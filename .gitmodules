@@ -1,0 +1,4 @@
+[submodule "ckan-docker/ckan_copy"]
+	path = ckan-docker/ckan_copy
+	url = git@github.com:ckan/ckan.git
+	branch = master
