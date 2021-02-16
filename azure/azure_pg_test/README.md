@@ -12,3 +12,7 @@
 This ARM template deploys [Azure Database for PostgreSQL Server](https://docs.microsoft.com/en-us/azure/postgresql/overview) and [Ubuntu VM](http://releases.ubuntu.com/19.04/). Ubuntu VM is used as a client to run the initialization bash script (init.sh) which runs initialization sql script(init.sql) using psql commandline. This initialization sql script can be used to create database, create users, configure roles, create tables, load data, manage extensions .. etc. 
 
 **NOTE** : After successful deployment, you may either use the Ubuntu VM as a PG client VM or delete it. 
+
+---
+
+Original files are from https://github.com/Azure/azure-postgresql/tree/master/arm-templates/ExampleWithStartupScript
