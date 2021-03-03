@@ -9,6 +9,7 @@ RUN apt-get -q -y update \
     && DEBIAN_FRONTEND=noninteractive apt-get -q -y upgrade \
     && apt-get -q -y install \
         crudini \
+        tcpdump \
         python3-dev \
         python3-pip \
         python3-virtualenv \
@@ -57,6 +58,7 @@ COPY ./ckan-run.sh /ckan-run.sh
 RUN $CKAN_VENV/bin/pip install -U pip && \
     $CKAN_VENV/bin/pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/requirement-setuptools.txt && \
     $CKAN_VENV/bin/pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/requirements.txt && \
+    $CKAN_VENV/bin/pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/dev-requirements.txt && \
     $CKAN_VENV/bin/pip install -e $CKAN_VENV/src/ckan/ && \
     ln -s $CKAN_VENV/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini && \
     chmod +x /ckan-entrypoint.sh /ckan-run.sh && \

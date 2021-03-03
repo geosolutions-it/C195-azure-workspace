@@ -42,6 +42,7 @@ set_environment () {
 write_config () {
   echo "Generating config at ${CONFIG_INI}..."
   $CKAN_VENV/bin/ckan generate config "$CONFIG_INI"
+
 }
 
 # Wait for PostgreSQL
@@ -59,6 +60,17 @@ fi
 
 # changes to the ini file -- SHOULD BE IDEMPOTENT
 
+crudini --set --verbose ${CONFIG_INI} app:main pool_size 10
+crudini --set --verbose ${CONFIG_INI} app:main echo_pool True
+crudini --set --verbose ${CONFIG_INI} app:main pool_pre_ping True
+crudini --set --verbose ${CONFIG_INI} app:main pool_reset_on_return rollback
+crudini --set --verbose ${CONFIG_INI} app:main pool_timeout 30
+crudini --set --verbose ${CONFIG_INI} DEFAULT debug True
+crudini --set --verbose ${CONFIG_INI} logger_root level DEBUG
+crudini --set --verbose ${CONFIG_INI} logger_werkzeug level DEBUG
+crudini --set --verbose ${CONFIG_INI} logger_ckan level DEBUG
+crudini --set --verbose ${CONFIG_INI} logger_ckanext level DEBUG
+crudini --set --verbose ${CONFIG_INI} handler_console level DEBUG
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins c195
 
 # END changes to the ini file
