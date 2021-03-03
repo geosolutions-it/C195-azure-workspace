@@ -14,7 +14,7 @@ set -e
 PGTMP=${CKAN_SQLALCHEMY_URL##*@}
 CKAN_PG_HOST=${PGTMP%/*}
 
-CONFIG="${CKAN_CONFIG}/production.ini"
+CONFIG_INI="${CKAN_CONFIG}/production.ini"
 
 abort () {
   echo "$@" >&2
@@ -40,8 +40,8 @@ set_environment () {
 }
 
 write_config () {
-  echo "Generating config at ${CONFIG}..."
-  $CKAN_VENV/bin/ckan generate config "$CONFIG"
+  echo "Generating config at ${CONFIG_INI}..."
+  $CKAN_VENV/bin/ckan generate config "$CONFIG_INI"
 }
 
 # Wait for PostgreSQL
@@ -50,12 +50,18 @@ while ! pg_isready -h $CKAN_PG_HOST -U ckan; do
 done
 
 # If we don't already have a config file, bootstrap
-if [ ! -e "$CONFIG" ]; then
+if [ ! -e "$CONFIG_INI" ]; then
   write_config
 else
-  echo "Config at ${CONFIG} already exists"
-  ls -l ${CONFIG}
+  echo "Config at ${CONFIG_INI} already exists"
+  ls -l ${CONFIG_INI}
 fi
+
+# changes to the ini file -- SHOULD BE IDEMPOTENT
+
+crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins c195
+
+# END changes to the ini file
 
 # Get or create CKAN_SQLALCHEMY_URL
 if [ -z "$CKAN_SQLALCHEMY_URL" ]; then
@@ -79,7 +85,7 @@ set_environment
 source $CKAN_VENV/bin/activate
 
 echo "Initting DB..."
-ckan --config "$CONFIG" db init
+ckan --config "$CONFIG_INI" db init
 
 echo 'Running command --> ' $@
 exec "$@"

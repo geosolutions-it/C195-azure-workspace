@@ -8,6 +8,7 @@ EXPOSE 5000
 RUN apt-get -q -y update \
     && DEBIAN_FRONTEND=noninteractive apt-get -q -y upgrade \
     && apt-get -q -y install \
+        crudini \
         python3-dev \
         python3-pip \
         python3-virtualenv \
@@ -60,6 +61,8 @@ RUN $CKAN_VENV/bin/pip install -U pip && \
     ln -s $CKAN_VENV/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini && \
     chmod +x /ckan-entrypoint.sh /ckan-run.sh && \
     chown -R ckan:ckan $CKAN_HOME $CKAN_VENV $CKAN_CONFIG $CKAN_STORAGE_PATH
+
+RUN $CKAN_VENV/bin/pip install -e git+https://github.com/geosolutions-it/ckanext-c195.git@main#egg=ckanext-c195
 
 USER ckan
 
