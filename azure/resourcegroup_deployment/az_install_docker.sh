@@ -1,4 +1,5 @@
 #!/bin/bash
+
 sudo apt-get -y update
 sudo apt-get -y install apt-transport-https ca-certificates curl gnupg
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -20,10 +21,19 @@ storageAccountKey="$arg8"
 registryName="$arg4"
 registryUsername="$arg5"
 registryPassword="$arg6"
-mntPath="/mnt/$storageAccountName/$fileShareName"
+mntPath="/mnt/$fileShareName"
 smbCredentialFile="/etc/smbcredentials/$storageAccountName.cred"
 httpEndpoint="$arg7"
 smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName
+
+#build and push ckan and solr images
+
+echo "$registryPassword" | sudo -u geosolutions docker login ${registryName}.azurecr.io --username $registryUsername --password-stdin 
+cd /home/geosolutions/C195-azure-workspace/ckan-docker
+sudo -u geosolutions docker-compose --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample build --no-cache ckan ckan_solr && docker-compose --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample push ckan ckan_solr
+
+# mount ckan share
+
 sudo mkdir -p $mntPath
 if [ ! -d "/etc/smbcredentials" ]; then
     sudo mkdir "/etc/smbcredentials"
@@ -45,7 +55,3 @@ else
 fi
 
 sudo mount -a
-
-echo "$registryPassword" | sudo -u geosolutions docker login ${registryName}.azurecr.io --username $registryUsername --password-stdin 
-cd /home/geosolutions/C195-azure-workspace/ckan-docker
-sudo -u geosolutions docker-compose build --no-cache ckan ckan_solr && docker-compose push ckan ckan_solr
