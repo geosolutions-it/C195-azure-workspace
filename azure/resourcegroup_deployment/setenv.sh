@@ -23,12 +23,13 @@ VM_DOMAIN=westeurope.cloudapp.azure.com
 SOLR_DOMAIN=privatelink.solr.azure.com
 
 REDIS_HOST=crea
+REDIS_NAME=crea-test
 SOLR_HOST=crea-solr
 PG_HOST=crea-pg
 PG_INSTANCE=crea-pgtest
 CKAN_HOST=ckan-vmtest
 
-REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_HOST --query primaryKey)
+REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_NAME --query primaryKey)
 
 CKAN_VM_NAME=ckan-vmtest
 CKAN_VM_USER=geosolutions

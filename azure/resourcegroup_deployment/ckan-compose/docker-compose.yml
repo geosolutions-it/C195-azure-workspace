@@ -19,9 +19,9 @@ services:
       - CKAN_REDIS_URL=redis://${REDIS_AUTHKEY}@${REDIS_HOST_FULL}:6379/1
       - CKAN_DATAPUSHER_URL=http://datapusher:8800
       - CKAN_SITE_URL=${CKAN_SITE_URL}
-      - CKAN_MAX_UPLOAD_SIZE_MB=5000
+      - CKAN_MAX_UPLOAD_SIZE_MB=${CKAN_MAX_UPLOAD_SIZE_MB}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
 
     volumes:
-      - /mnt/ckanshare:/var/lib/ckan
+      - ${CKAN_SHARE_MOUNT}:/var/lib/ckan
