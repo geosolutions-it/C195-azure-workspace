@@ -9,6 +9,7 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 sudo curl -L "https://github.com/docker/compose/releases/download/1.28.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 sudo adduser geosolutions docker
+sudo -u geosolutions rm -rf /home/geosolutions/C195-azure-workspace
 sudo -u geosolutions git clone https://github.com/geosolutions-it/C195-azure-workspace.git /home/geosolutions/C195-azure-workspace
 cd /home/geosolutions/C195-azure-workspace 
 sudo -u geosolutions git checkout implementation1c

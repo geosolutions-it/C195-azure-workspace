@@ -1,6 +1,3 @@
-#source ./setenv-secret.sh
-
-# you can customize this one
 RESOURCE_GROUP=CREA_TEST_DEPLOY
 
 REGISTRY_NAME=crearegistrytest
@@ -8,7 +5,7 @@ REGISTRY_USERNAME=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_N
 REGISTRY_PASSWORD=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query passwords[1].value)
 
 STORAGE_ACCOUNT_NAME=creastorage01test
-STORAGE_KEY=$(az storage account keys list -g $RESOURCE_GROUP -n $STORAGE_ACCOUNT_NAME --query [1].value | tr -d '"')
+STORAGE_KEY=$(az storage account keys list -g $RESOURCE_GROUP -n $STORAGE_ACCOUNT_NAME --query [1].value)
 
 SOLR_SHARE_NAME=solrshare
 PG_SHARE_NAME=pgshare
@@ -22,26 +19,29 @@ SOLR_CONTAINER_NAME=solr-container-test
 WE_DOMAIN=westeurope.azurecontainer.io
 REDIS_DOMAIN=redis.cache.windows.net
 PG_DOMAIN=privatelink.postgres.azure.com
+VM_DOMAIN=westeurope.cloudapp.azure.com
+SOLR_DOMAIN=privatelink.solr.azure.com
 
-REDIS_NAME=crea-test
 REDIS_HOST=crea
 SOLR_HOST=crea-solr
 PG_HOST=crea-pg
-CKAN_HOST=crea-ckan
+PG_INSTANCE=crea-pgtest
+CKAN_HOST=ckan-vmtest
 
-REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_NAME --query primaryKey)
+REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_HOST --query primaryKey)
 
 CKAN_VM_NAME=ckan-vmtest
 CKAN_VM_USER=geosolutions
-CKAN_SITE_URL=http://${CKAN_HOST}.westeurope.cloudapp.azure.com:5000/
+CKAN_SITE_URL=http://${CKAN_HOST}.${VM_DOMAIN}:5000/
+CKAN_PORT=5000
+CKAN_SITE_ID=default
 
 REDIS_HOST_FULL=${REDIS_HOST}.${REDIS_DOMAIN}
-SOLR_HOST_FULL=${SOLR_HOST}.privatelink.solr.azure.com
-PG_HOST_FULL=${PG_HOST}.${WE_DOMAIN}
+SOLR_HOST_FULL=${SOLR_HOST}.${SOLR_DOMAIN}
+PG_HOST_FULL=${PG_HOST}.${PG_DOMAIN}
+CKAN_PG_USER=geosolutions%40@${PG_INSTANCE}
 
+DATASTORE_RO_PG_USER=datastore_ro%40@${PG_INSTANCE}
 DATASTORE_READONLY_PASSWORD=datastore
-POSTGRES_PASSWORD=postgres
+POSTGRES_PASSWORD=S3cr3tP4ssw0rd
 DATASTORE_READONLY_PASSWORD=postgres
-CKAN_VM_PASSWORD=password
-
-http_endpoint=$(az storage account show --resource-group $RESOURCE_GROUP --name $STORAGE_ACCOUNT_NAME --query "primaryEndpoints.file" | tr -d '"')
