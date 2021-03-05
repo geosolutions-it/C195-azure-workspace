@@ -3,64 +3,64 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "Redis_crea_name": {
-            "defaultValue": "crea-test"
+            "Value": "crea-test"
         },
         "privateEndpoints_crea_name": {
-            "defaultValue": "crea"
+            "Value": "crea"
         },
         "virtualMachines_ckan_vm_name": {
-            "defaultValue": "ckan-vmtest"
+            "Value": "ckan-vmtest"
         },
         "virtualMachines_ckan_vm_username": {
-            "defaultValue": "geosolutions"
+            "Value": "geosolutions"
         },        
         "virtualMachines_ckan_vm_password": {
-            "defaultValue": "S3cre3tP4ssw0rd"
+            "Value": "S3cre3tP4ssw0rd"
         },        
         "servers_crea_pg_name": {
-            "defaultValue": "crea-pgtest"
+            "Value": "creapostgresql"
         },
         "privateEndpoints_crea_pg_name": {
-            "defaultValue": "creapostgresql"
+            "Value": "crea-pg"
         },
         "virtualNetworks_privnet01_name": {
-            "defaultValue": "privnet01"
+            "Value": "privnet01"
         },
         "networkInterfaces_ckan_vm195_name": {
-            "defaultValue": "ckan-vm195"
+            "Value": "ckan-vm195"
         },
         "publicIPAddresses_ckan_vm_ip_name": {
-            "defaultValue": "ckan-vm-ip"
+            "Value": "ckan-vm-ip"
         },
         "storageAccounts_creastorage01_name": {
-            "defaultValue": "creastorage01test"
+            "Value": "creastorage01test"
         },
         "registries_crearegistry_name": {
-            "defaultValue": "crearegistrytest"
+            "Value": "crearegistrytest"
         },
         "networkSecurityGroups_ckan_vm_nsg_name": {
-            "defaultValue": "ckan-vm-nsg"
+            "Value": "ckan-vm-nsg"
         },
         "containerGroups_solr_container_name": {
-            "defaultValue": "solr-container"
+            "Value": "solr-container"
         },
         "privateDnsZones_privatelink_solr_azure_com_name": {
-            "defaultValue": "privatelink.solr.azure.com"
+            "Value": "privatelink.solr.azure.com"
         },
         "privateDnsZones_privatelink_redis_cache_windows_net_name": {
-            "defaultValue": "privatelink.redis.cache.windows.net"
+            "Value": "privatelink.redis.cache.windows.net"
         },
         "privateDnsZones_privatelink_postgres_database_azure_com_name": {
-            "defaultValue": "privatelink.postgres.database.azure.com"
+            "Value": "privatelink.postgres.database.azure.com"
         },
         "networkInterfaces_crea_nic_2980809e_067b_47da_b39d_af39d736940d_name": {
-            "defaultValue": "crea-test.nic.2980809e-067b-47da-b39d-af39d736940d"
+            "Value": "crea-test.nic.2980809e-067b-47da-b39d-af39d736940d"
         },
         "networkInterfaces_crea_pg_nic_cfb98417_90b9_41be_8ec2_ec3f9d921a04_name": {
-            "defaultValue": "crea-pg-test.nic.cfb98417-90b9-41be-8ec2-ec3f9d921a04"
+            "Value": "crea-pg-test.nic.cfb98417-90b9-41be-8ec2-ec3f9d921a04"
         },
         "networkProfiles_aci_network_profile_privnet01_default_externalid": {
-            "defaultValue": "/subscriptions/1cd0a26f-1c2a-48fb-9db5-c5be98e7603b/resourceGroups/CREA_TEST_DEPLOYMENT/providers/Microsoft.Network/networkProfiles/aci-network-profile-privnet01-default"
+            "Value": "/subscriptions/1cd0a26f-1c2a-48fb-9db5-c5be98e7603b/resourceGroups/CREA_TEST_DEPLOYMENT/providers/Microsoft.Network/networkProfiles/aci-network-profile-privnet01-default"
         }
     }
 }    

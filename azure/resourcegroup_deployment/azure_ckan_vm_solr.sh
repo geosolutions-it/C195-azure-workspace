@@ -1,9 +1,6 @@
 
 
 . ./setenv.sh
-# Install docker on vm
-az vm run-command invoke -g CREA_TEST_DEPLOY -n ckan-vmtest --command-id RunShellScript --scripts @./az_install_docker.sh
-
 
 # solr container
 az container create \
@@ -22,3 +19,6 @@ az container create \
     --vnet-address-prefix 10.0.0.0/16 \
     --subnet default \
     --subnet-address-prefix 10.0.0.0/24 
+
+# Install docker on vm
+az vm run-command invoke -g ${RESOURCE_GROUP} -n ${CKAN_VM_NAME} --command-id RunShellScript --scripts @./az_install_docker.sh --parameters $RESOURCE_GROUP $STORAGE_ACCOUNT_NAME $CKAN_SHARE_NAME $STORAGE_KEY $REGISTRY_USERNAME $REGISTRY_PASSWORD

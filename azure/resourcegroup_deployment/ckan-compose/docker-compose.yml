@@ -1,0 +1,32 @@
+# docker-compose
+# build && docker-compose up -d
+# If "docker-compose logs ckan" shows DB not ready, run "docker-compose restart ckan" a few times.
+version: "3"
+
+services:
+  ckan:
+    container_name: ckan
+    image: ${REGISTRY_NAME}.azurecr.io/crea_ckan
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+      args:
+          - CKAN_SITE_URL=${CKAN_SITE_URL}
+    ports:
+      - "0.0.0.0:${CKAN_PORT}:5000"
+    environment:
+      # Defaults work with linked containers, change to use own Postgres, SolR, Redis or Datapusher
+      - CKAN_SQLALCHEMY_URL=postgresql://${CKAN_PG_USER}:${POSTGRES_PASSWORD}@${PG_HOST_FULL}/ckan
+      - CKAN_DATASTORE_WRITE_URL="postgresql://${CKAN_PG_USER}:${POSTGRES_PASSWORD}@${PG_HOST_FULL}/datastore"
+      - CKAN_DATASTORE_READ_URL=postgresql://${DATASTORE_RO_PG_USER}:${DATASTORE_READONLY_PASSWORD}@${PG_HOST_FULL}/datastore
+      - CKAN_SOLR_URL=http://${SOLR_HOST_FULL}:8983/solr/ckan
+      - CKAN_REDIS_URL=redis://${REDIS_AUTHKEY}@${REDIS_HOST_FULL}:6379/1
+      - CKAN_DATAPUSHER_URL=http://datapusher:8800
+      - CKAN_SITE_URL=${CKAN_SITE_URL}
+      - CKAN_MAX_UPLOAD_SIZE_MB=5000
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
+
+    volumes:
+      - /mnt/ckanshare:/var/lib/ckan
