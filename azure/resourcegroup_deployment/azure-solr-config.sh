@@ -17,3 +17,8 @@ az container create \
     --vnet-address-prefix 10.0.0.0/16 \
     --subnet default \
     --subnet-address-prefix 10.0.0.0/24 
+
+. ./setenv.sh
+
+# Install docker on vm
+az vm run-command invoke -g ${RESOURCE_GROUP} -n ${CKAN_VM_NAME} --command-id RunShellScript --scripts @./az_start_ckan.sh --parameters $RESOURCE_GROUP $STORAGE_ACCOUNT_NAME $CKAN_SHARE_NAME $REGISTRY_NAME $REGISTRY_USERNAME $REGISTRY_PASSWORD $http_endpoint arg8=$STORAGE_KEY
