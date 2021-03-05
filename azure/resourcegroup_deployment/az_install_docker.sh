@@ -31,7 +31,8 @@ smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareNa
 echo "$registryPassword" | sudo -u geosolutions docker login ${registryName}.azurecr.io --username $registryUsername --password-stdin 
 cd /home/geosolutions/C195-azure-workspace/ckan-docker
 sudo -u geosolutions docker-compose --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample build --no-cache ckan ckan_solr && docker-compose --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample push ckan ckan_solr
-
+cd /home/geosolutions/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose
+sudo -u geosolutions docker-compose --env-file .env.sample up -d ckan
 # mount ckan share
 
 sudo mkdir -p $mntPath
