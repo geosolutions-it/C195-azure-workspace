@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 sudo apt-get -y update
 sudo apt-get -y install apt-transport-https ca-certificates curl gnupg
@@ -32,10 +32,11 @@ smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareNa
 
 echo $registryPassword | sudo -u geosolutions docker login ${registryName}.azurecr.io --username $registryUsername --password-stdin 
 cd /home/geosolutions/C195-azure-workspace/ckan-docker
-sudo -u geosolutions docker-compose --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample build ckan ckan_solr
+sudo -u geosolutions docker-compose -f /home/geosolutions/C195-azure-workspace/ckan-docker/docker-compose.yml --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample build ckan 
+sudo -u geosolutions docker-compose -f /home/geosolutions/C195-azure-workspace/ckan-docker/docker-compose.yml --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample build ckan_solr
 cd /home/geosolutions/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose
-sudo -u geosolutions docker-compose --env-file .env.sample push ckan ckan_solr
-sudo -u geosolutions docker-compose --env-file .env.sample pull ckan ckan_solr
+sudo -u geosolutions docker-compose -f docker-compose.yml --env-file .env.sample push ckan ckan_solr
+sudo -u geosolutions docker-compose -f docker-compose.yml --env-file .env.sample pull ckan ckan_solr
 
 # mount ckan share
 

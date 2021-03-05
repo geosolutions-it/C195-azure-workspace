@@ -25,3 +25,6 @@ services:
 
     volumes:
       - ${CKAN_SHARE_MOUNT}:/var/lib/ckan
+  ckan_solr:
+    image: ${REGISTRY_NAME}.azurecr.io/crea_ckan_solr
+    container_name: ckan_solr      
