@@ -9,18 +9,20 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.28.5/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 sudo adduser geosolutions docker
 sudo -u geosolutions git clone https://github.com/geosolutions-it/C195-azure-workspace.git /home/geosolutions/C195-azure-workspace
-cd /home/geosolutions/C195-azure-workspace && sudo -u geosolutions git submodule init && sudo -u geosolutions git submodule update
+cd /home/geosolutions/C195-azure-workspace 
+sudo -u geosolutions git checkout implementation1c
+sudo -u geosolutions git submodule init && sudo -u geosolutions git submodule update
 
-resourceGroupName="$1"
-storageAccountName="$2"
-fileShareName="$3"
-storageAccountKey="$4"
-registryName="$5"
-registryUsername="$6"
-registryPassword="$7"
+resourceGroupName="$arg1"
+storageAccountName="$arg2"
+fileShareName="$arg3"
+storageAccountKey="$arg8"
+registryName="$arg4"
+registryUsername="$arg5"
+registryPassword="$arg6"
 mntPath="/mnt/$storageAccountName/$fileShareName"
 smbCredentialFile="/etc/smbcredentials/$storageAccountName.cred"
-httpEndpoint=
+httpEndpoint="$arg7"
 smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName
 sudo mkdir -p $mntPath
 if [ ! -d "/etc/smbcredentials" ]; then
@@ -44,4 +46,6 @@ fi
 
 sudo mount -a
 
-echo $registryPassword | sudo -u geosolutions docker login ${registryName}.azurecr.io --username $registryUsername --password-stdin 
+echo "$registryPassword" | sudo -u geosolutions docker login ${registryName}.azurecr.io --username $registryUsername --password-stdin 
+cd /home/geosolutions/C195-azure-workspace/ckan-docker
+sudo -u geosolutions docker-compose build --no-cache ckan ckan_solr && docker-compose push ckan ckan_solr

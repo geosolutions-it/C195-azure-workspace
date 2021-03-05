@@ -12,8 +12,13 @@ az deployment group create --resource-group $RESOURCE_GROUP --template-file ./00
 
 
 
-## Deploy solr, configure resources
+## Configure resources and deploy solr
 
 ```bash
-./azure_ckan_vm_install_docker.sh
+./azure_ckan_vm_config.sh
+./azure_solr_config.sh
 ```
+
+## Configure .env and build ckan image
+
+Basically you just need to copy setenv.sh into ckan-compose/.env
