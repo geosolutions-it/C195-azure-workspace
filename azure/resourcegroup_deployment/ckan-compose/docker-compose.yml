@@ -9,7 +9,7 @@ services:
     image: ${REGISTRY_NAME}.azurecr.io/crea_ckan
     restart: always
     ports:
-      - "0.0.0.0:${CKAN_PORT}:5000"
+      - "${CKAN_PORT}"
     environment:
       # Defaults work with linked containers, change to use own Postgres, SolR, Redis or Datapusher
       - CKAN_SQLALCHEMY_URL=postgresql://${CKAN_PG_USER}:${POSTGRES_PASSWORD}@${PG_HOST_FULL}/ckan
