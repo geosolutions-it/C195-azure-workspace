@@ -23,12 +23,13 @@ WE_DOMAIN=westeurope.azurecontainer.io
 REDIS_DOMAIN=redis.cache.windows.net
 PG_DOMAIN=privatelink.postgres.azure.com
 
+REDIS_NAME=crea-test
 REDIS_HOST=crea
 SOLR_HOST=crea-solr
 PG_HOST=crea-pg
 CKAN_HOST=crea-ckan
 
-REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_HOST --query primaryKey)
+REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_NAME --query primaryKey)
 
 CKAN_VM_NAME=ckan-vmtest
 CKAN_VM_USER=geosolutions
