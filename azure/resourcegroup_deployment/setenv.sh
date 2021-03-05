@@ -1,4 +1,4 @@
-source ./setenv-secret.sh
+#source ./setenv-secret.sh
 
 # you can customize this one
 RESOURCE_GROUP=CREA_TEST_DEPLOY
@@ -35,3 +35,6 @@ SOLR_HOST_FULL=${SOLR_HOST}.${WE_DOMAIN}
 PG_HOST_FULL=${PG_HOST}.${WE_DOMAIN}
 
 DATASTORE_READONLY_PASSWORD=datastore
+POSTGRES_PASSWORD=postgres
+DATASTORE_READONLY_PASSWORD=postgres
+CKAN_VM_PASSWORD=password
