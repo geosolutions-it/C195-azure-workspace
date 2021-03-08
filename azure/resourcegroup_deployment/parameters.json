@@ -6,7 +6,7 @@
             "Value": "crea-test"
         },
         "privateEndpoints_crea_name": {
-            "Value": "crea"
+            "Value": "crea-test"
         },
         "virtualMachines_ckan_vm_name": {
             "Value": "ckan-vmtest"
@@ -40,12 +40,6 @@
         },
         "networkSecurityGroups_ckan_vm_nsg_name": {
             "Value": "ckan-vm-nsg"
-        },
-        "containerGroups_solr_container_name": {
-            "Value": "solr-container"
-        },
-        "privateDnsZones_privatelink_solr_azure_com_name": {
-            "Value": "privatelink.solr.azure.com"
         },
         "privateDnsZones_privatelink_redis_cache_windows_net_name": {
             "Value": "privatelink.redis.cache.windows.net"

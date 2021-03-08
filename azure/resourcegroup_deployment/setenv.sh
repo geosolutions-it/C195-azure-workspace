@@ -1,11 +1,11 @@
 RESOURCE_GROUP=CREA_TEST_DEPLOY
 
 REGISTRY_NAME=crearegistrytest
-REGISTRY_USERNAME=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query username)
-REGISTRY_PASSWORD=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query passwords[1].value)
+REGISTRY_USERNAME=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query username | tr -d '"')
+REGISTRY_PASSWORD=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query passwords[1].value | tr -d '"')
 
 STORAGE_ACCOUNT_NAME=creastorage01test
-STORAGE_KEY=$(az storage account keys list -g $RESOURCE_GROUP -n $STORAGE_ACCOUNT_NAME --query [1].value)
+STORAGE_KEY=$(az storage account keys list -g $RESOURCE_GROUP -n $STORAGE_ACCOUNT_NAME --query [1].value | tr -d '"')
 
 SOLR_SHARE_NAME=solrshare
 PG_SHARE_NAME=pgshare
@@ -22,7 +22,7 @@ PG_DOMAIN=privatelink.postgres.azure.com
 VM_DOMAIN=westeurope.cloudapp.azure.com
 SOLR_DOMAIN=privatelink.solr.azure.com
 
-REDIS_HOST=crea
+REDIS_HOST=crea-test
 REDIS_NAME=crea-test
 SOLR_HOST=crea-solr
 PG_HOST=crea-pg

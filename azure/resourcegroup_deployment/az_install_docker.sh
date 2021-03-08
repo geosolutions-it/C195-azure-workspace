@@ -35,7 +35,10 @@ cd /home/geosolutions/C195-azure-workspace/ckan-docker
 sudo -u geosolutions docker-compose -f /home/geosolutions/C195-azure-workspace/ckan-docker/docker-compose.yml --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample build ckan 
 sudo -u geosolutions docker-compose -f /home/geosolutions/C195-azure-workspace/ckan-docker/docker-compose.yml --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample build ckan_solr
 cd /home/geosolutions/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose
-sudo -u geosolutions docker-compose -f docker-compose.yml --env-file .env.sample push ckan ckan_solr
+sudo -u geosolutions docker tag crearegistry.azurecr.io/crea_ckan ${registryName}.azurecr.io/crea_ckan
+sudo -u geosolutions docker tag crearegistry.azurecr.io/crea_ckan_solr ${registryName}.azurecr.io/crea_ckan_solr
+sudo -u geosolutions docker push ${registryName}.azurecr.io/crea_ckan
+sudo -u geosolutions docker push ${registryName}.azurecr.io/crea_ckan_solr
 sudo -u geosolutions docker-compose -f docker-compose.yml --env-file .env.sample pull ckan ckan_solr
 
 # mount ckan share

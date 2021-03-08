@@ -8,4 +8,8 @@ registryPassword="$arg6"
 httpEndpoint="$arg7"
 
 cd /home/geosolutions/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose
-sudo -u geosolutions docker-compose --env-file .env.sample pull ckan
+if [ ! -f .env ]; then
+    cp .env .env-sample
+fi    
+sudo -u geosolutions docker-compose --env-file .env down
+sudo -u geosolutions docker-compose --env-file .env up -d ckan
