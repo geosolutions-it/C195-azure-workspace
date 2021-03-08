@@ -65,15 +65,9 @@
 }
 ```
 
-## Deploy most part of resources
+## Desktop environment configuration
 
-```bash
-export RESOURCE_GORUP=YourResourceGroup
-# deploy most of resources (file share, registry private networking records, private docker registry, postgres, redis, ckan-vm)
-az deployment group create --resource-group $RESOURCE_GROUP --template-file ./001_deployment.json --parameters @./parameters.json --mode Complete --confirm-with-what-if
-```
-
-## Edit azure/resourcegroup_deployment/setenv.sh accordingly to your parameters.json, most of the secrets are automatically taken from the azure resources
+Edit azure/resourcegroup_deployment/setenv.sh accordingly to your parameters.json, most of the secrets are automatically taken from the azure resources, which will be deployed later
 
 ```bash
 # you can customize this one
@@ -124,7 +118,17 @@ http_endpoint=$(az storage account show --resource-group $RESOURCE_GROUP --name 
 
 ```
 
-## Configure resources, upload default ckan and solr images to registry.
+## Deploy most part of resources
+
+```bash
+export RESOURCE_GORUP=YourResourceGroup
+# deploy most of resources (file share, registry private networking records, private docker registry, postgres, redis, ckan-vm)
+az deployment group create --resource-group $RESOURCE_GROUP --template-file ./001_deployment.json --parameters @./parameters.json --mode Complete --confirm-with-what-if
+```
+
+## ckan VM preparation
+
+Configure resources, build and upload default ckan and solr images to registry.
 
 ```bash
 ./azure_ckan_vm_config.sh
@@ -132,10 +136,14 @@ http_endpoint=$(az storage account show --resource-group $RESOURCE_GROUP --name 
 
 ## Customize azure/resourcegroup_deployment/setenv.sh
 
+You should use same setenv.sh that you edited locally in the step above.
+
 - connect via ssh to the ckan vm
 - edit azure/resourcegroup_deployment/setenv.sh and copy it to azure/resourcegroup_deployment/.env
 
-## deploy a cotainer on private network for solr mounting a smb share for persistent solr data and start ckan docker container.
+## Deploy solr azure container, start ckan container on vm.
+
+deploy a cotainer on private network for solr mounting a smb share for persistent solr data and start ckan docker container.
 
 ```bash
 ./azure_solr_config.sh
@@ -143,4 +151,4 @@ http_endpoint=$(az storage account show --resource-group $RESOURCE_GROUP --name 
 
 ## Configure .env and build ckan image
 
-azure/resourcegroup_deployment/setenv.sh and azure/resourcegroup_deployment/ckan-compose
+`azure/resourcegroup_deployment/setenv.sh` and `azure/resourcegroup_deployment/ckan-compose`
