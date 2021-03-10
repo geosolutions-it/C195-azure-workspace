@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/bash -x
 
 
 export PGPASSWORD=$arg2
-psql -u $arg1@$arg3 $arg4 -f ../azure_pg_test/00_create_datastore.sql
-psql -u $arg1@$arg3 $arg4 datastore -f ../azure_pg_test/20_postgis_permissions.sql
+psql -U $arg1@$arg3 -h $arg4 postgres -c 'create database ckan if not exists;'
+psql -U $arg1@$arg3 -h $arg4 ckan -f /home/geosolutions/C195-azure-workspace/azure/azure_pg_test/00_create_datastore.sql
+psql -U $arg1@$arg3 -h $arg4 datastore -f /home/geosolutions/C195-azure-workspace/azure/azure_pg_test/20_postgis_permissions.sql

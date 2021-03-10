@@ -6,7 +6,7 @@ REGISTRY_PASSWORD=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_N
 
 STORAGE_ACCOUNT_NAME=creastorage01test
 STORAGE_KEY=$(az storage account keys list -g $RESOURCE_GROUP -n $STORAGE_ACCOUNT_NAME --query [1].value | tr -d '"')
-httpEndpoint=https://creastorage01test.file.core.windows.net/
+httpEndpoint=$(az storage account show --resource-group $RESOURCE_GROUP --name $STORAGE_ACCOUNT_NAME --query "primaryEndpoints.file" | tr -d '"')
 
 SOLR_SHARE_NAME=solrshare
 PG_SHARE_NAME=pgshare
@@ -40,8 +40,8 @@ CKAN_SITE_URL=http://${CKAN_HOST}.${VM_DOMAIN}:${CKAN_PORT}/
 
 REDIS_HOST_FULL=${REDIS_HOST}.${REDIS_DOMAIN}
 SOLR_HOST_FULL=${SOLR_HOST}.${SOLR_DOMAIN}
-PG_HOST_FULL=${PG_HOST}.${PG_DOMAIN}
-
+#PG_HOST_FULL=${PG_HOST}.${PG_DOMAIN}
+PG_HOST_FULL=10.0.1.6
 CKAN_PG_USER_PARTIAL=$(jq '.parameters.PostgreSQL_username.Value' ./parameters.json)
 CKAN_PG_USER=${CKAN_PG_USER_PARTIAL}%40${PG_INSTANCE}
 POSTGRES_PASSWORD=$(jq '.parameters.PostgreSQL_password.Value' ./parameters.json)
