@@ -2,6 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "ResourceGroup": {
+            "Value": "CREA_TEST_DEPLOY"
+        },
+        "AzureSubscriptionID": {
+            "Value": "1cd0a26f-1c2a-48fb-9db5-c5be98e7603b"
+        },                   
         "Redis_crea_name": {
             "Value": "crea-test"
         },
@@ -16,12 +22,18 @@
         },        
         "virtualMachines_ckan_vm_password": {
             "Value": "S3cre3tP4ssw0rd"
+        },
+        "PostgreSQL_username": {
+            "Value": "ckan"
         },        
+        "PostgreSQL_password": {
+            "Value": "S3cre3tP4ssw0rd"
+        },              
         "servers_crea_pg_name": {
             "Value": "creapostgresql"
         },
         "privateEndpoints_crea_pg_name": {
-            "Value": "crea-pg"
+            "Value": "creapostgresql"
         },
         "virtualNetworks_privnet01_name": {
             "Value": "privnet01"
@@ -41,20 +53,20 @@
         "networkSecurityGroups_ckan_vm_nsg_name": {
             "Value": "ckan-vm-nsg"
         },
-        "privateDnsZones_privatelink_redis_cache_windows_net_name": {
-            "Value": "privatelink.redis.cache.windows.net"
-        },
-        "privateDnsZones_privatelink_postgres_database_azure_com_name": {
-            "Value": "privatelink.postgres.database.azure.com"
-        },
-        "networkInterfaces_crea_nic_2980809e_067b_47da_b39d_af39d736940d_name": {
-            "Value": "crea-test.nic.2980809e-067b-47da-b39d-af39d736940d"
-        },
-        "networkInterfaces_crea_pg_nic_cfb98417_90b9_41be_8ec2_ec3f9d921a04_name": {
-            "Value": "crea-pg-test.nic.cfb98417-90b9-41be-8ec2-ec3f9d921a04"
-        },
+        // "privateDnsZones_privatelink_redis_cache_windows_net_name": {
+        //     "Value": "privatelink.redis.cache.windows.net"
+        // },
+        // "privateDnsZones_privatelink_postgres_database_azure_com_name": {
+        //     "Value": "privatelink.postgres.database.azure.com"
+        // },
+        // "networkInterfaces_crea_nic_2980809e_067b_47da_b39d_af39d736940d_name": {
+        //     "Value": "crea-test.nic.2980809e-067b-47da-b39d-af39d736940d"
+        // },
+        // "networkInterfaces_crea_pg_nic_cfb98417_90b9_41be_8ec2_ec3f9d921a04_name": {
+        //     "Value": "crea-pg.nic.cfb98417-90b9-41be-8ec2-ec3f9d921a04"
+        // },
         "networkProfiles_aci_network_profile_privnet01_default_externalid": {
-            "Value": "/subscriptions/1cd0a26f-1c2a-48fb-9db5-c5be98e7603b/resourceGroups/CREA_TEST_DEPLOYMENT/providers/Microsoft.Network/networkProfiles/aci-network-profile-privnet01-default"
+            "Value": "/subscriptions/[parameters('AzureSubscriptionID')]/resourceGroups/[parameters('ResourceGroup')]/providers/Microsoft.Network/networkProfiles/aci-network-profile-privnet01-default"
         }
     }
 }    

@@ -2,6 +2,14 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "ResourceGroup": {
+            "defaultValue": "CREA_TEST_DEPLOY",
+            "type": "String"
+        },
+        "AzureSubscriptionID": {
+            "defaultValue": "1cd0a26f-1c2a-48fb-9db5-c5be98e7603b",
+            "type": "String"
+        },            
         "Redis_crea_name": {
             "defaultValue": "crea-test",
             "type": "String"
@@ -21,7 +29,15 @@
         "virtualMachines_ckan_vm_password": {
             "defaultValue": "S3cre3tP4ssw0rd",
             "type": "SecureString"
+        },
+        "PostgreSQL_username": {
+            "defaultValue": "ckan",
+            "type": "String"
         },        
+        "PostgreSQL_password": {
+            "defaultValue": "S3cre3tP4ssw0rd",
+            "type": "SecureString"
+        },               
         "servers_crea_pg_name": {
             "defaultValue": "crea-pgtest",
             "type": "String"
@@ -66,10 +82,10 @@
             "defaultValue": "crea-test.nic.2980809e-067b-47da-b39d-af39d736940d",
             "type": "String"
         },
-        "networkInterfaces_crea_pg_nic_cfb98417_90b9_41be_8ec2_ec3f9d921a04_name": {
-            "defaultValue": "crea-pg-test.nic.cfb98417-90b9-41be-8ec2-ec3f9d921a04",
-            "type": "String"
-        },
+        // "networkInterfaces_crea_pg_nic_cfb98417_90b9_41be_8ec2_ec3f9d921a04_name": {
+        //     "defaultValue": "crea-pg-test.nic.cfb98417-90b9-41be-8ec2-ec3f9d921a04",
+        //     "type": "String"
+        // },
         "networkProfiles_aci_network_profile_privnet01_default_externalid": {
             "defaultValue": "/subscriptions/1cd0a26f-1c2a-48fb-9db5-c5be98e7603b/resourceGroups/CREA_TEST_DEPLOYMENT/providers/Microsoft.Network/networkProfiles/aci-network-profile-privnet01-default",
             "type": "String"
@@ -159,8 +175,8 @@
                 "minimalTlsVersion": "TLSEnforcementDisabled",
                 "infrastructureEncryption": "Disabled",
                 "publicNetworkAccess": "Enabled",
-                "administratorLogin": "[parameters('virtualMachines_ckan_vm_username')]",
-                "administratorLoginPassword": "[parameters('virtualMachines_ckan_vm_password')]"
+                "administratorLogin": "[parameters('PostgreSQL_username')]",
+                "administratorLoginPassword": "[parameters('PostgreSQL_password')]"
             }
         },
         {
@@ -459,36 +475,36 @@
                 "enableIPForwarding": false
             }
         },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2020-05-01",
-            "name": "[parameters('networkInterfaces_crea_pg_nic_cfb98417_90b9_41be_8ec2_ec3f9d921a04_name')]",
-            "location": "westeurope",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
-            ],
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "postgresqlServer-postgresqlServer.privateEndpoint",
-                        "properties": {
-                            "privateIPAddress": "10.0.1.6",
-                            "privateIPAllocationMethod": "Dynamic",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
-                },
-                "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false
-            }
-        },
+        // {
+        //     "type": "Microsoft.Network/networkInterfaces",
+        //     "apiVersion": "2020-05-01",
+        //     "name": "[parameters('networkInterfaces_crea_pg_nic_cfb98417_90b9_41be_8ec2_ec3f9d921a04_name')]",
+        //     "location": "westeurope",
+        //     "dependsOn": [
+        //         "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
+        //     ],
+        //     "properties": {
+        //         "ipConfigurations": [
+        //             {
+        //                 "name": "postgresqlServer-postgresqlServer.privateEndpoint",
+        //                 "properties": {
+        //                     "privateIPAddress": "10.0.1.6",
+        //                     "privateIPAllocationMethod": "Dynamic",
+        //                     "subnet": {
+        //                         "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
+        //                     },
+        //                     "primary": true,
+        //                     "privateIPAddressVersion": "IPv4"
+        //                 }
+        //             }
+        //         ],
+        //         "dnsSettings": {
+        //             "dnsServers": []
+        //         },
+        //         "enableAcceleratedNetworking": false,
+        //         "enableIPForwarding": false
+        //     }
+        // },
         {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2020-05-01",
@@ -533,81 +549,81 @@
                 "destinationAddressPrefixes": []
             }
         },
-        {
-            "type": "Microsoft.Network/privateDnsZones/A",
-            "apiVersion": "2018-09-01",
-            "name": "[concat(parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'), '/crea')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'))]"
-            ],
-            "properties": {
-                "ttl": 3600,
-                "aRecords": [
-                    {
-                        "ipv4Address": "10.0.1.5"
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Microsoft.Network/privateDnsZones/A",
-            "apiVersion": "2018-09-01",
-            "name": "[concat(parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'), '/crea-pg')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'))]"
-            ],
-            "properties": {
-                "metadata": {
-                    "creator": "created by private endpoint crea-pg with resource guid 5276e628-8a84-4550-81eb-28b83f137ea1"
-                },
-                "ttl": 10,
-                "aRecords": [
-                    {
-                        "ipv4Address": "10.0.1.6"
-                    }
-                ]
-            }
-        },
-        {
-            "type": "Microsoft.Network/privateDnsZones/SOA",
-            "apiVersion": "2018-09-01",
-            "name": "[concat(parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'), '/@')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'))]"
-            ],
-            "properties": {
-                "ttl": 3600,
-                "soaRecord": {
-                    "email": "azureprivatedns-host.microsoft.com",
-                    "expireTime": 2419200,
-                    "host": "azureprivatedns.net",
-                    "refreshTime": 3600,
-                    "retryTime": 300,
-                    "serialNumber": 1,
-                    "minimumTtl": 10
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Network/privateDnsZones/SOA",
-            "apiVersion": "2018-09-01",
-            "name": "[concat(parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'), '/@')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'))]"
-            ],
-            "properties": {
-                "ttl": 3600,
-                "soaRecord": {
-                    "email": "azureprivatedns-host.microsoft.com",
-                    "expireTime": 2419200,
-                    "host": "azureprivatedns.net",
-                    "refreshTime": 3600,
-                    "retryTime": 300,
-                    "serialNumber": 1,
-                    "minimumTtl": 10
-                }
-            }
-        },
+        // {
+        //     "type": "Microsoft.Network/privateDnsZones/A",
+        //     "apiVersion": "2018-09-01",
+        //     "name": "[concat(parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'), '/crea')]",
+        //     "dependsOn": [
+        //         "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'))]"
+        //     ],
+        //     "properties": {
+        //         "ttl": 3600,
+        //         "aRecords": [
+        //             {
+        //                 "ipv4Address": "10.0.1.5"
+        //             }
+        //         ]
+        //     }
+        // },
+        // {
+        //     "type": "Microsoft.Network/privateDnsZones/A",
+        //     "apiVersion": "2018-09-01",
+        //     "name": "[concat(parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'), '/crea-pg')]",
+        //     "dependsOn": [
+        //         "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'))]"
+        //     ],
+        //     "properties": {
+        //         "metadata": {
+        //             "creator": "created by private endpoint crea-pg with resource guid 5276e628-8a84-4550-81eb-28b83f137ea1"
+        //         },
+        //         "ttl": 10,
+        //         "aRecords": [
+        //             {
+        //                 "ipv4Address": "10.0.1.6"
+        //             }
+        //         ]
+        //     }
+        // },
+        // {
+        //     "type": "Microsoft.Network/privateDnsZones/SOA",
+        //     "apiVersion": "2018-09-01",
+        //     "name": "[concat(parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'), '/@')]",
+        //     "dependsOn": [
+        //         "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'))]"
+        //     ],
+        //     "properties": {
+        //         "ttl": 3600,
+        //         "soaRecord": {
+        //             "email": "azureprivatedns-host.microsoft.com",
+        //             "expireTime": 2419200,
+        //             "host": "azureprivatedns.net",
+        //             "refreshTime": 3600,
+        //             "retryTime": 300,
+        //             "serialNumber": 1,
+        //             "minimumTtl": 10
+        //         }
+        //     }
+        // },
+        // {
+        //     "type": "Microsoft.Network/privateDnsZones/SOA",
+        //     "apiVersion": "2018-09-01",
+        //     "name": "[concat(parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'), '/@')]",
+        //     "dependsOn": [
+        //         "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'))]"
+        //     ],
+        //     "properties": {
+        //         "ttl": 3600,
+        //         "soaRecord": {
+        //             "email": "azureprivatedns-host.microsoft.com",
+        //             "expireTime": 2419200,
+        //             "host": "azureprivatedns.net",
+        //             "refreshTime": 3600,
+        //             "retryTime": 300,
+        //             "serialNumber": 1,
+        //             "minimumTtl": 10
+        //         }
+        //     }
+        // },
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2020-05-01",
@@ -718,24 +734,24 @@
                 }
             }
         },
-        // {
-        //     "type": "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections",
-        //     "apiVersion": "2018-06-01",
-        //     "name": "[concat(parameters('servers_crea_pg_name'), '/', parameters('servers_crea_pg_name'), '-5e68a1a5-e830-4054-9344-b7008ab2214a')]",
-        //     "dependsOn": [
-        //         "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]",
-        //         "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpoints_crea_pg_name'))]"
-        //     ],
-        //     "properties": {
-        //         "privateEndpoint": {
-        //             "id": "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpoints_crea_pg_name'))]"
-        //         },
-        //         "privateLinkServiceConnectionState": {
-        //             "status": "Approved",
-        //             "description": "Auto-approved"
-        //         }
-        //     }
-        // },
+        {
+            "type": "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections",
+            "apiVersion": "2018-06-01",
+            "name": "[concat(parameters('servers_crea_pg_name'), '/', parameters('servers_crea_pg_name'), '-5e68a1a5-e830-4054-9344-b7008ab2214a')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]",
+                "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpoints_crea_pg_name'))]"
+            ],
+            "properties": {
+                "privateEndpoint": {
+                    "id": "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpoints_crea_pg_name'))]"
+                },
+                "privateLinkServiceConnectionState": {
+                    "status": "Approved",
+                    "description": "Auto-approved"
+                }
+            }
+        },
         {
             "type": "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules",
             "apiVersion": "2017-12-01",
@@ -913,6 +929,44 @@
                 "accessTier": "TransactionOptimized",
                 "shareQuota": 5120,
                 "enabledProtocols": "SMB"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('networkInterfaces_ckan_vm195_name')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ckan_vm_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ckan_vm_nsg_name'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.1.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ckan_vm_ip_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableAcceleratedNetworking": false,
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ckan_vm_nsg_name'))]"
+                }
             }
         }
     ]

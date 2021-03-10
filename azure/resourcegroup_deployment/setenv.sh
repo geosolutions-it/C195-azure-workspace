@@ -25,8 +25,8 @@ SOLR_DOMAIN=privatelink.solr.azure.com
 REDIS_HOST=crea-test
 REDIS_NAME=crea-test
 SOLR_HOST=crea-solr
-PG_HOST=crea-pg
-PG_INSTANCE=crea-pgtest
+PG_HOST=creapostgresql
+PG_INSTANCE=creapostgresql
 CKAN_HOST=ckan-vmtest
 
 REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_NAME --query primaryKey)
@@ -40,11 +40,15 @@ CKAN_SITE_URL=http://${CKAN_HOST}.${VM_DOMAIN}:${CKAN_PORT}/
 REDIS_HOST_FULL=${REDIS_HOST}.${REDIS_DOMAIN}
 SOLR_HOST_FULL=${SOLR_HOST}.${SOLR_DOMAIN}
 PG_HOST_FULL=${PG_HOST}.${PG_DOMAIN}
-CKAN_PG_USER=geosolutions%40@${PG_INSTANCE}
 
-DATASTORE_RO_PG_USER=datastore_ro%40@${PG_INSTANCE}
+CKAN_PG_USER_PARTIAL=$(jq '.parameters.PostgreSQL_username.Value' ./parameters.json)
+CKAN_PG_USER=${CKAN_PG_USER_PARTIAL}%40${PG_INSTANCE}
+POSTGRES_PASSWORD=$(jq '.parameters.PostgreSQL_password.Value' ./parameters.json)
+
+DATASTORE_RO_PG_USER_PARTIAL=datastore_ro
+DATASTORE_RO_PG_USER=${DATASTORE_RO_PG_USER_PARTIAL}%40${PG_INSTANCE}
 DATASTORE_READONLY_PASSWORD=datastore
-POSTGRES_PASSWORD=S3cr3tP4ssw0rd
-DATASTORE_READONLY_PASSWORD=postgres
 
 CKAN_MAX_UPLOAD_SIZE_MB=5000
+
+CKAN_SHARE_MOUNT=/mnt/ckanshare

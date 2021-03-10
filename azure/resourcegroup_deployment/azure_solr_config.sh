@@ -19,5 +19,7 @@ az container create \
     --subnet default \
     --subnet-address-prefix 10.0.0.0/24 
 
-# Install docker on vm
+# Start ckan composition
+az vm run-command invoke -g ${RESOURCE_GROUP} -n ${CKAN_VM_NAME} --command-id RunShellScript --scripts @./postgres_datastore_provision.sh
+
 az vm run-command invoke -g ${RESOURCE_GROUP} -n ${CKAN_VM_NAME} --command-id RunShellScript --scripts @./az_start_ckan.sh --parameters $RESOURCE_GROUP $STORAGE_ACCOUNT_NAME $CKAN_SHARE_NAME $REGISTRY_NAME $REGISTRY_USERNAME $REGISTRY_PASSWORD $http_endpoint arg8=$STORAGE_KEY

@@ -13,7 +13,9 @@ sudo -u geosolutions rm -rf /home/geosolutions/C195-azure-workspace
 sudo -u geosolutions rm -rf /home/geosolutions/.docker
 sudo -u geosolutions git clone https://github.com/geosolutions-it/C195-azure-workspace.git /home/geosolutions/C195-azure-workspace
 cd /home/geosolutions/C195-azure-workspace 
+### Please remove me once merge is accepted!!!
 sudo -u geosolutions git checkout implementation1c
+###
 sudo -u geosolutions git submodule init && sudo -u geosolutions git submodule update
 
 resourceGroupName="$arg1"
@@ -64,3 +66,4 @@ else
 fi
 
 sudo mount -a
+
