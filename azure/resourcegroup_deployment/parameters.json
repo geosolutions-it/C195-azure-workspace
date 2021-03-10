@@ -53,18 +53,6 @@
         "networkSecurityGroups_ckan_vm_nsg_name": {
             "Value": "ckan-vm-nsg"
         },
-        // "privateDnsZones_privatelink_redis_cache_windows_net_name": {
-        //     "Value": "privatelink.redis.cache.windows.net"
-        // },
-        // "privateDnsZones_privatelink_postgres_database_azure_com_name": {
-        //     "Value": "privatelink.postgres.database.azure.com"
-        // },
-        // "networkInterfaces_crea_nic_2980809e_067b_47da_b39d_af39d736940d_name": {
-        //     "Value": "crea-test.nic.2980809e-067b-47da-b39d-af39d736940d"
-        // },
-        // "networkInterfaces_crea_pg_nic_cfb98417_90b9_41be_8ec2_ec3f9d921a04_name": {
-        //     "Value": "crea-pg.nic.cfb98417-90b9-41be-8ec2-ec3f9d921a04"
-        // },
         "networkProfiles_aci_network_profile_privnet01_default_externalid": {
             "Value": "/subscriptions/[parameters('AzureSubscriptionID')]/resourceGroups/[parameters('ResourceGroup')]/providers/Microsoft.Network/networkProfiles/aci-network-profile-privnet01-default"
         }

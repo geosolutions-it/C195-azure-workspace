@@ -41,7 +41,7 @@ sudo -u geosolutions docker tag crearegistry.azurecr.io/crea_ckan ${registryName
 sudo -u geosolutions docker tag crearegistry.azurecr.io/crea_ckan_solr ${registryName}.azurecr.io/crea_ckan_solr
 sudo -u geosolutions docker push ${registryName}.azurecr.io/crea_ckan
 sudo -u geosolutions docker push ${registryName}.azurecr.io/crea_ckan_solr
-sudo -u geosolutions docker-compose -f docker-compose.yml --env-file .env.sample pull ckan ckan_solr
+sudo -u geosolutions docker-compose -f docker-compose.yml --env-file .env.sample pull ckan
 
 # mount ckan share
 

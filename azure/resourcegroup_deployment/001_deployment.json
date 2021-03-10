@@ -78,10 +78,10 @@
             "defaultValue": "privatelink.postgres.database.azure.com",
             "type": "String"
         },
-        "networkInterfaces_crea_nic_2980809e_067b_47da_b39d_af39d736940d_name": {
-            "defaultValue": "crea-test.nic.2980809e-067b-47da-b39d-af39d736940d",
-            "type": "String"
-        },
+        // "networkInterfaces_crea_nic_2980809e_067b_47da_b39d_af39d736940d_name": {
+        //     "defaultValue": "crea-test.nic.2980809e-067b-47da-b39d-af39d736940d",
+        //     "type": "String"
+        // },
         // "networkInterfaces_crea_pg_nic_cfb98417_90b9_41be_8ec2_ec3f9d921a04_name": {
         //     "defaultValue": "crea-pg-test.nic.cfb98417-90b9-41be-8ec2-ec3f9d921a04",
         //     "type": "String"
@@ -445,36 +445,36 @@
                 "retentionDays": 0
             }
         },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2020-05-01",
-            "name": "[parameters('networkInterfaces_crea_nic_2980809e_067b_47da_b39d_af39d736940d_name')]",
-            "location": "westeurope",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
-            ],
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "redisCache-redisCache.privateEndpoint",
-                        "properties": {
-                            "privateIPAddress": "10.0.1.5",
-                            "privateIPAllocationMethod": "Dynamic",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
-                },
-                "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false
-            }
-        },
+        // {
+        //     "type": "Microsoft.Network/networkInterfaces",
+        //     "apiVersion": "2020-05-01",
+        //     "name": "[parameters('networkInterfaces_crea_nic_2980809e_067b_47da_b39d_af39d736940d_name')]",
+        //     "location": "westeurope",
+        //     "dependsOn": [
+        //         "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
+        //     ],
+        //     "properties": {
+        //         "ipConfigurations": [
+        //             {
+        //                 "name": "redisCache-redisCache.privateEndpoint",
+        //                 "properties": {
+        //                     "privateIPAddress": "10.0.1.5",
+        //                     "privateIPAllocationMethod": "Dynamic",
+        //                     "subnet": {
+        //                         "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
+        //                     },
+        //                     "primary": true,
+        //                     "privateIPAddressVersion": "IPv4"
+        //                 }
+        //             }
+        //         ],
+        //         "dnsSettings": {
+        //             "dnsServers": []
+        //         },
+        //         "enableAcceleratedNetworking": false,
+        //         "enableIPForwarding": false
+        //     }
+        // },
         // {
         //     "type": "Microsoft.Network/networkInterfaces",
         //     "apiVersion": "2020-05-01",
@@ -549,22 +549,22 @@
                 "destinationAddressPrefixes": []
             }
         },
-        // {
-        //     "type": "Microsoft.Network/privateDnsZones/A",
-        //     "apiVersion": "2018-09-01",
-        //     "name": "[concat(parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'), '/crea')]",
-        //     "dependsOn": [
-        //         "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'))]"
-        //     ],
-        //     "properties": {
-        //         "ttl": 3600,
-        //         "aRecords": [
-        //             {
-        //                 "ipv4Address": "10.0.1.5"
-        //             }
-        //         ]
-        //     }
-        // },
+        {
+            "type": "Microsoft.Network/privateDnsZones/A",
+            "apiVersion": "2018-09-01",
+            "name": "[concat(parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'), '/crea')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'))]"
+            ],
+            "properties": {
+                "ttl": 3600,
+                "aRecords": [
+                    {
+                        "ipv4Address": "10.0.1.6"
+                    }
+                ]
+            }
+        },
         // {
         //     "type": "Microsoft.Network/privateDnsZones/A",
         //     "apiVersion": "2018-09-01",
