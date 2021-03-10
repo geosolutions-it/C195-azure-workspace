@@ -6,6 +6,7 @@ REGISTRY_PASSWORD=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_N
 
 STORAGE_ACCOUNT_NAME=creastorage01test
 STORAGE_KEY=$(az storage account keys list -g $RESOURCE_GROUP -n $STORAGE_ACCOUNT_NAME --query [1].value | tr -d '"')
+httpEndpoint=https://creastorage01test.file.core.windows.net/
 
 SOLR_SHARE_NAME=solrshare
 PG_SHARE_NAME=pgshare
