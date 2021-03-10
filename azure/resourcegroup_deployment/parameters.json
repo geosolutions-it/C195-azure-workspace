@@ -54,7 +54,7 @@
             "Value": "ckan-vm-nsg"
         },
         "networkProfiles_aci_network_profile_privnet01_default_externalid": {
-            "Value": "/subscriptions/1cd0a26f-1c2a-48fb-9db5-c5be98e7603b/resourceGroups/CREA_TEST_DEPLOY/providers/Microsoft.Network/networkProfiles/aci-network-profile-privnet01-default"
+            "Value": "/subscriptions/1cd0a26f-1c2a-48fb-9db5-c5be98e7603b/resourceGroups/CREA_TEST_DEPLOYMENT/providers/Microsoft.Network/networkProfiles/aci-network-profile-privnet01-default"
         }
     }
 }    

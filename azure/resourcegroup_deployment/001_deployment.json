@@ -734,24 +734,24 @@
                 }
             }
         },
-        {
-            "type": "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections",
-            "apiVersion": "2018-06-01",
-            "name": "[concat(parameters('servers_crea_pg_name'), '/', parameters('servers_crea_pg_name'), '-5e68a1a5-e830-4054-9344-b7008ab2214a')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]",
-                "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpoints_crea_pg_name'))]"
-            ],
-            "properties": {
-                "privateEndpoint": {
-                    "id": "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpoints_crea_pg_name'))]"
-                },
-                "privateLinkServiceConnectionState": {
-                    "status": "Approved",
-                    "description": "Auto-approved"
-                }
-            }
-        },
+        // {
+        //     "type": "Microsoft.DBforPostgreSQL/servers/privateEndpointConnections",
+        //     "apiVersion": "2018-06-01",
+        //     "name": "[concat(parameters('servers_crea_pg_name'), '/', parameters('servers_crea_pg_name'), '-5e68a1a5-e830-4054-9344-b7008ab2214a')]",
+        //     "dependsOn": [
+        //         "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]",
+        //         "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpoints_crea_pg_name'))]"
+        //     ],
+        //     "properties": {
+        //         "privateEndpoint": {
+        //             "id": "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpoints_crea_pg_name'))]"
+        //         },
+        //         "privateLinkServiceConnectionState": {
+        //             "status": "Approved",
+        //             "description": "Auto-approved"
+        //         }
+        //     }
+        // },
         {
             "type": "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules",
             "apiVersion": "2017-12-01",
