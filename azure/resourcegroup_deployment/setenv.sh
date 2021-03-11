@@ -18,8 +18,8 @@ CKAN_IMAGE=crea_ckan:latest
 
 SOLR_CONTAINER_NAME=solr-container-test
 WE_DOMAIN=westeurope.azurecontainer.io
-REDIS_DOMAIN=redis.cache.windows.net
-PG_DOMAIN=privatelink.postgres.azure.com
+REDIS_DOMAIN=privatelink.redis.cache.windows.net
+PG_DOMAIN=privatelink.postgres.database.azure.com
 VM_DOMAIN=westeurope.cloudapp.azure.com
 SOLR_DOMAIN=privatelink.solr.azure.com
 
@@ -40,8 +40,7 @@ CKAN_SITE_URL=http://${CKAN_HOST}.${VM_DOMAIN}:${CKAN_PORT}/
 
 REDIS_HOST_FULL=${REDIS_HOST}.${REDIS_DOMAIN}
 SOLR_HOST_FULL=${SOLR_HOST}.${SOLR_DOMAIN}
-#PG_HOST_FULL=${PG_HOST}.${PG_DOMAIN}
-PG_HOST_FULL=10.0.1.6
+PG_HOST_FULL=${PG_HOST}.${PG_DOMAIN}
 CKAN_PG_USER_PARTIAL=$(jq '.parameters.PostgreSQL_username.Value' ./parameters.json)
 CKAN_PG_USER=${CKAN_PG_USER_PARTIAL}%40${PG_INSTANCE}
 POSTGRES_PASSWORD=$(jq '.parameters.PostgreSQL_password.Value' ./parameters.json)

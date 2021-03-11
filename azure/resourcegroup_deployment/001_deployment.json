@@ -15,7 +15,7 @@
             "type": "String"
         },
         "privateEndpoints_crea_name": {
-            "defaultValue": "crea",
+            "defaultValue": "crea-test",
             "type": "String"
         },
         "virtualMachines_ckan_vm_name": {
