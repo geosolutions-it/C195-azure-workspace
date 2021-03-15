@@ -26,6 +26,7 @@ RUN apt-get -q -y update \
         git-core \
         vim \
         wget \
+        gdb python3-dbg \
     && apt-get -q clean \
     && rm -rf /var/lib/apt/lists/*
 
