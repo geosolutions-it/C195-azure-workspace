@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "ResourceGroup": {
+            "Value": "CREA_TEST_DEPLOY"
+        },
+        "AzureSubscriptionID": {
+            "Value": "1cd0a26f-1c2a-48fb-9db5-c5be98e7603b"
+        },                   
+        "Redis_crea_name": {
+            "Value": "crea-test"
+        },
+        "privateEndpoints_crea_name": {
+            "Value": "crea-test"
+        },
+        "virtualMachines_ckan_vm_name": {
+            "Value": "ckan-vmtest"
+        },
+        "virtualMachines_ckan_vm_username": {
+            "Value": "geosolutions"
+        },        
+        "virtualMachines_ckan_vm_password": {
+            "Value": "S3cre3tP4ssw0rd"
+        },
+        "PostgreSQL_username": {
+            "Value": "ckan"
+        },        
+        "PostgreSQL_password": {
+            "Value": "S3cre3tP4ssw0rd"
+        },              
+        "servers_crea_pg_name": {
+            "Value": "creapostgresql"
+        },
+        "privateEndpoints_crea_pg_name": {
+            "Value": "creapostgresql"
+        },
+        "virtualNetworks_privnet01_name": {
+            "Value": "privnet01"
+        },
+        "networkInterfaces_ckan_vm195_name": {
+            "Value": "ckan-vm195"
+        },
+        "publicIPAddresses_ckan_vm_ip_name": {
+            "Value": "ckan-vm-ip"
+        },
+        "storageAccounts_creastorage01_name": {
+            "Value": "creastorage01test"
+        },
+        "registries_crearegistry_name": {
+            "Value": "crearegistrytest"
+        },
+        "networkSecurityGroups_ckan_vm_nsg_name": {
+            "Value": "ckan-vm-nsg"
+        },
+        "networkProfiles_aci_network_profile_privnet01_default_externalid": {
+            "Value": "/subscriptions/1cd0a26f-1c2a-48fb-9db5-c5be98e7603b/resourceGroups/CREA_TEST_DEPLOYMENT/providers/Microsoft.Network/networkProfiles/aci-network-profile-privnet01-default"
+        }
+    }
+}    
