@@ -166,3 +166,23 @@ deploy a cotainer on private network for solr mounting a smb share for persisten
 ```bash
 ./azure_solr_config.sh
 ```
+
+## Restart ckan on failures
+
+To ensure ckan is alyways respondig, in the ckan vm should be created such a script named `check_ckan_alive.sh`:
+
+```bash
+#!/bin/bash
+date=$(date '+%Y-%m-%d %H:%M:%S')
+response="$(curl -I -s http://localhost:5000/ --max-time 10 --connect-timeout 10 | head -1 | tr -d '\r')"
+if [ "$response" != 'HTTP/1.0 200 OK' ]; then 
+        docker restart ckan
+	echo "$date - restarted ckan because it was stuck" >> $HOME/ckan_restart_log
+fi
+```
+
+and a subsequent cron job with a user which can handle docker restarts as this:
+
+```
+* * * * * $HOME/check_ckan_alive.sh
+```
