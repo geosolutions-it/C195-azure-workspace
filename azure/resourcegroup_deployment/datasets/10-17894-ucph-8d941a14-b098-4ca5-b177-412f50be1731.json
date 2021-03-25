@@ -1,0 +1,52 @@
+{
+  "name": "10-17894-ucph-8d941a14-b098-4ca5-b177-412f50be1731",
+  "title": "Meteorological site-level data from the CLIMAITE project at Brandbjerg, Denmark, from 1 October 2005 to 31 December 2013 V.3",
+  "notes": "This dataset provides site-level, meteorological data from the climate change experimental platform CLIMAITE – part of the Danish Research Infrastructure AnaEE Denmark. The site is situated at Brandbjerg, Jægerspris, Northern Zealand in Denmark in a heatland/shrubland ecosystem co-dominated by the heather, Calluna Vulgaris, and the grass, Deschampsia flexuosa. \r\n\r\nThe data set covers precipitation (P), calculated precipitation in drought treatments (P_drought), Photosynthetic Active Radiation (PAR), Air temperature (TA), Relative Humidity (RH), potential radiation (Gpot) and Wind Speed (WS) for the period 20051010 to 20131231. The time resolution is hourly with min, mean, max and standard deviation of the data for each hour.\r\n \r\nThe dataset is supplemented by a metadata file with similar filename. This file gives information about units, sensors, logging intervals and data quality assurance procedures for the dataset.",
+  "owner_org": "anaee-denmark",
+  "tags": [
+    {
+      "name": "AnaEE Denmark"
+    },
+    {
+      "name": "Brandbjerg"
+    },
+    {
+      "name": "CLIMAITE"
+    },
+    {
+      "name": "Climate change experiment"
+    },
+    {
+      "name": "Denmark"
+    },
+    {
+      "name": "INCREASE EU project"
+    },
+    {
+      "name": "Meteorological data"
+    }
+  ],
+  "resources": [
+    {
+      "name": "BRANDBJERG 20051001 20131231 HOURLY.csv",
+      "description": "Data variable names and data files were created following a structure similar to the ICOS project (https://www.icos-ri.eu/), with some additions when needed. The ICOS meta-data standards are described at https://meta.icos-cp.eu/resources/cpmeta/atcMeteoTimeSer. Table-driven variable codes (GRIB codes) are provided for each data variable according to WMO guidelines of variable codes (https://public.wmo.int/en). For more information on variable codes of WMO, see https://www.wmo.int/pages/prog/www/WMOCodes/WMO306_vI2/LatestVERSION/LatestVERSION.html.",
+      "url": "https://erda.ku.dk/public/archives/ad280f6ee8ad89643c7e1f8d2909eb51/AnaEE_DK/Brandbjerg/BRANDBJERG%2020051001%2020131231%20HOURLY.csv",
+      "format": "CSV"
+    },
+    {
+      "name": "BRANDBJERG REF METADATA 20051001 20131231 HOURLY.csv",
+      "description": "Data variable names and data files were created following a structure similar to the ICOS project (https://www.icos-ri.eu/), with some additions when needed. The ICOS meta-data standards are described at https://meta.icos-cp.eu/resources/cpmeta/atcMeteoTimeSer. Table-driven variable codes (GRIB codes) are provided for each data variable according to WMO guidelines of variable codes (https://public.wmo.int/en). For more information on variable codes of WMO, see https://www.wmo.int/pages/prog/www/WMOCodes/WMO306_vI2/LatestVERSION/LatestVERSION.html.",
+      "url": "https://erda.ku.dk/public/archives/ad280f6ee8ad89643c7e1f8d2909eb51/AnaEE_DK/Brandbjerg/BRANDBJERG%20REF%20METADATA%2020051001%2020131231%20HOURLY.csv",
+      "format": "CSV"
+    }
+  ],
+  "author": "Simon Fiil Svane, Jesper Svensgaard and Carsten Tilbæk Petersen",
+  "url": "https://doi.org/10.17894/ucph.8d941a14-b098-4ca5-b177-412f50be1731",
+  "extras": [
+    {
+      "key": "DOI_URL",
+      "value": "\thttps://doi.org/10.17894/ucph.8d941a14-b098-4ca5-b177-412f50be1731"
+    }
+  ],
+  "license_id": "cc-by"
+}
