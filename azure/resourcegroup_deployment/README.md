@@ -3,12 +3,17 @@
 Prerequisites
 
 - command line terminal with bash
-- configured and logged in az cli
-- jq tool for parsing json
+- configured and logged in `az` cli
+- `jq` tool for parsing json
 
-## Customize parameters.json to suit your needs, username/password are identical for vm and prostgres instance.
+## Customize parameters
 
-Any of the external resource parameters should be customized in `parameters.json` to be sure they are not used anywhere else in Azure from other users.
+Customize `parameters.json` to suit your needs.
+
+username/password are identical for vm and prostgres instance.
+
+Many of the external resource parameters **must be customized** in `parameters.json` to be sure they are not used anywhere else in Azure by other users.
+
 Here is a list:
 
 - ResourceGroup
@@ -18,27 +23,27 @@ Here is a list:
 - privateEndpoints_crea_pg_name (please put this the same of servers_crea_pg_name)
 - storageAccounts_creastorage01_name
 - registries_crearegistry_name
-- networkProfiles_aci_network_profile_privnet01_default_externalid (please updated it to your subscription and resource group)
+- networkProfiles_aci_network_profile_privnet01_default_externalid (please update it to your subscription and resource group)
 
-## Configure environment on Azure ckan vm
+## Configure environment on Azure CKAN VM
 
 - on the installation machine run:
 ```bash
 ./azure_config_env.sh
 ```
-- copy resulting C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env on the very same directory on the ckan-vm 
+- copy resulting `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env` on the very same directory on the ckan-vm 
 
 ## Deploy solr azure container, start ckan container on vm.
 
-deploy a container on private network for solr mounting a smb share for persistent solr data and start ckan docker container.
+Deploy a container on private network for Solr mounting a SMB share for persistent solr data and start CKAN docker container.
 
 ```bash
 ./azure_solr_config.sh
 ```
 
-## Restart ckan on failures
+## Restart CKAN on failures
 
-To ensure ckan is alyways respondig, in the ckan vm should be created such a script named `check_ckan_alive.sh`:
+To ensure CKAN is alyways respondig, in the CKAN vm should be created such a script named `check_ckan_alive.sh`:
 
 ```bash
 #!/bin/bash
@@ -52,6 +57,6 @@ fi
 
 and a subsequent cron job with a user which can handle docker restarts as this:
 
-```
-* * * * * $HOME/check_ckan_alive.sh
+
+    * * * * * $HOME/check_ckan_alive.sh
 
