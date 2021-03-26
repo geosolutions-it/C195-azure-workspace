@@ -25,13 +25,21 @@ Here is a list:
 - registries_crearegistry_name
 - networkProfiles_aci_network_profile_privnet01_default_externalid (please update it to your subscription and resource group)
 
-## Configure environment on Azure CKAN VM
+## Configure environment on Azure CKAN VM, build docker images
 
 - on the installation machine run:
+
 ```bash
 ./azure_config_env.sh
 ```
+
 - copy resulting `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env` on the very same directory on the ckan-vm 
+
+- start ckan,solr docker image building.
+
+```bash
+./azure_ckan_vm_config.sh
+```
 
 ## Deploy solr azure container, start ckan container on vm.
 
@@ -57,6 +65,6 @@ fi
 
 and a subsequent cron job with a user which can handle docker restarts as this:
 
-
-    * * * * * $HOME/check_ckan_alive.sh
-
+```bash
+* * * * * $HOME/check_ckan_alive.sh
+```
