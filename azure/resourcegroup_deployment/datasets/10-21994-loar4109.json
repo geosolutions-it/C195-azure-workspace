@@ -1,0 +1,46 @@
+{
+  "name": "10-21994-loar4109",
+  "title": "Meteorological site-level data from agricultural fields at Foulum (Denmark) from 25 May 2018 to 31 December 2019",
+  "notes": "This dataset provides site-level, meteorological data from the agricultural research facilities at Foulum (Aarhus University) – part of the Danish Research Infrastructure AnaEE Denmark. The site is situated at Foulum, Central Jylland in Denmark in an agricultural field. The dataset covers Air Temperature (TA), Relative Humidity (RH), Wind Direction (WD), Wind Speed (WS), Precipitation (P), Soil heat flux (G), Air pressure (PA), Net shortwave radiation (NETRAD), Global Radiation (SW_IN), Soil Temperature under grass (TS_1_1), Soil temperature at 10 and 30 cm depth (TS_2_1 and TS_2_2, respectively) for the period 20180525 to 20191231. The time resolution is hourly and contains a data flag for each variable to indicate the quality of the data. The dataset is supplemented by a metadata file with similar filename. This file gives information about units, sensors, logging intervals and data quality assurance procedures for the dataset. This dataset is an update of the data set previously published (DOI: http://dx.doi.org/10.21994/loar4105). This dataset entails the full calendar year of 2019 and due to an issue with our software, the old dataset did not contain the correct precipitation data. The data is now is corrected and it resulted in 133 mm higher precipitation in the period 4 March to 31 December 2019.",
+  "owner_org": "aarhus-university",
+  "tags": [
+    {
+      "name": "Agriculture"
+    },
+    {
+      "name": "AnaEE"
+    },
+    {
+      "name": "AnaEE Denmark"
+    },
+    {
+      "name": "Foulum"
+    },
+    {
+      "name": "Meteorological data"
+    }
+  ],
+  "resources": [
+    {
+      "name": "FOULUM_20180525_20191231_HOURLY.csv",
+      "description": "Meteorological site-level data from agricultural fields at Foulum (Denmark) from 25 May 2018 to 31 December 2019",
+      "url": "https://loar.kb.dk/bitstream/1902/4296/1/FOULUM_20180525_20191231_HOURLY.csv",
+      "format": "CSV"
+    },
+    {
+      "name": "FOULUM_REF_METADATA_20180525_20191231_HOURLY.csv",
+      "description": "Metadata for the meteorological site-level data from agricultural fields at Foulum (Denmark) from 25 May 2018 to 31 December 2019",
+      "url": "https://loar.kb.dk/bitstream/1902/4296/2/FOULUM_REF_METADATA_20180525_20191231_HOURLY.csv",
+      "format": "CSV"
+    }
+  ],
+  "author": "Pullens, J.W.M. Kørup, K. Plauborg, F.",
+  "url": "http://dx.doi.org/10.21994/loar4109",
+  "extras": [
+    {
+      "key": "DOI_URL",
+      "value": "http://dx.doi.org/10.21994/loar4109"
+    }
+  ],
+  "license_id": ""
+}

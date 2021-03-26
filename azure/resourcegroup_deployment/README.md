@@ -8,161 +8,50 @@ Prerequisites
 
 ## Customize parameters.json to suit your needs, username/password are identical for vm and prostgres instance.
 
-```json
-{
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "ResourceGroup": {
-            "Value": "CREA_TEST_DEPLOY"
-        },
-        "AzureSubscriptionID": {
-            "Value": "1cd0a26f-1c2a-48fb-9db5-c5be98e7603b"
-        },                   
-        "Redis_crea_name": {
-            "Value": "crea-test"
-        },
-        "privateEndpoints_crea_name": {
-            "Value": "crea-test"
-        },
-        "virtualMachines_ckan_vm_name": {
-            "Value": "ckan-vmtest"
-        },
-        "virtualMachines_ckan_vm_username": {
-            "Value": "geosolutions"
-        },        
-        "virtualMachines_ckan_vm_password": {
-            "Value": "S3cre3tP4ssw0rd"
-        },
-        "PostgreSQL_username": {
-            "Value": "ckan"
-        },        
-        "PostgreSQL_password": {
-            "Value": "S3cre3tP4ssw0rd"
-        },              
-        "servers_crea_pg_name": {
-            "Value": "creapostgresql"
-        },
-        "privateEndpoints_crea_pg_name": {
-            "Value": "crea-pg"
-        },
-        "virtualNetworks_privnet01_name": {
-            "Value": "privnet01"
-        },
-        "networkInterfaces_ckan_vm195_name": {
-            "Value": "ckan-vm195"
-        },
-        "publicIPAddresses_ckan_vm_ip_name": {
-            "Value": "ckan-vm-ip"
-        },
-        "storageAccounts_creastorage01_name": {
-            "Value": "creastorage01test"
-        },
-        "registries_crearegistry_name": {
-            "Value": "crearegistrytest"
-        },
-        "networkSecurityGroups_ckan_vm_nsg_name": {
-            "Value": "ckan-vm-nsg"
-        },
-        "privateDnsZones_privatelink_redis_cache_windows_net_name": {
-            "Value": "privatelink.redis.cache.windows.net"
-        },
-        "privateDnsZones_privatelink_postgres_database_azure_com_name": {
-            "Value": "privatelink.postgres.database.azure.com"
-        },
-        "networkInterfaces_crea_nic_2980809e_067b_47da_b39d_af39d736940d_name": {
-            "Value": "[parameters('Redis_crea_name')].nic.2980809e-067b-47da-b39d-af39d736940d"
-        },
-        "networkInterfaces_crea_pg_nic_cfb98417_90b9_41be_8ec2_ec3f9d921a04_name": {
-            "Value": "[parameters('servers_crea_pg_name')].nic.cfb98417-90b9-41be-8ec2-ec3f9d921a04"
-        },
-        "networkProfiles_aci_network_profile_privnet01_default_externalid": {
-            "Value": "/subscriptions/[parameters('AzureSubscriptionID')]/resourceGroups/[parameters('ResourceGroup')]/providers/Microsoft.Network/networkProfiles/aci-network-profile-privnet01-default"
-        }
-    }
-} 
-```
+Any of the external resource parameters should be customized in `parameters.json` to be sure they are not used anywhere else in Azure from other users.
+Here is a list:
 
-## Desktop environment configuration
+- ResourceGroup
+- AzureSubscriptionID
+- Redis_crea_name
+- servers_crea_pg_name
+- privateEndpoints_crea_pg_name (please put this the same of servers_crea_pg_name)
+- storageAccounts_creastorage01_name
+- registries_crearegistry_name
+- networkProfiles_aci_network_profile_privnet01_default_externalid (please updated it to your subscription and resource group)
 
-Edit azure/resourcegroup_deployment/setenv.sh accordingly to your parameters.json, most of the secrets are automatically taken from the azure resources, which will be deployed later
+## Configure environment on Azure ckan vm
 
+- on the installation machine run:
 ```bash
-# you can customize this one
-RESOURCE_GROUP=CREA_TEST_DEPLOY
-
-REGISTRY_NAME=crearegistrytest
-REGISTRY_USERNAME=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query username)
-REGISTRY_PASSWORD=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query passwords[1].value)
-
-STORAGE_ACCOUNT_NAME=creastorage01test
-STORAGE_KEY=$(az storage account keys list -g $RESOURCE_GROUP -n $STORAGE_ACCOUNT_NAME --query [1].value | tr -d '"')
-
-SOLR_SHARE_NAME=solrshare
-PG_SHARE_NAME=pgshare
-CKAN_SHARE_NAME=ckanshare
-
-SOLR_IMAGE=crea_ckan_solr:latest
-PG_IMAGE=crea_ckan_db:latest
-CKAN_IMAGE=crea_ckan:latest
-
-SOLR_CONTAINER_NAME=solr-container-test
-WE_DOMAIN=westeurope.azurecontainer.io
-REDIS_DOMAIN=redis.cache.windows.net
-PG_DOMAIN=privatelink.postgres.azure.com
-
-REDIS_NAME=crea-test
-REDIS_HOST=crea
-SOLR_HOST=crea-solr
-PG_HOST=crea-pg
-CKAN_HOST=crea-ckan
-
-REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_NAME --query primaryKey)
-
-CKAN_VM_NAME=ckan-vmtest
-CKAN_VM_USER=geosolutions
-CKAN_URL=http://${CKAN_HOST}.${WE_DOMAIN}:5000/
-
-REDIS_HOST_FULL=${REDIS_HOST}.${REDIS_DOMAIN}
-SOLR_HOST_FULL=${SOLR_HOST}.privatelink.solr.azure.com
-PG_HOST_FULL=${PG_HOST}.${WE_DOMAIN}
-
-DATASTORE_READONLY_PASSWORD=datastore
-POSTGRES_PASSWORD=postgres
-DATASTORE_READONLY_PASSWORD=postgres
-CKAN_VM_PASSWORD=password
-
-http_endpoint=$(az storage account show --resource-group $RESOURCE_GROUP --name $STORAGE_ACCOUNT_NAME --query "primaryEndpoints.file" | tr -d '"')
-
+./azure_config_env.sh
 ```
-
-## Deploy most part of resources
-
-```bash
-export RESOURCE_GROUP=YourResourceGroup
-# deploy most of resources (file share, registry private networking records, private docker registry, postgres, redis, ckan-vm)
-az deployment group create --resource-group $RESOURCE_GROUP --template-file ./001_deployment.json --parameters @./parameters.json --mode Complete --confirm-with-what-if
-```
-
-## ckan VM preparation
-
-Configure resources, build and upload default ckan and solr images to registry.
-
-```bash
-./azure_ckan_vm_config.sh
-```
-
-## Customize azure/resourcegroup_deployment/setenv.sh
-
-You should use same setenv.sh that you edited locally in the step above.
-
-- connect via ssh to the ckan vm
-- edit azure/resourcegroup_deployment/setenv.sh and copy it to azure/resourcegroup_deployment/.env
+- copy resulting C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env on the very same directory on the ckan-vm 
 
 ## Deploy solr azure container, start ckan container on vm.
 
-deploy a cotainer on private network for solr mounting a smb share for persistent solr data and start ckan docker container.
+deploy a container on private network for solr mounting a smb share for persistent solr data and start ckan docker container.
 
 ```bash
 ./azure_solr_config.sh
 ```
+
+## Restart ckan on failures
+
+To ensure ckan is alyways respondig, in the ckan vm should be created such a script named `check_ckan_alive.sh`:
+
+```bash
+#!/bin/bash
+date=$(date '+%Y-%m-%d %H:%M:%S')
+response="$(curl -I -s http://localhost:5000/ --max-time 10 --connect-timeout 10 | head -1 | tr -d '\r')"
+if [ "$response" != 'HTTP/1.0 200 OK' ]; then 
+        docker restart ckan
+	echo "$date - restarted ckan because it was stuck" >> $HOME/ckan_restart_log
+fi
+```
+
+and a subsequent cron job with a user which can handle docker restarts as this:
+
+```
+* * * * * $HOME/check_ckan_alive.sh
+
