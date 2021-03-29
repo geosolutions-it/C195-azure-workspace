@@ -1,6 +1,6 @@
-RESOURCE_GROUP=$(jq '.parameters.ResourceGroup.Value' ./parameters.json)
+RESOURCE_GROUP=$(jq '.parameters.ResourceGroup.Value' ./parameters.json | tr -d '"')
 
-REGISTRY_NAME=$(jq '.parameters.registries_crearegistry_name.Value' ./parameters.json)
+REGISTRY_NAME=$(jq '.parameters.registries_crearegistry_name.Value' ./parameters.json | tr -d '"')
 REGISTRY_USERNAME=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query username | tr -d '"')
 REGISTRY_PASSWORD=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query passwords[1].value | tr -d '"')
 
