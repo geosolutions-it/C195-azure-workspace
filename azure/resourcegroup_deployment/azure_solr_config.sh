@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
+set -x
 source ./setenv.sh
-set -x 
-# az network private-dns record-set a add-record -g $RESOURCE_GROUP -z $SOLR_DOMAIN --ipv4-address 10.0.0.4 --record-set-name $SOLR_HOST
+az network private-dns record-set a add-record -g $RESOURCE_GROUP -z $SOLR_DOMAIN --ipv4-address 10.0.0.4 --record-set-name $SOLR_HOST
 # solr container
 az container create \
     --resource-group $RESOURCE_GROUP \

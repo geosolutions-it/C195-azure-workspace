@@ -1,9 +1,11 @@
 #!/bin/bash
 
+#!/usr/bin/env bash
+set -x
 . ./setenv.sh
-
-export PGPASSWORD=POSTGRES_PASSWORD
-CKAN_APIKEY=$(psql -t -A -X -U ${CKAN_PG_USER_PARTIAL}@${CKAN_PG_INSTANCE} -h ${PG_HOST_FULL} ckan -c "select apikey from \"user\" where name='admin';")
+CKAN_HOST_FULL=${CKAN_VM_NAME}.${VM_DOMAIN}
+export PGPASSWORD=$POSTGRES_PASSWORD
+CKAN_APIKEY=$(psql -t -A -X -U ${CKAN_PG_USER_PARTIAL}@${PG_INSTANCE} -h ${PG_HOST_FULL} ckan -c "select apikey from \"user\" where name='admin';")
 NEW_JSON=/tmp/load_org.json
 
 for json in orgs/* ; do
