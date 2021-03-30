@@ -13,12 +13,20 @@ sudo -u geosolutions rm -rf /home/geosolutions/C195-azure-workspace
 sudo -u geosolutions rm -rf /home/geosolutions/.docker
 sudo -u geosolutions git clone https://github.com/geosolutions-it/C195-azure-workspace.git /home/geosolutions/C195-azure-workspace
 cd /home/geosolutions/C195-azure-workspace 
+
+### remove this before merging to master
 sudo -u geosolutions git checkout environment-fixes
+###
+
 sudo -u geosolutions git submodule init && sudo -u geosolutions git submodule update
+
+### remove this when submodule is ok
 cd /home/geosolutions/C195-azure-workspace/ckan-docker/ckan_copy
 sudo -u geosolutions git pull
 sudo -u geosolutions git checkout c195-luca
 cd /home/geosolutions/C195-azure-workspace
+###
+
 resourceGroupName="$arg1"
 storageAccountName="$arg2"
 fileShareName="$arg3"

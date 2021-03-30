@@ -38,10 +38,10 @@ Here is a partial list:
 - on the installation machine run:
 
 ```bash
-./azure_config_env.sh
+./az_config_env.sh
 ```
 
-- copy resulting `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env` on the very same directory on the ckan-vm 
+- copy resulting `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env` on the very same directory on the ckan-vm (a command to do that is echoed from previous script)
 
 ## Deploy solr azure container, start ckan container on vm.
 
@@ -49,6 +49,14 @@ Deploy a container on private network for Solr mounting a SMB share for persiste
 
 ```bash
 ./azure_solr_config.sh
+```
+
+## Provision initial data to ckan
+
+- make at least a login ad admin, got to admin user properties, regenerate api key
+- run this script:
+```bash
+./000_provision_initial_data.sh
 ```
 
 ## Restart CKAN on failures
