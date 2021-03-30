@@ -103,7 +103,7 @@ echo "Initting DB..."
 ckan --config "$CONFIG_INI" db init
 
 echo "Adding admin user"
-ckan -c /etc/ckan/default/ckan.ini sysadmin add admin email=admin@localhost name=admin
+ckan -c "$CONFIG_INI" sysadmin add admin email=admin@localhost name=admin password=admin
 
 
 echo 'Running command --> ' $@
