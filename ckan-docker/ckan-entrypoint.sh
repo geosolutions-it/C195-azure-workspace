@@ -102,5 +102,10 @@ source $CKAN_VENV/bin/activate
 echo "Initting DB..."
 ckan --config "$CONFIG_INI" db init
 
+echo "Adding admin user"
+ckan -c /etc/ckan/default/ckan.ini sysadmin add admin email=admin@localhost name=admin
+
+
 echo 'Running command --> ' $@
 exec "$@"
+
