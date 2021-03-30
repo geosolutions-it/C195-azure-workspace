@@ -55,6 +55,7 @@ Deploy a container on private network for Solr mounting a SMB share for persiste
 
 - make at least a login ad admin, got to admin user properties, regenerate api key
 - run this script:
+
 ```bash
 ./000_provision_initial_data.sh
 ```
