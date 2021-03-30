@@ -14,7 +14,7 @@ username/password are identical for vm and prostgres instance.
 
 Many of the external resource parameters **must be customized** in `parameters.json` to be sure they are not used anywhere else in Azure by other users.
 
-Here is a list:
+Here is a partial list:
 
 - ResourceGroup
 - AzureSubscriptionID
