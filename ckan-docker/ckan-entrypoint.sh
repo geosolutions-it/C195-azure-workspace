@@ -62,11 +62,11 @@ fi
 
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins c195
 
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_size 10
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.echo_pool True
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_pre_ping True
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_reset_on_return rollback
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_timeout 30
+# crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_size 10
+# crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.echo_pool True
+# crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_pre_ping True
+# crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_reset_on_return rollback
+# crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_timeout 30
 
 crudini --set --verbose ${CONFIG_INI} DEFAULT debug True
 
@@ -102,8 +102,8 @@ source $CKAN_VENV/bin/activate
 echo "Initting DB..."
 ckan --config "$CONFIG_INI" db init
 
-echo "Adding admin user"
-ckan -c "$CONFIG_INI" sysadmin add admin email=admin@localhost name=admin password=admin
+# echo "Adding admin user"
+# ckan -c "$CONFIG_INI" sysadmin add admin email=admin@localhost name=admin password=admin
 
 
 echo 'Running command --> ' $@
