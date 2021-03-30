@@ -14,7 +14,7 @@ for json in orgs/* ; do
   sed -e s=__SERVER__=${CKAN_HOST_FULL}=g $json > $NEW_JSON
   curl ${CKAN_HOST_FULL}:${CKAN_PORT}/api/3/action/organization_create \
       --data @$NEW_JSON  -H "Content-Type:application/json" \
-      -H "Authorization:${APIKEY}"
+      -H "Authorization:${CKAN_APIKEY}"
 done
 
 for JSON in ./datasets/* ; do
