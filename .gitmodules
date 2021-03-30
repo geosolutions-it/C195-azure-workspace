@@ -1,4 +1,4 @@
 [submodule "ckan-docker/ckan_copy"]
 	path = ckan-docker/ckan_copy
-	url = https://github.com/ckan/ckan.git
-	branch = master
+	url = https://github.com/geosolutionsit/ckan.git
+	branch = c195-luca
