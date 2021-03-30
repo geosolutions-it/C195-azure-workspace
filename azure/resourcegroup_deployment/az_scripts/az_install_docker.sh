@@ -15,6 +15,9 @@ sudo -u geosolutions git clone https://github.com/geosolutions-it/C195-azure-wor
 cd /home/geosolutions/C195-azure-workspace 
 sudo -u geosolutions git checkout environment-fixes
 sudo -u geosolutions git submodule init && sudo -u geosolutions git submodule update
+cd /home/geosolutions/C195-azure-workspace/ckan-docker/ckan_copy
+sudo -u geosolutions git pull
+sudo -u geosolutions git checkout c195-luca
 
 resourceGroupName="$arg1"
 storageAccountName="$arg2"
