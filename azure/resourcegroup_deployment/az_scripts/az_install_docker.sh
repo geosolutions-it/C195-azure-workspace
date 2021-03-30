@@ -13,9 +13,7 @@ sudo -u geosolutions rm -rf /home/geosolutions/C195-azure-workspace
 sudo -u geosolutions rm -rf /home/geosolutions/.docker
 sudo -u geosolutions git clone https://github.com/geosolutions-it/C195-azure-workspace.git /home/geosolutions/C195-azure-workspace
 cd /home/geosolutions/C195-azure-workspace 
-### Please remove me once merge is accepted!!!
-sudo -u geosolutions git checkout implementation1c
-###
+sudo -u geosolutions git checkout environment-fixes
 sudo -u geosolutions git submodule init && sudo -u geosolutions git submodule update
 
 resourceGroupName="$arg1"
@@ -41,8 +39,8 @@ sudo -u geosolutions docker tag crearegistry.azurecr.io/crea_ckan ${registryName
 sudo -u geosolutions docker tag crearegistry.azurecr.io/crea_ckan_solr ${registryName}.azurecr.io/crea_ckan_solr
 sudo -u geosolutions docker push ${registryName}.azurecr.io/crea_ckan
 sudo -u geosolutions docker push ${registryName}.azurecr.io/crea_ckan_solr
-sudo -u geosolutions docker-compose -f docker-compose.yml --env-file .env.sample pull ckan
-
+sudo -u geosolutions docker pull ${registryName}.azurecr.io/crea_ckan || echo "problem pulling from registry"
+sudo -u geosolutions docker pull ${registryName}.azurecr.io/crea_ckan_solr || echo "problem pulling from registry"
 # mount ckan share
 
 sudo mkdir -p $mntPath

@@ -226,6 +226,21 @@
         {
             "type": "Microsoft.Network/privateDnsZones",
             "apiVersion": "2018-09-01",
+            "name": "privatelink.solr.azure.com",
+            "location": "global",
+            "properties": {
+                "maxNumberOfRecordSets": 25000,
+                "maxNumberOfVirtualNetworkLinks": 1000,
+                "maxNumberOfVirtualNetworkLinksWithRegistration": 100,
+                "numberOfRecordSets": 3,
+                "numberOfVirtualNetworkLinks": 0,
+                "numberOfVirtualNetworkLinksWithRegistration": 0,
+                "provisioningState": "Succeeded"
+            }
+        },             
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2018-09-01",
             "name": "[parameters('privateDnsZones_privatelink_postgres_database_azure_com_name')]",
             "location": "global",
             "properties": {
@@ -363,9 +378,9 @@
             "apiVersion": "2019-07-01",
             "name": "[parameters('virtualMachines_ckan_vm_name')]",
             "location": "westeurope",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ckan_vm195_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_ckan_vm195_name'))]"
+            // ],
             "properties": {
                 "hardwareProfile": {
                     "vmSize": "Standard_B1ms"
@@ -418,9 +433,9 @@
             "type": "Microsoft.DBforPostgreSQL/servers/firewallRules",
             "apiVersion": "2017-12-01",
             "name": "[concat(parameters('servers_crea_pg_name'), '/geosolutions-vpn')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]"
+            // ],
             "properties": {
                 "startIpAddress": "79.135.50.243",
                 "endIpAddress": "79.135.50.243"
@@ -430,9 +445,9 @@
             "type": "Microsoft.DBforPostgreSQL/servers/securityAlertPolicies",
             "apiVersion": "2017-12-01",
             "name": "[concat(parameters('servers_crea_pg_name'), '/Default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]"
+            // ],
             "properties": {
                 "state": "Disabled",
                 "disabledAlerts": [
@@ -509,9 +524,9 @@
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2020-05-01",
             "name": "[concat(parameters('networkSecurityGroups_ckan_vm_nsg_name'), '/Port_5000')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ckan_vm_nsg_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ckan_vm_nsg_name'))]"
+            // ],
             "properties": {
                 "protocol": "TCP",
                 "sourcePortRange": "*",
@@ -531,9 +546,9 @@
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2020-05-01",
             "name": "[concat(parameters('networkSecurityGroups_ckan_vm_nsg_name'), '/SSH')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ckan_vm_nsg_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ckan_vm_nsg_name'))]"
+            // ],
             "properties": {
                 "protocol": "TCP",
                 "sourcePortRange": "*",
@@ -553,9 +568,9 @@
             "type": "Microsoft.Network/privateDnsZones/A",
             "apiVersion": "2018-09-01",
             "name": "[concat(parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'), '/crea')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'))]"
+            // ],
             "properties": {
                 "ttl": 3600,
                 "aRecords": [
@@ -628,9 +643,9 @@
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2020-05-01",
             "name": "[concat(parameters('virtualNetworks_privnet01_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_privnet01_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_privnet01_name'))]"
+            // ],
             "properties": {
                 "addressPrefix": "10.0.0.0/24",
                 "serviceEndpoints": [],
@@ -650,9 +665,9 @@
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2020-05-01",
             "name": "[concat(parameters('virtualNetworks_privnet01_name'), '/vm')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_privnet01_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_privnet01_name'))]"
+            // ],
             "properties": {
                 "addressPrefix": "10.0.1.0/24",
                 "serviceEndpoints": [
@@ -672,9 +687,9 @@
             "type": "Microsoft.Storage/storageAccounts/blobServices",
             "apiVersion": "2020-08-01-preview",
             "name": "[concat(parameters('storageAccounts_creastorage01_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
+            // ],
             "sku": {
                 "name": "Standard_LRS",
                 "tier": "Standard"
@@ -692,9 +707,9 @@
             "type": "Microsoft.Storage/storageAccounts/fileServices",
             "apiVersion": "2019-06-01",
             "name": "[concat(parameters('storageAccounts_creastorage01_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
+            // ],
             "sku": {
                 "name": "Standard_LRS",
                 "tier": "Standard"
@@ -712,9 +727,9 @@
             "type": "Microsoft.Storage/storageAccounts/queueServices",
             "apiVersion": "2020-08-01-preview",
             "name": "[concat(parameters('storageAccounts_creastorage01_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
+            // ],
             "properties": {
                 "cors": {
                     "corsRules": []
@@ -725,9 +740,9 @@
             "type": "Microsoft.Storage/storageAccounts/tableServices",
             "apiVersion": "2020-08-01-preview",
             "name": "[concat(parameters('storageAccounts_creastorage01_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
+            // ],
             "properties": {
                 "cors": {
                     "corsRules": []
@@ -756,10 +771,9 @@
             "type": "Microsoft.DBforPostgreSQL/servers/virtualNetworkRules",
             "apiVersion": "2017-12-01",
             "name": "[concat(parameters('servers_crea_pg_name'), '/privnetrule01')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
-            ],
+            // "dependsOn": [
+            //         "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
+            // ],
             "properties": {
                 "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]",
                 "ignoreMissingVnetServiceEndpoint": false
@@ -770,10 +784,10 @@
             "apiVersion": "2018-09-01",
             "name": "[concat(parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'), '/3jg36f462rkj2')]",
             "location": "global",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_privnet01_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'))]",
+            //     "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_privnet01_name'))]"
+            // ],
             "properties": {
                 "registrationEnabled": false,
                 "virtualNetwork": {
@@ -786,10 +800,10 @@
             "apiVersion": "2018-09-01",
             "name": "[concat(parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'), '/3jg36f462rkj2')]",
             "location": "global",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_privnet01_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'))]",
+            //     "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_privnet01_name'))]"
+            // ],
             "properties": {
                 "registrationEnabled": false,
                 "virtualNetwork": {
@@ -802,10 +816,10 @@
             "apiVersion": "2020-05-01",
             "name": "[parameters('privateEndpoints_crea_name')]",
             "location": "westeurope",
-            "dependsOn": [
-                "[resourceId('Microsoft.Cache/Redis', parameters('Redis_crea_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Cache/Redis', parameters('Redis_crea_name'))]",
+            //     "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
+            // ],
             "properties": {
                 "privateLinkServiceConnections": [
                     {
@@ -842,10 +856,10 @@
             "apiVersion": "2020-05-01",
             "name": "[parameters('privateEndpoints_crea_pg_name')]",
             "location": "westeurope",
-            "dependsOn": [
-                "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]",
+            //     "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
+            // ],
             "properties": {
                 "privateLinkServiceConnections": [
                     {
@@ -874,10 +888,10 @@
             "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
             "apiVersion": "2020-05-01",
             "name": "[concat(parameters('privateEndpoints_crea_pg_name'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpoints_crea_pg_name'))]",
-                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpoints_crea_pg_name'))]",
+            //     "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_postgres_database_azure_com_name'))]"
+            // ],
             "properties": {
                 "privateDnsZoneConfigs": [
                     {
@@ -893,10 +907,10 @@
             "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
             "apiVersion": "2020-08-01-preview",
             "name": "[concat(parameters('storageAccounts_creastorage01_name'), '/default/ckanshare')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/fileServices', parameters('storageAccounts_creastorage01_name'), 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Storage/storageAccounts/fileServices', parameters('storageAccounts_creastorage01_name'), 'default')]",
+            //     "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
+            // ],
             "properties": {
                 "accessTier": "TransactionOptimized",
                 "shareQuota": 5120,
@@ -921,10 +935,10 @@
             "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
             "apiVersion": "2020-08-01-preview",
             "name": "[concat(parameters('storageAccounts_creastorage01_name'), '/default/solrshare')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/fileServices', parameters('storageAccounts_creastorage01_name'), 'default')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Storage/storageAccounts/fileServices', parameters('storageAccounts_creastorage01_name'), 'default')]",
+            //     "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_creastorage01_name'))]"
+            // ],
             "properties": {
                 "accessTier": "TransactionOptimized",
                 "shareQuota": 5120,
@@ -936,11 +950,11 @@
             "apiVersion": "2020-05-01",
             "name": "[parameters('networkInterfaces_ckan_vm195_name')]",
             "location": "westeurope",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ckan_vm_ip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ckan_vm_nsg_name'))]"
-            ],
+            // "dependsOn": [
+            //     "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_ckan_vm_ip_name'))]",
+            //     "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]",
+            //     "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_ckan_vm_nsg_name'))]"
+            // ],
             "properties": {
                 "ipConfigurations": [
                     {

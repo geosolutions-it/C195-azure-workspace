@@ -1,4 +1,3 @@
-. ./setenv.sh
 cp ckan-compose/.env.sample ckan-compose/.env
 echo REGISTRY_USERNAME=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query username | tr -d '"') | tee -a ckan-compose/.env
 echo REGISTRY_PASSWORD=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query passwords[1].value | tr -d '"') | tee -a ckan-compose/.env

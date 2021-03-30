@@ -27,6 +27,14 @@ Here is a list:
 
 ## Configure environment on Azure CKAN VM, build docker images
 
+- start ckan,solr docker image building.
+
+```bash
+./azure_ckan_vm_config.sh
+```
+
+- on the installation machine align `C195-azure-workspace/azure/resourcegroup_deployment/setenv.sh` and `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env.sample` variables not taken from parameters.json
+
 - on the installation machine run:
 
 ```bash
@@ -34,12 +42,6 @@ Here is a list:
 ```
 
 - copy resulting `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env` on the very same directory on the ckan-vm 
-
-- start ckan,solr docker image building.
-
-```bash
-./azure_ckan_vm_config.sh
-```
 
 ## Deploy solr azure container, start ckan container on vm.
 
