@@ -64,5 +64,3 @@ else
 fi
 
 sudo mount -a
-
-mkdir $mntPath/webassets
