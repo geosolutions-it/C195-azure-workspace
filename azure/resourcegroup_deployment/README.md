@@ -41,7 +41,8 @@ Here is a partial list:
 ./az_config_env.sh
 ```
 
-- copy resulting `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env` on the very same directory on the ckan-vm (a command to do that is echoed from previous script)
+- copy resulting `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env` on the very same 
+  directory on the ckan-vm (a command to do that is echoed from previous script)
 
 ## Deploy solr azure container, start ckan container on vm.
 
@@ -50,6 +51,10 @@ Deploy a container on private network for Solr mounting a SMB share for persiste
 ```bash
 ./azure_solr_config.sh
 ```
+
+This command above is idempotent and can be run several times at once, due to a current bug in Azure CLI 
+(https://github.com/Azure/azure-cli/issues/16705) this script may be needed to be run more than one for 
+solr to be configured correctly
 
 ## Provision initial data to ckan
 
