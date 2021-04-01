@@ -25,6 +25,14 @@ Here is a partial list:
 - registries_crearegistry_name
 - networkProfiles_aci_network_profile_privnet01_default_externalid (please update it to your subscription and resource group)
 
+## Deploy major part of resources
+
+This command will take up to 20-25 minutes to complete.
+
+```bash
+export RESOURCE_GROUP=CREA_TEST_DEPLOY && az deployment group create --resource-group $RESOURCE_GROUP --template-file ./001_deployment.json --parameters @./parameters.json --mode Incremental --confirm-with-what-if
+```
+
 ## Configure environment on Azure CKAN VM, build docker images
 
 - start ckan,solr docker image building.
