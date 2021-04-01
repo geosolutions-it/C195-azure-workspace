@@ -27,4 +27,25 @@ services:
       - ${CKAN_SHARE_MOUNT}:/var/lib/ckan
   ckan_solr:
     image: ${REGISTRY_NAME}.azurecr.io/crea_ckan_solr
-    container_name: ckan_solr      
+    container_name: ckan_solr
+  proxy:
+    image: ghcr.io/linuxserver/swag
+    container_name: proxy
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - URL=${CKAN_VM_NAME}.${VM_DOMAIN}
+      - SUBDOMAINS=
+      - VALIDATION=http
+      - EMAIL=admin@${CKAN_VM_NAME}.${VM_DOMAIN} #optional
+      - ONLY_SUBDOMAINS=false #optional
+      - EXTRA_DOMAINS= #optional
+      - STAGING=false #optional
+    volumes:
+      - ./site-confs/default:/config/nginx/site-confs/default
+    ports:
+      - 443:443
+      - 80:80 #optional
+    restart: unless-stopped
