@@ -38,7 +38,7 @@ CKAN_VM_NAME=$(jq '.parameters.virtualMachines_ckan_vm_name.Value' ./parameters.
 CKAN_VM_USER=geosolutions
 CKAN_PORT=5000
 CKAN_SITE_ID=default
-CKAN_SITE_URL=http://${CKAN_HOST}.${VM_DOMAIN}:${CKAN_PORT}/
+CKAN_SITE_URL=https://${CKAN_HOST}.${VM_DOMAIN}
 
 REDIS_HOST_FULL=${REDIS_HOST}.${REDIS_DOMAIN}
 # Because of bug https://github.com/Azure/azure-cli/issues/16499
@@ -46,11 +46,11 @@ REDIS_HOST_FULL=${REDIS_HOST}.${REDIS_DOMAIN}
 SOLR_HOST_FULL=ckan_solr
 PG_HOST_FULL=${PG_HOST}.${PG_DOMAIN}
 CKAN_PG_USER_PARTIAL=$(jq '.parameters.PostgreSQL_username.Value' ./parameters.json | tr -d '"')
-CKAN_PG_USER=${CKAN_PG_USER_PARTIAL}%40${PG_INSTANCE}
+CKAN_PG_USER=${CKAN_PG_USER_PARTIAL}@${PG_INSTANCE}
 POSTGRES_PASSWORD=$(jq '.parameters.PostgreSQL_password.Value' ./parameters.json | tr -d '"')
 
 DATASTORE_RO_PG_USER_PARTIAL=datastore_ro
-DATASTORE_RO_PG_USER=${DATASTORE_RO_PG_USER_PARTIAL}%40${PG_INSTANCE}
+DATASTORE_RO_PG_USER=${DATASTORE_RO_PG_USER_PARTIAL}@${PG_INSTANCE}
 DATASTORE_READONLY_PASSWORD=datastore
 CKAN_MAX_UPLOAD_SIZE_MB=5000
 CKAN_SHARE_MOUNT=/mnt/ckanshare
