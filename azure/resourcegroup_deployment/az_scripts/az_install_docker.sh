@@ -20,12 +20,9 @@ sudo -u geosolutions git checkout move-solr-into-vm
 
 sudo -u geosolutions git submodule init && sudo -u geosolutions git submodule update
 
-# # ### remove this when submodule is ok
-# cd /home/geosolutions/C195-azure-workspace/ckan-docker/ckan_copy
-# sudo -u geosolutions git pull
-# sudo -u geosolutions git checkout c195-luca
-# cd /home/geosolutions/C195-azure-workspace
-# # ###
+cd /home/geosolutions/C195-azure-workspace/ckan-docker/ckan_copy
+sudo -u geosolutions git fetch --all
+sudo -u geosolutions git checkout master
 
 resourceGroupName="$arg1"
 storageAccountName="$arg2"
