@@ -36,7 +36,7 @@ CKAN_VM_NAME=$(jq '.parameters.virtualMachines_ckan_vm_name.Value' ./parameters.
 CKAN_VM_USER=geosolutions
 CKAN_PORT=5000
 CKAN_SITE_ID=default
-CKAN_SITE_URL=http://${CKAN_HOST}.${VM_DOMAIN}:${CKAN_PORT}/
+CKAN_SITE_URL=https://${CKAN_HOST}.${VM_DOMAIN}/
 
 REDIS_HOST_FULL=${REDIS_HOST}.${REDIS_DOMAIN}
 SOLR_HOST_FULL=${SOLR_HOST}.${SOLR_DOMAIN}

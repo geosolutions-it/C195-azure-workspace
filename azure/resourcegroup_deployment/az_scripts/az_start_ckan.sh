@@ -13,3 +13,4 @@ if [ ! -f /home/geosolutions/C195-azure-workspace/azure/resourcegroup_deployment
 fi    
 sudo -u geosolutions docker-compose --env-file .env down
 sudo -u geosolutions docker-compose --env-file .env up -d ckan
+sudo -u geosolutions docker-compose --env-file .env up -d proxy
