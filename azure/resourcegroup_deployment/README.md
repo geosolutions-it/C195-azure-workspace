@@ -14,7 +14,7 @@ username/password are identical for vm and prostgres instance.
 
 Many of the external resource parameters **must be customized** in `parameters.json` to be sure they are not used anywhere else in Azure by other users.
 
-Here is a list:
+Here is a partial list:
 
 - ResourceGroup
 - AzureSubscriptionID
@@ -27,19 +27,22 @@ Here is a list:
 
 ## Configure environment on Azure CKAN VM, build docker images
 
-- on the installation machine run:
-
-```bash
-./azure_config_env.sh
-```
-
-- copy resulting `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env` on the very same directory on the ckan-vm 
-
 - start ckan,solr docker image building.
 
 ```bash
 ./azure_ckan_vm_config.sh
 ```
+
+- on the installation machine align `C195-azure-workspace/azure/resourcegroup_deployment/setenv.sh` and `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env.sample` variables not taken from parameters.json
+
+- on the installation machine run:
+
+```bash
+./az_config_env.sh
+```
+
+- copy resulting `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env` on the very same 
+  directory on the ckan-vm (a command to do that is echoed from previous script)
 
 ## Deploy solr azure container, start ckan container on vm.
 
@@ -47,6 +50,19 @@ Deploy a container on private network for Solr mounting a SMB share for persiste
 
 ```bash
 ./azure_solr_config.sh
+```
+
+This command above is idempotent and can be run several times at once, due to a current bug in Azure CLI 
+(https://github.com/Azure/azure-cli/issues/16705) this script may be needed to be run more than one for 
+solr to be configured correctly
+
+## Provision initial data to ckan
+
+- make at least a login ad admin, got to admin user properties, regenerate api key
+- run this script:
+
+```bash
+./000_provision_initial_data.sh
 ```
 
 ## Restart CKAN on failures

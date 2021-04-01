@@ -78,6 +78,14 @@
             "defaultValue": "privatelink.postgres.database.azure.com",
             "type": "String"
         },
+        "privateDnsZones_privatelink_solr_azure_com_name": {
+            "defaultValue": "privatelink.solr.azure.com",
+            "type": "String"
+        },
+        "solr_Private_Name": {
+            "defaultValue": "crea-solr",
+            "type": "String"
+        },
         // "networkInterfaces_crea_nic_2980809e_067b_47da_b39d_af39d736940d_name": {
         //     "defaultValue": "crea-test.nic.2980809e-067b-47da-b39d-af39d736940d",
         //     "type": "String"
@@ -223,6 +231,21 @@
                 ]
             }
         },
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2018-09-01",
+            "name": "[parameters('privateDnsZones_privatelink_solr_azure_com_name')]",
+            "location": "global",
+            "properties": {
+                "maxNumberOfRecordSets": 25000,
+                "maxNumberOfVirtualNetworkLinks": 1000,
+                "maxNumberOfVirtualNetworkLinksWithRegistration": 100,
+                "numberOfRecordSets": 3,
+                "numberOfVirtualNetworkLinks": 0,
+                "numberOfVirtualNetworkLinksWithRegistration": 0,
+                "provisioningState": "Succeeded"
+            }
+        },             
         {
             "type": "Microsoft.Network/privateDnsZones",
             "apiVersion": "2018-09-01",
@@ -415,17 +438,32 @@
             }
         },
         {
-            "type": "Microsoft.DBforPostgreSQL/servers/firewallRules",
-            "apiVersion": "2017-12-01",
-            "name": "[concat(parameters('servers_crea_pg_name'), '/geosolutions-vpn')]",
+            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+            "apiVersion": "2018-09-01",
+            "name": "[concat(parameters('privateDnsZones_privatelink_solr_azure_com_name'), '/', parameters('solr_Private_Name'))]",
+            "location": "global",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]"
+                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_solr_azure_com_name'))]"
             ],
             "properties": {
-                "startIpAddress": "79.135.50.243",
-                "endIpAddress": "79.135.50.243"
+                "registrationEnabled": true,
+                "virtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_privnet01_name'))]"
+                }
             }
-        },
+        },        
+        // {
+        //     "type": "Microsoft.DBforPostgreSQL/servers/firewallRules",
+        //     "apiVersion": "2017-12-01",
+        //     "name": "[concat(parameters('servers_crea_pg_name'), '/geosolutions-vpn')]",
+        //     "dependsOn": [
+        //         "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]"
+        //     ],
+        //     "properties": {
+        //         "startIpAddress": "79.135.50.243",
+        //         "endIpAddress": "79.135.50.243"
+        //     }
+        // },
         {
             "type": "Microsoft.DBforPostgreSQL/servers/securityAlertPolicies",
             "apiVersion": "2017-12-01",
@@ -552,7 +590,7 @@
         {
             "type": "Microsoft.Network/privateDnsZones/A",
             "apiVersion": "2018-09-01",
-            "name": "[concat(parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'), '/crea')]",
+            "name": "[concat(parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'), '/', parameters('privateEndpoints_crea_name'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_redis_cache_windows_net_name'))]"
             ],
@@ -757,8 +795,8 @@
             "apiVersion": "2017-12-01",
             "name": "[concat(parameters('servers_crea_pg_name'), '/privnetrule01')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
+                    "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('servers_crea_pg_name'))]",
+                    "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]"
             ],
             "properties": {
                 "virtualNetworkSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_privnet01_name'), 'vm')]",

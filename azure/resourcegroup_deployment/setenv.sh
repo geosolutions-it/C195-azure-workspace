@@ -25,12 +25,12 @@ SOLR_DOMAIN=privatelink.solr.azure.com
 
 REDIS_HOST=$(jq '.parameters.Redis_crea_name.Value' ./parameters.json | tr -d '"')
 REDIS_NAME=$(jq '.parameters.privateEndpoints_crea_name.Value' ./parameters.json | tr -d '"')
-SOLR_HOST=crea-solr2
+SOLR_HOST=$(jq '.parameters.solr_Private_Name.Value' ./parameters.json | tr -d '"')
 PG_HOST=$(jq '.parameters.servers_crea_pg_name.Value' ./parameters.json | tr -d '"')
 PG_INSTANCE=$(jq '.parameters.privateEndpoints_crea_pg_name.Value' ./parameters.json | tr -d '"')
 CKAN_HOST=$(jq '.parameters.virtualMachines_ckan_vm_name.Value' ./parameters.json | tr -d '"')
 
-REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_NAME --query primaryKey)
+REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_NAME --query primaryKey | tr -d '"')
 
 CKAN_VM_NAME=$(jq '.parameters.virtualMachines_ckan_vm_name.Value' ./parameters.json | tr -d '"')
 CKAN_VM_USER=geosolutions
