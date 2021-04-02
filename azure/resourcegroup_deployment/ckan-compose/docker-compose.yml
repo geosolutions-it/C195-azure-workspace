@@ -8,6 +8,8 @@ services:
     container_name: ckan
     image: ${REGISTRY_NAME}.azurecr.io/crea_ckan
     restart: always
+    cap_add:
+      - SYS_PTRACE
     expose:
       - "5000"
     # ports:
