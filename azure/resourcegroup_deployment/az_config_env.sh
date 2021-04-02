@@ -10,8 +10,9 @@ export CKAN_HOST CKAN_IMAGE CKAN_MAX_UPLOAD_SIZE_MB CKAN_PG_USER CKAN_PG_USER_PA
 # echo POSTGRES_PASSWORD=$(jq '.parameters.PostgreSQL_password.Value' ./parameters.json | tr -d '"') | tee -a ckan-compose/.env
 
 export -p > ckan-compose/.env
-sed -i 's/declare -x//' ckan-compose/.env
+sed -i 's/declare -x //' ckan-compose/.env
 
+sed -i '/OLDPWD/d'  ckan-compose/.env
 
 echo "Please run:"
 echo "scp ckan-compose/.env geosolutions@${CKAN_VM_NAME}.westeurope.cloudapp.azure.com:C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env"
