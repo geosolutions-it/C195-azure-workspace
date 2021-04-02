@@ -91,6 +91,7 @@ fi
 Resulting stack traces will be found in `/mnt/ckanshare/` in a format like `/var/lib/ckan/$DATE_gdb_ckan.txt`
 
 to configure this you can use cron like this:
+
 ```bash
 */2 * * * * $HOME/C195-azure-workspace/azure/resourcegroup_deployment/az_scripts/az_cronjob.sh
 ```
