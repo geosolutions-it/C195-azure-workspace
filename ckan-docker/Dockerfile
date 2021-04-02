@@ -27,6 +27,7 @@ RUN apt-get -q -y update \
         vim \
         wget \
         gdb python3-dbg \
+        procps \
     && apt-get -q clean \
     && rm -rf /var/lib/apt/lists/*
 
