@@ -26,7 +26,7 @@ SOLR_DOMAIN=privatelink.solr.azure.com
 REDIS_HOST=$(jq '.parameters.Redis_crea_name.Value' ./parameters.json | tr -d '"')
 REDIS_NAME=$(jq '.parameters.privateEndpoints_crea_name.Value' ./parameters.json | tr -d '"')
 # Because of bug https://github.com/Azure/azure-cli/issues/16499
-#SOLR_HOST=$(jq '.parameters.solr_Private_Name.Value' ./parameters.json | tr -d '"')
+SOLR_HOST=$(jq '.parameters.solr_Private_Name.Value' ./parameters.json | tr -d '"')
 
 PG_HOST=$(jq '.parameters.servers_crea_pg_name.Value' ./parameters.json | tr -d '"')
 PG_INSTANCE=$(jq '.parameters.privateEndpoints_crea_pg_name.Value' ./parameters.json | tr -d '"')
