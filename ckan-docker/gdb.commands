@@ -1,3 +1,4 @@
+set logging on
 bt
 py-bt
 py-list
