@@ -15,7 +15,7 @@ sudo -u geosolutions git clone https://github.com/geosolutions-it/C195-azure-wor
 cd /home/geosolutions/C195-azure-workspace 
 
 ### remove this before merging to master
-#sudo -u geosolutions git checkout move-solr-into-vm
+sudo -u geosolutions git checkout move-solr-into-vm
 ###
 
 sudo -u geosolutions git submodule init && sudo -u geosolutions git submodule update
