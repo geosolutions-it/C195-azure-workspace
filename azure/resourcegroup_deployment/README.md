@@ -75,7 +75,7 @@ solr to be configured correctly
 
 ## Restart CKAN on failures
 
-To ensure CKAN is alyways respondig, in the CKAN vm should be created such a script named `check_ckan_alive.sh`:
+To ensure CKAN is alyways respondig, in the CKAN vm should be run named `check_ckan_alive.sh`:
 
 ```bash
 #!usr/bin/env bash
@@ -88,10 +88,9 @@ if [ "$response" != 'HTTP/1.0 200 OK' ]; then
 fi
 ```
 
+Resulting stack traces will be found in `/mnt/ckanshare/` in a format like `/var/lib/ckan/$DATE_gdb_ckan.txt`
 
-
-and a subsequent cron job with a user which can handle docker restarts as this:
-
+to configure this you can use cron like this:
 ```bash
-* * * * * $HOME/check_ckan_alive.sh
+*/2 * * * * $HOME/C195-azure-workspace/azure/resourcegroup_deployment/az_scripts/az_cronjob.sh
 ```
