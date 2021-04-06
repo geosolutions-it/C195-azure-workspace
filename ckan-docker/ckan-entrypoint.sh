@@ -105,7 +105,8 @@ ckan --config "$CONFIG_INI" db init
 # echo "Adding admin user"
 
 if [ "$(ckan -c "$CONFIG_INI" sysadmin list 2>&1 | grep ^User | grep -v 'name=default' | wc -l )" == "0" ];then
-  echo -ne '\n' | ckan -c "$CONFIG_INI" sysadmin add admin email=admin@localhost name=admin password=adminadmin
+  APIKEY=$(cat /proc/sys/kernel/random/uuid)
+  echo -ne '\n' | ckan -c "$CONFIG_INI" sysadmin add admin email=admin@localhost name=admin password=adminadmin # apikey=$APIKEY
 fi
 
 echo 'Running command --> ' $@

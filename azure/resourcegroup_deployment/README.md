@@ -25,6 +25,14 @@ Here is a partial list:
 - registries_crearegistry_name
 - networkProfiles_aci_network_profile_privnet01_default_externalid (please update it to your subscription and resource group)
 
+## Deploy major part of resources
+
+This command will take up to 20-25 minutes to complete.
+
+```bash
+export RESOURCE_GROUP=CREA_TEST_DEPLOY && az deployment group create --resource-group $RESOURCE_GROUP --template-file ./001_deployment.json --parameters @./parameters.json --mode Incremental --confirm-with-what-if
+```
+
 ## Configure environment on Azure CKAN VM, build docker images
 
 - start ckan,solr docker image building.
@@ -67,20 +75,23 @@ solr to be configured correctly
 
 ## Restart CKAN on failures
 
-To ensure CKAN is alyways respondig, in the CKAN vm should be created such a script named `check_ckan_alive.sh`:
+To ensure CKAN is alyways respondig, in the CKAN vm should be run named `check_ckan_alive.sh`:
 
 ```bash
-#!/bin/bash
+#!usr/bin/env bash
 date=$(date '+%Y-%m-%d %H:%M:%S')
 response="$(curl -I -s http://localhost:5000/ --max-time 10 --connect-timeout 10 | head -1 | tr -d '\r')"
-if [ "$response" != 'HTTP/1.0 200 OK' ]; then 
-        docker restart ckan
-	echo "$date - restarted ckan because it was stuck" >> $HOME/ckan_restart_log
+if [ "$response" != 'HTTP/1.0 200 OK' ]; then
+    docker exec -i ckan /capture_gdb.sh      
+    docker restart ckan
+   	echo "$date - restarted ckan because it was stuck" >> $HOME/ckan_restart_log
 fi
 ```
 
-and a subsequent cron job with a user which can handle docker restarts as this:
+Resulting stack traces will be found in `/mnt/ckanshare/` in a format like `/var/lib/ckan/$DATE_gdb_ckan.txt`
+
+to configure this you can use cron like this:
 
 ```bash
-* * * * * $HOME/check_ckan_alive.sh
+*/2 * * * * $HOME/C195-azure-workspace/azure/resourcegroup_deployment/az_scripts/az_cronjob.sh
 ```

@@ -27,6 +27,7 @@ RUN apt-get -q -y update \
         vim \
         wget \
         gdb python3-dbg \
+        procps \
     && apt-get -q clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -54,7 +55,8 @@ RUN mkdir -p $CKAN_VENV $CKAN_CONFIG $CKAN_STORAGE_PATH && \
 COPY ./ckan_copy $CKAN_VENV/src/ckan/
 COPY ./ckan-entrypoint.sh /ckan-entrypoint.sh
 COPY ./ckan-run.sh /ckan-run.sh
-
+COPY ./gdb.commands /gdb.commands
+COPY ./capture_gdb.sh /capture_gdb.sh
 
 RUN $CKAN_VENV/bin/pip install -U pip && \
     $CKAN_VENV/bin/pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/requirement-setuptools.txt && \
@@ -62,12 +64,12 @@ RUN $CKAN_VENV/bin/pip install -U pip && \
     $CKAN_VENV/bin/pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/dev-requirements.txt && \
     $CKAN_VENV/bin/pip install -e $CKAN_VENV/src/ckan/ && \
     ln -s $CKAN_VENV/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini && \
-    chmod +x /ckan-entrypoint.sh /ckan-run.sh && \
+    chmod +x /ckan-entrypoint.sh /capture_gdb.sh /ckan-run.sh && \
     chown -R ckan:ckan $CKAN_HOME $CKAN_VENV $CKAN_CONFIG $CKAN_STORAGE_PATH
 
 RUN $CKAN_VENV/bin/pip install -e git+https://github.com/geosolutions-it/ckanext-c195.git@main#egg=ckanext-c195
 
-USER ckan
+#USER ckan
 
 SHELL ["/bin/bash", "-c"]
 

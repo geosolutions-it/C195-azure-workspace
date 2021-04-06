@@ -15,29 +15,29 @@ sudo -u geosolutions git clone https://github.com/geosolutions-it/C195-azure-wor
 cd /home/geosolutions/C195-azure-workspace 
 
 ### remove this before merging to master
-# sudo -u geosolutions git checkout environment-fixes
+#sudo -u geosolutions git checkout move-solr-into-vm
 ###
 
 sudo -u geosolutions git submodule init && sudo -u geosolutions git submodule update
 
-### remove this when submodule is ok
 cd /home/geosolutions/C195-azure-workspace/ckan-docker/ckan_copy
-sudo -u geosolutions git pull
-sudo -u geosolutions git checkout c195-luca
-cd /home/geosolutions/C195-azure-workspace
-###
+sudo -u geosolutions git fetch --all
+sudo -u geosolutions git checkout master
 
 resourceGroupName="$arg1"
 storageAccountName="$arg2"
 fileShareName="$arg3"
+fileShareName2="$arg9"
 storageAccountKey="$arg8"
 registryName="$arg4"
 registryUsername="$arg5"
 registryPassword="$arg6"
-mntPath="/mnt/$fileShareName"
+mntPath1="/mnt/$fileShareName"
+mntPath2="/mnt/$fileShareName2"
 smbCredentialFile="/etc/smbcredentials/$storageAccountName.cred"
 httpEndpoint="$arg7"
-smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName
+smbPath1=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName
+smbPath2=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName2
 
 #build and push ckan and solr images
 
@@ -54,7 +54,8 @@ sudo -u geosolutions docker pull ${registryName}.azurecr.io/crea_ckan || echo "p
 sudo -u geosolutions docker pull ${registryName}.azurecr.io/crea_ckan_solr || echo "problem pulling from registry"
 # mount ckan share
 
-sudo mkdir -p $mntPath
+sudo mkdir -p $mntPath1 $mntPath2
+
 if [ ! -d "/etc/smbcredentials" ]; then
     sudo mkdir "/etc/smbcredentials"
 fi
@@ -68,10 +69,15 @@ fi
 sudo chmod 600 $smbCredentialFile
 # This command assumes you have logged in with az login
 
-if [ -z "$(grep $smbPath\ $mntPath /etc/fstab)" ]; then
-    echo "$smbPath $mntPath cifs nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
+if [ -z "$(grep $smbPath1\ $mntPath1 /etc/fstab)" ]; then
+    echo "$smbPath1 $mntPath1 cifs nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
 else
     echo "/etc/fstab was not modified to avoid conflicting entries as this Azure file share was already present. You may want to double check /etc/fstab to ensure the configuration is as desired."
 fi
 
+if [ -z "$(grep $smbPath2\ $mntPath2 /etc/fstab)" ]; then
+    echo "$smbPath2 $mntPath2 cifs nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
+else
+    echo "/etc/fstab was not modified to avoid conflicting entries as this Azure file share was already present. You may want to double check /etc/fstab to ensure the configuration is as desired."
+fi
 sudo mount -a

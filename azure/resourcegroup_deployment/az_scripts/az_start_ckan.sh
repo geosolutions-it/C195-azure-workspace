@@ -12,5 +12,4 @@ if [ ! -f /home/geosolutions/C195-azure-workspace/azure/resourcegroup_deployment
     cp /home/geosolutions/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env.sample /home/geosolutions/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env
 fi    
 sudo -u geosolutions docker-compose --env-file .env down
-sudo -u geosolutions docker-compose --env-file .env up -d ckan
-sudo -u geosolutions docker-compose --env-file .env up -d proxy
+sudo -u geosolutions docker-compose --env-file .env up -d

@@ -12,7 +12,7 @@ for json in orgs/* ; do
   echo ===
   echo UPLOADING $json
   sed -e s=__SERVER__=${CKAN_HOST_FULL}=g $json > $NEW_JSON
-  curl ${CKAN_HOST_FULL}:${CKAN_PORT}/api/3/action/organization_create \
+  curl https://${CKAN_HOST_FULL}/api/3/action/organization_create \
       --data @$NEW_JSON  -H "Content-Type:application/json" \
       -H "Authorization:${CKAN_APIKEY}"
 done
@@ -21,7 +21,7 @@ for JSON in ./datasets/* ; do
   echo ===
   echo UPLOADING $JSON
 
-  curl ${CKAN_HOST_FULL}:${CKAN_PORT}/api/3/action/package_create \
+  curl https://${CKAN_HOST_FULL}/api/3/action/package_create \
       --data @$JSON  \
       -H "Content-Type:application/json" \
       -H "Authorization:${CKAN_APIKEY}"
