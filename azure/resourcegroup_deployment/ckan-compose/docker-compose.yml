@@ -52,8 +52,11 @@ services:
       - EXTRA_DOMAINS= #optional
       - STAGING=false #optional
     volumes:
+      - config:/config
       - ./site-confs/default:/config/nginx/site-confs/default
     ports:
       - "443:443"
       - "80:80" #optional
     restart: unless-stopped
+volumes:
+  config:
