@@ -5,6 +5,7 @@ Prerequisites
 - command line terminal with bash
 - configured and logged in `az` cli
 - `jq` tool for parsing json
+- machine performing deployment operations must have full access or be in same resource group where the ckan stack is being deployed.
 
 ## Customize parameters
 
@@ -71,6 +72,14 @@ solr to be configured correctly
 
 ```bash
 ./000_provision_initial_data.sh
+```
+
+## Smoke tests
+
+- to run smoke tests there is a script that can be run after deployment on the installation machine:
+
+```bash
+./azure_test_all.sh
 ```
 
 ## Restart CKAN on failures
