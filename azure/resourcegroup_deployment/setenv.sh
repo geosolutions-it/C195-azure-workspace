@@ -1,10 +1,10 @@
-RESOURCE_GROUP=$(jq '.parameters.ResourceGroup.Value' ./parameters.json | tr -d '"')
+RESOURCE_GROUP=$(jq -r '.parameters.param_resource_group_name.Value' ./parameters.json)
 
-REGISTRY_NAME=$(jq '.parameters.registries_crearegistry_name.Value' ./parameters.json | tr -d '"')
+REGISTRY_NAME=$(jq -r '.parameters.param_registry_name.Value' ./parameters.json)
 REGISTRY_USERNAME=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query username | tr -d '"')
 REGISTRY_PASSWORD=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query passwords[1].value | tr -d '"')
 
-STORAGE_ACCOUNT_NAME=$(jq '.parameters.storageAccounts_creastorage01_name.Value' ./parameters.json | tr -d '"')
+STORAGE_ACCOUNT_NAME=$(jq -r '.parameters.param_storageaccount_name.Value' ./parameters.json)
 STORAGE_KEY=$(az storage account keys list -g $RESOURCE_GROUP -n $STORAGE_ACCOUNT_NAME --query [1].value | tr -d '"')
 httpEndpoint=$(az storage account show --resource-group $RESOURCE_GROUP --name $STORAGE_ACCOUNT_NAME --query "primaryEndpoints.file" | tr -d '"')
 
@@ -23,19 +23,19 @@ PG_DOMAIN=privatelink.postgres.database.azure.com
 VM_DOMAIN=westeurope.cloudapp.azure.com
 SOLR_DOMAIN=privatelink.solr.azure.com
 
-REDIS_HOST=$(jq '.parameters.Redis_crea_name.Value' ./parameters.json | tr -d '"')
-REDIS_NAME=$(jq '.parameters.privateEndpoints_crea_name.Value' ./parameters.json | tr -d '"')
+REDIS_HOST=$(jq -r '.parameters.param_redis_name.Value' ./parameters.json)
+REDIS_NAME=$(jq -r '.parameters.param_endpoint_redis_name.Value' ./parameters.json)
 # Because of bug https://github.com/Azure/azure-cli/issues/16499
-SOLR_HOST=$(jq '.parameters.solr_Private_Name.Value' ./parameters.json | tr -d '"')
+SOLR_HOST=$(jq -r '.parameters.param_vnetlink_solr_name.Value' ./parameters.json)
 
-PG_HOST=$(jq '.parameters.servers_crea_pg_name.Value' ./parameters.json | tr -d '"')
-PG_INSTANCE=$(jq '.parameters.privateEndpoints_crea_pg_name.Value' ./parameters.json | tr -d '"')
-CKAN_HOST=$(jq '.parameters.virtualMachines_ckan_vm_name.Value' ./parameters.json | tr -d '"')
+PG_HOST=$(jq -r '.parameters.param_postgres_hostname.Value' ./parameters.json)
+PG_INSTANCE=$(jq -r '.parameters.param_endpoint_pg_name.Value' ./parameters.json)
+CKAN_HOST=$(jq -r '.parameters.param_vm_ckan_hostname.Value' ./parameters.json)
 
 REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_NAME --query primaryKey | tr -d '"')
 
-CKAN_VM_NAME=$(jq '.parameters.virtualMachines_ckan_vm_name.Value' ./parameters.json | tr -d '"')
-CKAN_VM_USER=geosolutions
+CKAN_VM_NAME=$(jq -r '.parameters.param_vm_ckan_hostname.Value' ./parameters.json)
+CKAN_VM_USER=$(jq -r '.parameters.param_vm_ckan_username.Value' ./parameters.json)
 CKAN_PORT=5000
 CKAN_SITE_ID=default
 CKAN_SITE_URL=https://${CKAN_HOST}.${VM_DOMAIN}
@@ -45,9 +45,9 @@ REDIS_HOST_FULL=${REDIS_HOST}.${REDIS_DOMAIN}
 #SOLR_HOST_FULL=${SOLR_HOST}.${SOLR_DOMAIN}
 SOLR_HOST_FULL=ckan_solr
 PG_HOST_FULL=${PG_HOST}.${PG_DOMAIN}
-CKAN_PG_USER_PARTIAL=$(jq '.parameters.PostgreSQL_username.Value' ./parameters.json | tr -d '"')
+CKAN_PG_USER_PARTIAL=$(jq -r '.parameters.param_postgres_username.Value' ./parameters.json)
 CKAN_PG_USER=${CKAN_PG_USER_PARTIAL}@${PG_INSTANCE}
-POSTGRES_PASSWORD=$(jq '.parameters.PostgreSQL_password.Value' ./parameters.json | tr -d '"')
+POSTGRES_PASSWORD=$(jq -r '.parameters.param_postgres_password.Value' ./parameters.json)
 
 DATASTORE_RO_PG_USER_PARTIAL=datastore_ro
 DATASTORE_RO_PG_USER=${DATASTORE_RO_PG_USER_PARTIAL}@${PG_INSTANCE}

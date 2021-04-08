@@ -1,54 +1,61 @@
 # Azure Deployment
 
-Prerequisites
+Prerequisites on the machine performing deployment operations:
 
-- command line terminal with bash
-- configured and logged in `az` cli
-- `jq` tool for parsing json
-- machine performing deployment operations must have full access or be in same resource group where the ckan stack is being deployed.
+- These commands should be available:
+  - `bash` (shell)
+  - `az` (azure cli)
+  - `jq` (tool for parsing json)
+- must have full access or be in same resource group where the ckan stack is being deployed.
+
+## First steps
+
+- In Azure, create the Resource Group for the deployment
+- In your shell, run `az login` and authenticate in Azure
 
 ## Customize parameters
 
-Customize `parameters.json` to suit your needs.
+Edit the file `parameters.json` to suit your needs.
 
-username/password are identical for vm and prostgres instance.
+Please note that username/password are identical for vm and postgres instance.
 
-Many of the external resource parameters **must be customized** in `parameters.json` to be sure they are not used anywhere else in Azure by other users.
+Many of the external resource parameters **must be customized** in `parameters.json` either because they are global in Azure or in the Azure server location.
+Make sure you customize the params starting with `YOUR_` (e.g. `YOUR_VM_HOSTNAME`).
 
 Here is a partial list:
 
-- ResourceGroup
-- AzureSubscriptionID
-- Redis_crea_name
-- servers_crea_pg_name
-- privateEndpoints_crea_pg_name (please put this the same of servers_crea_pg_name)
-- storageAccounts_creastorage01_name
-- registries_crearegistry_name
-- networkProfiles_aci_network_profile_privnet01_default_externalid (please update it to your subscription and resource group)
+- `param_resource_group_name`: the name of the resource group you created
+- `param_subscription_id`: the subscription id for the deployment
+- `param_vm_ckan_hostname`: the host name of the virtual machine; this will be part of the externally visibile FQDN
+- `param_redis_name`
+- `param_postgres_hostname`
+- `param_endpoint_pg_name` (please put this the same of param_postgres_hostname)
+- `param_storageaccount_name`: Storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only.
+- `param_registry_name`: Resource names may contain alpha numeric characters only and must be between 5 and 50 characters.
 
-## Deploy major part of resources
+## Deploy main resources
 
 This command will take up to 20-25 minutes to complete.
 
 ```bash
-export RESOURCE_GROUP=CREA_TEST_DEPLOY && az deployment group create --resource-group $RESOURCE_GROUP --template-file ./001_deployment.json --parameters @./parameters.json --mode Incremental --confirm-with-what-if
+   ./azure_main_deploy.sh
 ```
 
 ## Configure environment on Azure CKAN VM, build docker images
 
-- start ckan,solr docker image building.
-
-```bash
-./azure_ckan_vm_config.sh
-```
+- start ckan, solr docker image building.
+  ```bash
+     ./azure_ckan_vm_config.sh
+  ```
 
 - on the installation machine align `C195-azure-workspace/azure/resourcegroup_deployment/setenv.sh` and `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env.sample` variables not taken from parameters.json
 
 - on the installation machine run:
+  ```bash
+  ./az_config_env.sh
+  ```
+  This script will also retrieve some info from Azure, so it's not immediate, but should be quite fast anyway.
 
-```bash
-./az_config_env.sh
-```
 
 - copy resulting `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env` on the very same 
   directory on the ckan-vm (a command to do that is echoed from previous script)
@@ -67,7 +74,7 @@ solr to be configured correctly
 
 ## Provision initial data to ckan
 
-- make at least a login ad admin, got to admin user properties, regenerate api key
+- make at least a login ad admin, got to admin user properties, regenerate API key
 - run this script:
 
 ```bash
@@ -84,7 +91,7 @@ solr to be configured correctly
 
 ## Restart CKAN on failures
 
-To ensure CKAN is alyways respondig, in the CKAN vm should be run named `check_ckan_alive.sh`:
+To ensure CKAN is always responding, there's a script named `check_ckan_alive.sh` in the CKAN VM that should be added in the `crontab`:
 
 ```bash
 #!usr/bin/env bash
@@ -97,7 +104,7 @@ if [ "$response" != 'HTTP/1.0 200 OK' ]; then
 fi
 ```
 
-Resulting stack traces will be found in `/mnt/ckanshare/` in a format like `/var/lib/ckan/$DATE_gdb_ckan.txt`
+Resulting stack traces will be found in `/mnt/ckanshare/` in files named like `/var/lib/ckan/$DATE_gdb_ckan.txt`
 
 to configure this you can use cron like this:
 

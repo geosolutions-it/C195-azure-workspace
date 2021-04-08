@@ -2,58 +2,58 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "ResourceGroup": {
-            "Value": "CREA_TEST_DEPLOY"
+        "param_resource_group_name": {
+            "Value": "YOUR_RESOURCE_GROUP_NAME"
         },
-        "AzureSubscriptionID": {
-            "Value": "1cd0a26f-1c2a-48fb-9db5-c5be98e7603b"
+        "param_subscription_id": {
+            "Value": "YOUR_SUBSCRIPTION_ID"
         },                   
-        "Redis_crea_name": {
-            "Value": "crea-test-redis2"
+        "param_redis_name": {
+            "Value": "YOUR_REDIS_NAME"
         },
-        "privateEndpoints_crea_name": {
-            "Value": "crea-test-redis2"
+        "param_endpoint_redis_name": {
+            "Value": "YOUR_REDIS_NAME"
         },
-        "virtualMachines_ckan_vm_name": {
-            "Value": "ckan-vmtest"
+        "param_vm_ckan_hostname": {
+            "Value": "YOUR_VM_HOSTNAME"
         },
-        "virtualMachines_ckan_vm_username": {
+        "param_vm_ckan_username": {
             "Value": "geosolutions"
         },        
-        "virtualMachines_ckan_vm_password": {
+        "param_vm_ckan_password": {
             "Value": "S3cre3tP4ssw0rd"
         },
-        "PostgreSQL_username": {
+        "param_postgres_username": {
             "Value": "ckan"
         },        
-        "PostgreSQL_password": {
+        "param_postgres_password": {
             "Value": "S3cre3tP4ssw0rd"
         },              
-        "servers_crea_pg_name": {
-            "Value": "creapostgresql"
+        "param_postgres_hostname": {
+            "Value": "YOUR_POSTGRES_HOSTNAME"
         },
-        "privateEndpoints_crea_pg_name": {
-            "Value": "creapostgresql"
+        "param_endpoint_pg_name": {
+            "Value": "YOUR_POSTGRES_HOSTNAME"
         },
-        "virtualNetworks_privnet01_name": {
+        "param_vnet_name": {
             "Value": "privnet01"
         },
-        "networkInterfaces_ckan_vm195_name": {
+        "param_networkiface_vm_name": {
             "Value": "ckan-vm195"
         },
-        "publicIPAddresses_ckan_vm_ip_name": {
+        "param_publicipaddress_vm_name": {
             "Value": "ckan-vm-ip"
         },
-        "storageAccounts_creastorage01_name": {
-            "Value": "creastorage01test"
+        "param_storageaccount_name": {
+            "Value": "YOUR_STORAGEACCOUNT_NAME"
         },
-        "solr_Private_Name": {
+        "param_vnetlink_solr_name": {
             "Value": "crea-solr"
         },
-        "registries_crearegistry_name": {
-            "Value": "crearegistrytest"
+        "param_registry_name": {
+            "Value": "YOUR_REGISTRY_NAME"
         },
-        "networkSecurityGroups_ckan_vm_nsg_name": {
+        "param_networksecgroup_name": {
             "Value": "ckan-vm-nsg"
         }
     }

@@ -6,8 +6,8 @@ export CKAN_HOST CKAN_IMAGE CKAN_MAX_UPLOAD_SIZE_MB CKAN_PG_USER CKAN_PG_USER_PA
 # echo REGISTRY_PASSWORD=$(az acr credential show -g $RESOURCE_GROUP --name $REGISTRY_NAME --query passwords[1].value | tr -d '"') | tee -a ckan-compose/.env
 # echo httpEndpoint=$(az storage account show --resource-group $RESOURCE_GROUP --name $STORAGE_ACCOUNT_NAME --query "primaryEndpoints.file" | tr -d '"') | tee -a ckan-compose/.env
 # echo REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_NAME --query primaryKey | tr -d '"') | tee -a ckan-compose/.env
-# echo CKAN_PG_USER_PARTIAL=$(jq '.parameters.PostgreSQL_username.Value' ./parameters.json | tr -d '"') | tee -a ckan-compose/.env
-# echo POSTGRES_PASSWORD=$(jq '.parameters.PostgreSQL_password.Value' ./parameters.json | tr -d '"') | tee -a ckan-compose/.env
+# echo CKAN_PG_USER_PARTIAL=$(jq '.parameters.param_postgres_username.Value' ./parameters.json | tr -d '"') | tee -a ckan-compose/.env
+# echo POSTGRES_PASSWORD=$(jq '.parameters.param_postgres_password.Value' ./parameters.json | tr -d '"') | tee -a ckan-compose/.env
 
 export -p > ckan-compose/.env
 sed -i 's/declare -x //' ckan-compose/.env
@@ -15,4 +15,4 @@ sed -i 's/declare -x //' ckan-compose/.env
 sed -i '/OLDPWD/d'  ckan-compose/.env
 
 echo "Please run:"
-echo "scp ckan-compose/.env geosolutions@${CKAN_VM_NAME}.westeurope.cloudapp.azure.com:C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env"
+echo "scp ckan-compose/.env ${CKAN_VM_USER}@${CKAN_VM_NAME}.westeurope.cloudapp.azure.com:C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env"
