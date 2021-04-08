@@ -55,7 +55,7 @@ Partial customization can be also be done in file `setenv.sh`, for vars not extr
   - This script will also retrieve some info from Azure, so it's not immediate, but should be quite fast anyway.
   - Run locally 
     ```bash
-    ./az_config_env.sh
+    env -i ./az_config_env.sh
     ```
 - Copy configuration to VM
   - Previous script should have printed a full `scp` command line. Run it locally to copy local generated configuration file to VM.
@@ -71,8 +71,8 @@ Partial customization can be also be done in file `setenv.sh`, for vars not extr
 
 - Create API key
   1. login into CKAN as admin
-  1. go into admin user properties
-  1. regenerate api key
+  1. go into admin / manage 
+  1. regenerate API key
 
 - Load initial datasets
   - Run the script

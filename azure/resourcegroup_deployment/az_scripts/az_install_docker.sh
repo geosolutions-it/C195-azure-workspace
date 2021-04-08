@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-vmusername="$arg10"
+vmusername="${arg10}"
 
 sudo apt-get -y update
 sudo apt-get -y install apt-transport-https ca-certificates curl gnupg postgresql-client

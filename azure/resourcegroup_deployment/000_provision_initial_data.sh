@@ -2,13 +2,14 @@
 
 #!/usr/bin/env bash
 set -x
-. ./setenv.sh
+. ckan-compose/.env
 CKAN_HOST_FULL=${CKAN_VM_NAME}.${VM_DOMAIN}
 export PGPASSWORD=$POSTGRES_PASSWORD
+
 CKAN_APIKEY=$(psql -t -A -X -U ${CKAN_PG_USER_PARTIAL}@${PG_INSTANCE} -h ${PG_HOST_FULL} ckan -c "select apikey from \"user\" where name='admin';")
 NEW_JSON=/tmp/load_org.json
 
-for json in orgs/* ; do
+for json in data/orgs/* ; do
   echo ===
   echo UPLOADING $json
   sed -e s=__SERVER__=${CKAN_HOST_FULL}=g $json > $NEW_JSON
@@ -17,7 +18,7 @@ for json in orgs/* ; do
       -H "Authorization:${CKAN_APIKEY}"
 done
 
-for JSON in ./datasets/* ; do
+for JSON in data/datasets/* ; do
   echo ===
   echo UPLOADING $JSON
 
