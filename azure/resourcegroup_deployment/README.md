@@ -15,7 +15,7 @@ Prerequisites on the machine performing deployment operations:
 
 ## Customize parameters
 
-Edit the file `parameters.json` to suit your needs.
+Edit the file `parameters.json` to suit your needs.  
 
 Please note that username/password are identical for vm and postgres instance.
 
@@ -33,61 +33,60 @@ Here is a partial list:
 - `param_storageaccount_name`: Storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only.
 - `param_registry_name`: Resource names may contain alpha numeric characters only and must be between 5 and 50 characters.
 
-## Deploy main resources
-
-This command will take up to 20-25 minutes to complete.
-
-```bash
-   ./azure_main_deploy.sh
-```
-
-## Configure environment on Azure CKAN VM, build docker images
-
-- start ckan, solr docker image building.
-  ```bash
-     ./azure_ckan_vm_config.sh
-  ```
-
-- on the installation machine align `C195-azure-workspace/azure/resourcegroup_deployment/setenv.sh` and `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env.sample` variables not taken from parameters.json
-
-- on the installation machine run:
-  ```bash
-  ./az_config_env.sh
-  ```
-  This script will also retrieve some info from Azure, so it's not immediate, but should be quite fast anyway.
+Partial customization can be also be done in file `setenv.sh`, for vars not extracted from the `parameters.json` file, but it's not needed.
 
 
-- copy resulting `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env` on the very same 
-  directory on the ckan-vm (a command to do that is echoed from previous script)
+## Deploy 
 
-## Deploy solr azure container, start ckan container on vm.
+- Deploy main resources in Azure. 
+  - This command will take up to 20-25 minutes to complete.
+  - Run locally:
+    ```bash
+    ./azure_main_deploy.sh
+    ```
 
-Deploy a container on private network for Solr mounting a SMB share for persistent solr data and start CKAN docker container.
+- Install docker stuff on VM and create images.
+  - Run locally:
+    ```bash
+    ./azure_ckan_vm_config.sh
+    ```
 
-```bash
-./azure_solr_config.sh
-```
+- Create configuration from local files.
+  - This script will also retrieve some info from Azure, so it's not immediate, but should be quite fast anyway.
+  - Run locally 
+    ```bash
+    ./az_config_env.sh
+    ```
+- Copy configuration to VM
+  - Previous script should have printed a full `scp` command line. Run it locally to copy local generated configuration file to VM.
 
-This command above is idempotent and can be run several times at once, due to a current bug in Azure CLI 
-(https://github.com/Azure/azure-cli/issues/16705) this script may be needed to be run more than one for 
-solr to be configured correctly
 
-## Provision initial data to ckan
+- Create CKAN DB, restart services
+  - Create CKAN DBs and assign privs, restart containers in VM (solr, ckan, nginx)
+  - This command above is idempotent and can be run several times, due to a current bug in Azure CLI (https://github.com/Azure/azure-cli/issues/16705) this script may be needed to be run more than one for solr to be configured correctly.
+  - Run locally (calls `az` commands)
+    ```bash
+    ./azure_solr_config.sh
+    ```
 
-- make at least a login ad admin, got to admin user properties, regenerate API key
-- run this script:
+- Create API key
+  1. login into CKAN as admin
+  1. go into admin user properties
+  1. regenerate api key
 
-```bash
-./000_provision_initial_data.sh
-```
+- Load initial datasets
+  - Run the script
+    ```bash
+    ./000_provision_initial_data.sh
+    ```
 
 ## Smoke tests
 
 - to run smoke tests there is a script that can be run after deployment on the installation machine:
 
-```bash
-./azure_test_all.sh
-```
+  ```bash
+  ./azure_test_all.sh
+  ```
 
 ## Restart CKAN on failures
 
@@ -111,3 +110,5 @@ to configure this you can use cron like this:
 ```bash
 */2 * * * * $HOME/C195-azure-workspace/azure/resourcegroup_deployment/az_scripts/az_cronjob.sh
 ```
+
+You may need to edit the `home` path in `az_cronjob.sh`
