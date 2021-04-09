@@ -61,6 +61,7 @@ fi
 # changes to the ini file -- SHOULD BE IDEMPOTENT
 
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins c195
+crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins "dcat dcat_json_interface structured_data"
 
 crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_size 10
 crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.echo_pool True
@@ -105,8 +106,8 @@ ckan --config "$CONFIG_INI" db init
 # echo "Adding admin user"
 
 if [ "$(ckan -c "$CONFIG_INI" sysadmin list 2>&1 | grep ^User | grep -v 'name=default' | wc -l )" == "0" ];then
-  APIKEY=$(cat /proc/sys/kernel/random/uuid)
-  echo -ne '\n' | ckan -c "$CONFIG_INI" sysadmin add admin email=admin@localhost name=admin password=adminadmin # apikey=$APIKEY
+  # APIKEY=$(cat /proc/sys/kernel/random/uuid)
+  echo -ne '\n' | ckan -c "$CONFIG_INI" sysadmin add admin email=admin@localhost name=admin password=adminadmin
 fi
 
 echo 'Running command --> ' $@

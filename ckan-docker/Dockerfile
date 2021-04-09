@@ -28,6 +28,7 @@ RUN apt-get -q -y update \
         wget \
         gdb python3-dbg \
         procps \
+        swig \
     && apt-get -q clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -68,6 +69,9 @@ RUN $CKAN_VENV/bin/pip install -U pip && \
     chown -R ckan:ckan $CKAN_HOME $CKAN_VENV $CKAN_CONFIG $CKAN_STORAGE_PATH
 
 RUN $CKAN_VENV/bin/pip install -e git+https://github.com/geosolutions-it/ckanext-c195.git@main#egg=ckanext-c195
+RUN $CKAN_VENV/bin/pip install -e git+https://github.com/ckan/ckanext-dcat.git@master#egg=ckanext-dcat && \
+    $CKAN_VENV/bin/pip install -r $CKAN_VENV/src/ckanext-dcat/requirements.txt 
+
 
 #USER ckan
 
