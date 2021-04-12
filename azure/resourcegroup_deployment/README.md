@@ -35,6 +35,9 @@ Here is a partial list:
 
 Partial customization can be also be done in file `setenv.sh`, for vars not extracted from the `parameters.json` file, but it's not needed.
 
+It is recommended **not** to modify the params in the following list, because they are considered as fixed values in some scripts:
+- `param_postgres_username = ckan`
+
 
 ## Deploy 
 
