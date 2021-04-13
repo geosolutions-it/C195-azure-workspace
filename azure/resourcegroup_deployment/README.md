@@ -11,7 +11,10 @@ Prerequisites on the machine performing deployment operations:
 ## First steps
 
 - In Azure, create the Resource Group for the deployment
-- In your shell, run `az login` and authenticate in Azure
+- Authenticate in azure in order to be able to run `az` commands.  
+  You may either run in your terminal:  
+  - `az login`: it will open a browser session where you can perform the authentication.
+  - `az login -u USERNAME`: it will ask for a query in the terminal.
 
 ## Customize parameters
 
