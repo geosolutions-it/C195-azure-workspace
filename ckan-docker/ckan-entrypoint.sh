@@ -61,7 +61,9 @@ fi
 # changes to the ini file -- SHOULD BE IDEMPOTENT
 
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins c195
-crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins "dcat dcat_json_interface structured_data"
+crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins dcat
+crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins dcat_json_interface
+crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins structured_data
 
 crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_size 10
 crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.echo_pool True
