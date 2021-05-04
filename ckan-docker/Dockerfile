@@ -37,6 +37,10 @@ ENV CKAN_HOME /usr/lib/ckan
 ENV CKAN_VENV $CKAN_HOME/venv
 ENV CKAN_CONFIG /etc/ckan
 ENV CKAN_STORAGE_PATH=/var/lib/ckan
+ENV TENANT_ID 00000000-0000-0000-0000-000000000000
+ENV CLIENT_ID 00000000-0000-0000-0000-000000000000
+ENV CLIENT_SECRET pKf_0000000_00000-0000-0000
+ENV CKAN_AZURE_AUTH_ENABLED "false"
 
 # Build-time variables specified by docker-compose.yml / .env
 ARG CKAN_SITE_URL
@@ -71,7 +75,8 @@ RUN $CKAN_VENV/bin/pip install -U pip && \
 RUN $CKAN_VENV/bin/pip install -e git+https://github.com/geosolutions-it/ckanext-c195.git@main#egg=ckanext-c195
 RUN $CKAN_VENV/bin/pip install -e git+https://github.com/ckan/ckanext-dcat.git@master#egg=ckanext-dcat && \
     $CKAN_VENV/bin/pip install -r $CKAN_VENV/src/ckanext-dcat/requirements.txt 
-
+RUN $CKAN_VENV/bin/pip install -e git+https://github.com/geosolutions-it/ckanext-azure-auth.git@main#egg=ckanext-azure-auth && \
+    $CKAN_VENV/bin/pip install -r $CKAN_VENV/src/ckanext-azure-auth/requirements.txt
 
 #USER ckan
 
