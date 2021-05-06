@@ -63,6 +63,7 @@ crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins dcat
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins dcat_json_interface
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins structured_data
+crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins azure_auth
 
 
 crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_size 10
@@ -79,15 +80,15 @@ crudini --set --verbose ${CONFIG_INI} logger_ckan     level DEBUG
 crudini --set --verbose ${CONFIG_INI} logger_ckanext  level DEBUG
 crudini --set --verbose ${CONFIG_INI} handler_console level DEBUG
 
-if [ "$CKAN_AZURE_AUTH_ENABLED" == "true" ]; then
-  crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins azure_auth
-  crudini --set --verbose ${CONFIG_INI} ckanext.azure_auth.tenant_id $TENANT_ID
-  crudini --set --verbose ${CONFIG_INI} ckanext.azure_auth.client_id $CLIENT_ID
-  crudini --set --verbose ${CONFIG_INI} ckanext.azure_auth.audience $CLIENT_ID
-  crudini --set --verbose ${CONFIG_INI} ckanext.azure_auth.client_secret $CLIENT_SECRET
-  crudini --set --verbose ${CONFIG_INI} ckanext.azure_auth.auth_callback_path /azure/callback
-  crudini --set --verbose ${CONFIG_INI} ckanext.azure_auth.allow_create_users True
-fi
+#Azure auth plugin https://github.com/geosolutions-it/ckanext-azure-auth.git
+
+crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.tenant_id ${TENANT_ID}
+crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.client_id ${CLIENT_ID}
+crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.audience ${CLIENT_ID}
+crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.client_secret ${CLIENT_SECRET}
+crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.auth_callback_path /azure/callback
+crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.allow_create_users True
+
 # END changes to the ini file
 
 # Get or create CKAN_SQLALCHEMY_URL
