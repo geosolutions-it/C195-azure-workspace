@@ -55,6 +55,15 @@
         },
         "param_networksecgroup_name": {
             "Value": "ckan-vm-nsg"
-        }
+        },
+        "param_azure_auth_tenantid": {
+            "Value": "00000000-0000-0000-0000-000000000000"
+        },
+        "param_azure_auth_clientid": {
+            "Value": "00000000-0000-0000-0000-000000000000"
+        },
+        "param_azure_auth_client_secret": {
+            "Value": "pKf_0000000_00000-0000-0000"
+        }             
     }
 }    
