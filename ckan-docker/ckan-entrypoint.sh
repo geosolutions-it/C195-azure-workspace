@@ -90,6 +90,7 @@ crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.client_secret 
 crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.auth_callback_path /azure/callback
 crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.allow_create_users True
 
+crudini --set --verbose ${CONFIG_INI} app:main ckan.max_resource_size 5000
 #Configure datastore SQL functions
 
 $CKAN_VENV/bin/ckan -c ${CONFIG_INI} datastore set-permissions | grep -v ^"$(date +%Y-%m-%d)" | psql ${CKAN_DATASTORE_WRITE_URL} --set ON_ERROR_STOP=1

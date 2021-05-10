@@ -48,9 +48,13 @@ services:
 
   datapusher:
     container_name: ckan_datapusher
-    image: clementmouchet/datapusher
+    image: crearegistry.azurecr.io/datapusher
+    build:
+      context: ./datapusher_copy
     ports:
       - "8800:8800"
+    environment:
+      - MAX_CONTENT_LENGTH="5000000000"
 
   ckan_db:
     image: crearegistry.azurecr.io/crea_ckan_db
