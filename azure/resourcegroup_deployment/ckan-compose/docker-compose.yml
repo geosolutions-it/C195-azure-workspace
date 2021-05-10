@@ -4,6 +4,7 @@
 version: "3"
 
 services:
+
   ckan:
     container_name: ckan
     image: ${REGISTRY_NAME}.azurecr.io/crea_ckan
@@ -17,7 +18,7 @@ services:
     environment:
       # Defaults work with linked containers, change to use own Postgres, SolR, Redis or Datapusher
       - CKAN_SQLALCHEMY_URL=postgresql://${CKAN_PG_USER}:${POSTGRES_PASSWORD}@${PG_HOST_FULL}/ckan
-      - CKAN_DATASTORE_WRITE_URL="postgresql://${CKAN_PG_USER}:${POSTGRES_PASSWORD}@${PG_HOST_FULL}/datastore"
+      - CKAN_DATASTORE_WRITE_URL=postgresql://${CKAN_PG_USER}:${POSTGRES_PASSWORD}@${PG_HOST_FULL}/datastore
       - CKAN_DATASTORE_READ_URL=postgresql://${DATASTORE_RO_PG_USER}:${DATASTORE_READONLY_PASSWORD}@${PG_HOST_FULL}/datastore
       - CKAN_SOLR_URL=http://${SOLR_HOST_FULL}:8983/solr/ckan
       - CKAN_REDIS_URL=redis://default:${REDIS_AUTHKEY}@${REDIS_HOST_FULL}:6379/1
@@ -28,6 +29,13 @@ services:
       - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
     volumes:
       - ${CKAN_SHARE_MOUNT}:/var/lib/ckan
+
+  datapusher:
+    container_name: ckan_datapusher
+    image: clementmouchet/datapusher
+    ports:
+      - "8800:8800"
+
   ckan_solr:
     image: ${REGISTRY_NAME}.azurecr.io/crea_ckan_solr
     container_name: ckan_solr      
@@ -35,7 +43,8 @@ services:
     expose:
       - "8983"
     volumes:
-      - ${SOLR_SHARE_MOUNT}:/opt/solr/server/solr/ckan/data  
+      - ${SOLR_SHARE_MOUNT}:/opt/solr/server/solr/ckan/data
+
   proxy:
     image: ghcr.io/linuxserver/swag
     container_name: proxy
