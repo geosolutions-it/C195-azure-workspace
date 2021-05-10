@@ -3,8 +3,8 @@
 version: "3"
 
 volumes:
-  ckan_config:
-  ckan_home:
+  # ckan_config:
+  # ckan_home:
   ckan_storage:
   pg_data:
   solr_data:
@@ -32,7 +32,7 @@ services:
       # Defaults work with linked containers, change to use own Postgres, SolR, Redis or Datapusher
       - CKAN_SQLALCHEMY_URL=postgresql://ckan:${POSTGRES_PASSWORD}@ckan_db/ckan
       - CKAN_DATASTORE_WRITE_URL=postgresql://ckan:${POSTGRES_PASSWORD}@ckan_db/datastore
-      - CKAN_DATASTORE_READ_URL=postgresql://datastore_ro:${DATASTORE_READONLY_PASSWORD}@db/datastore
+      - CKAN_DATASTORE_READ_URL=postgresql://datastore_ro:${DATASTORE_READONLY_PASSWORD}@ckan_db/datastore
       - CKAN_SOLR_URL=http://ckan_solr:8983/solr/ckan
       - CKAN_REDIS_URL=redis://ckan_redis:6379/1
       - CKAN_DATAPUSHER_URL=http://datapusher:8800

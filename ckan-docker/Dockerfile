@@ -1,6 +1,6 @@
 # See CKAN docs on installation from Docker Compose on usage
 FROM debian:buster
-MAINTAINER Open Knowledge
+LABEL Open Knowledge
 
 EXPOSE 5000
 
@@ -41,10 +41,10 @@ ENV TENANT_ID 00000000-0000-0000-0000-000000000000
 ENV CLIENT_ID 00000000-0000-0000-0000-000000000000
 ENV CLIENT_SECRET pKf_0000000_00000-0000-0000
 
+# Build-time variables specified by docker-compose.yml / .env
 ARG TENANT_ID
 ARG CLIENT_ID
 ARG CLIENT_SECRET
-# Build-time variables specified by docker-compose.yml / .env
 ARG CKAN_SITE_URL
 
 # Create ckan user
@@ -54,16 +54,7 @@ RUN useradd -r -u 900 -m -c "ckan account" -d $CKAN_HOME -s /bin/bash ckan
 RUN mkdir -p $CKAN_VENV $CKAN_CONFIG $CKAN_STORAGE_PATH && \
     python3 -m venv $CKAN_VENV
 
-#    ln -s $CKAN_VENV/bin/pip /usr/local/bin/ckan-pip &&\
-#    ln -s $CKAN_VENV/bin/ckan /usr/local/bin/ckan
-
-# Setup CKAN
-#ADD . $CKAN_VENV/src/ckan/
 COPY ./ckan_copy $CKAN_VENV/src/ckan/
-COPY ./ckan-entrypoint.sh /ckan-entrypoint.sh
-COPY ./ckan-run.sh /ckan-run.sh
-COPY ./gdb.commands /gdb.commands
-COPY ./capture_gdb.sh /capture_gdb.sh
 
 RUN $CKAN_VENV/bin/pip install -U pip && \
     $CKAN_VENV/bin/pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/requirement-setuptools.txt && \
@@ -71,7 +62,6 @@ RUN $CKAN_VENV/bin/pip install -U pip && \
     $CKAN_VENV/bin/pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/dev-requirements.txt && \
     $CKAN_VENV/bin/pip install -e $CKAN_VENV/src/ckan/ && \
     ln -s $CKAN_VENV/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini && \
-    chmod +x /ckan-entrypoint.sh /capture_gdb.sh /ckan-run.sh && \
     chown -R ckan:ckan $CKAN_HOME $CKAN_VENV $CKAN_CONFIG $CKAN_STORAGE_PATH
 
 RUN $CKAN_VENV/bin/pip install -e git+https://github.com/geosolutions-it/ckanext-c195.git@main#egg=ckanext-c195
@@ -79,6 +69,14 @@ RUN $CKAN_VENV/bin/pip install -e git+https://github.com/ckan/ckanext-dcat.git@m
     $CKAN_VENV/bin/pip install -r $CKAN_VENV/src/ckanext-dcat/requirements.txt 
 RUN $CKAN_VENV/bin/pip install -e git+https://github.com/geosolutions-it/ckanext-azure-auth.git@main#egg=ckanext-azure-auth && \
     $CKAN_VENV/bin/pip install -r $CKAN_VENV/src/ckanext-azure-auth/requirements.txt
+
+# Setup CKAN custom scripts
+
+COPY ./ckan-entrypoint.sh /ckan-entrypoint.sh
+COPY ./ckan-run.sh /ckan-run.sh
+COPY ./gdb.commands /gdb.commands
+COPY ./capture_gdb.sh /capture_gdb.sh
+RUN chmod +x /ckan-entrypoint.sh /capture_gdb.sh /ckan-run.sh
 
 #USER ckan
 

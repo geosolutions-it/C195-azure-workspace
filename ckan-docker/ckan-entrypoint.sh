@@ -64,13 +64,8 @@ crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins dcat_json_interface
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins structured_data
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins azure_auth
-
-
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_size 10
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.echo_pool True
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_pre_ping True
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_reset_on_return rollback
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_timeout 30
+crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins datastore
+crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins datapusher
 
 crudini --set --verbose ${CONFIG_INI} DEFAULT debug True
 
@@ -79,6 +74,12 @@ crudini --set --verbose ${CONFIG_INI} logger_werkzeug level DEBUG
 crudini --set --verbose ${CONFIG_INI} logger_ckan     level DEBUG
 crudini --set --verbose ${CONFIG_INI} logger_ckanext  level DEBUG
 crudini --set --verbose ${CONFIG_INI} handler_console level DEBUG
+
+crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_size 10
+crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.echo_pool True
+crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_pre_ping True
+crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_reset_on_return rollback
+crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_timeout 30
 
 #Azure auth plugin https://github.com/geosolutions-it/ckanext-azure-auth.git
 
@@ -89,7 +90,11 @@ crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.client_secret 
 crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.auth_callback_path /azure/callback
 crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.allow_create_users True
 
-# END changes to the ini file
+#Configure datastore SQL functions
+
+$CKAN_VENV/bin/ckan -c ${CONFIG_INI} datastore set-permissions | grep -v ^"$(date +%Y-%m-%d)" | psql ${CKAN_DATASTORE_WRITE_URL} --set ON_ERROR_STOP=1
+
+# END changes to the ini file 
 
 # Get or create CKAN_SQLALCHEMY_URL
 if [ -z "$CKAN_SQLALCHEMY_URL" ]; then
