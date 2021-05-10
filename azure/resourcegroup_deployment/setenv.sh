@@ -58,6 +58,6 @@ SOLR_SHARE_MOUNT=/mnt/solrshare
 
 #ckan azure_auth plugin (see https://github.com/geosolutions-it/ckanext-azure-auth.git)
 
-TENANT_IT=$(jq -r '.parameters.param_azure_auth_tenantid.Value' ./parameters.json)
+TENANT_ID=$(jq -r '.parameters.param_azure_auth_tenantid.Value' ./parameters.json)
 CLIENT_ID=$(jq -r '.parameters.param_azure_auth_clientid.Value' ./parameters.json)
 CLIENT_SECRET=$(jq -r '.parameters.param_azure_auth_client_secret.Value' ./parameters.json)
