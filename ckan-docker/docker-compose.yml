@@ -49,20 +49,13 @@ services:
   datapusher:
     container_name: ckan_datapusher
     image: keitaro/ckan-datapusher:latest
-    # build:
-    #   dockerfile: ./Dockerfile
-    #   context: ./datapusher_copy/
     ports:
       - "8000:8000"
     environment:
       - DATAPUSHER_MAX_CONTENT_LENGTH=5000000000
-      #- DATAPUSHER_CHUNK_SIZE=${DATAPUSHER_CHUNK_SIZE}
-      #- DATAPUSHER_CHUNK_INSERT_ROWS=${DATAPUSHER_CHUNK_INSERT_ROWS}
-      - DATAPUSHER_DOWNLOAD_TIMEOUT=30
+      - DATAPUSHER_DOWNLOAD_TIMEOUT=60
       - DATAPUSHER_SSL_VERIFY=False
       - DATAPUSHER_REWRITE_RESOURCES=True
-      - CKAN_SITE_URL=${CKAN_SITE_URL}
-      # - DATAPUSHER_REWRITE_URL=http://ckan:5000
 
   ckan_db:
     image: crearegistry.azurecr.io/crea_ckan_db
