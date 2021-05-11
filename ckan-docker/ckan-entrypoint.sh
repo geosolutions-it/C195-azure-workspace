@@ -97,7 +97,7 @@ crudini --set --verbose ${CONFIG_INI} app:main ckan.datapusher.assume_task_stale
 
 #Configure datastore SQL functions
 
-$CKAN_VENV/bin/ckan -c ${CONFIG_INI} datastore set-permissions | grep -v ^"$(date +%Y-%m-%d)" | psql --set ON_ERROR_STOP=1 -U ckan@${PG_HOST} -h ${PG_HOST_FULL} datastore
+$CKAN_VENV/bin/ckan -c ${CONFIG_INI} datastore set-permissions | grep -v ^"$(date +%Y-%m-%d)" | PDPASSWORD=${POSTGRES_PASSWORD} psql --set ON_ERROR_STOP=1 -U ckan@${PG_HOST} -h ${PG_HOST_FULL} datastore
 
 # END changes to the ini file 
 
