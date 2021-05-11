@@ -28,6 +28,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
       - PG_HOST_FULL=${PG_HOST_FULL}
+      - PG_HOST=${PG_HOST}
     volumes:
       - ${CKAN_SHARE_MOUNT}:/var/lib/ckan
 
