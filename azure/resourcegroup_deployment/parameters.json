@@ -9,13 +9,13 @@
             "Value": "YOUR_SUBSCRIPTION_ID"
         },                   
         "param_redis_name": {
-            "Value": "testredis01aaa"
+            "Value": "YOUR_REDIS_NAME"
         },
         "param_endpoint_redis_name": {
-            "Value": "testredis01aaa"
+            "Value": "YOUR_REDIS_NAME"
         },
         "param_vm_ckan_hostname": {
-            "Value": "testvm01aaaxyz"
+            "Value": "YOUR_VM_HOSTNAME"
         },
         "param_vm_ckan_username": {
             "Value": "geosolutions"
@@ -30,28 +30,28 @@
             "Value": "S3cre3tP4ssw0rd"
         },              
         "param_postgres_hostname": {
-            "Value": "testpostgres01aaaa"
+            "Value": "YOUR_POSTGRES_HOSTNAME"
         },
         "param_endpoint_pg_name": {
-            "Value": "testpostgres01aaaa"
+            "Value": "YOUR_POSTGRES_HOSTNAME"
         },
         "param_vnet_name": {
             "Value": "privnet01"
         },
         "param_networkiface_vm_name": {
-            "Value": "testvm01aaa"
+            "Value": "ckan-vm195"
         },
         "param_publicipaddress_vm_name": {
-            "Value": "testvm01aaa"
+            "Value": "ckan-vm-ip"
         },
         "param_storageaccount_name": {
-            "Value": "teststorage01aaa"
+            "Value": "YOUR_STORAGEACCOUNT_NAME"
         },
         "param_vnetlink_solr_name": {
             "Value": "crea-solr"
         },
         "param_registry_name": {
-            "Value": "testregistry01aaa"
+            "Value": "YOUR_REGISTRY_NAME"
         },
         "param_networksecgroup_name": {
             "Value": "ckan-vm-nsg"
