@@ -35,6 +35,8 @@ services:
     image: clementmouchet/datapusher
     ports:
       - "8800:8800"
+    environment:
+      - MAX_CONTENT_LENGTH="5000000000"      
 
   ckan_solr:
     image: ${REGISTRY_NAME}.azurecr.io/crea_ckan_solr
