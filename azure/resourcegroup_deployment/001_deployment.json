@@ -85,7 +85,19 @@
         "param_vnetlink_solr_name": {
             "defaultValue": "crea-solr",
             "type": "String"
-        }
+        },
+        "param_azure_auth_tenantid": {
+            "defaultValue": "00000000-0000-0000-0000-000000000000",
+            "type": "String"
+        },
+        "param_azure_auth_clientid": {
+            "defaultValue": "00000000-0000-0000-0000-000000000000",
+            "type": "String"
+        },
+        "param_azure_auth_client_secret": {
+            "defaultValue": "pKf_0000000_00000-0000-0000",
+            "type": "String"
+        }         
     },
     "variables": {},
     "resources": [

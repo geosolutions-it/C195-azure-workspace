@@ -35,7 +35,7 @@ services:
       - CKAN_DATASTORE_READ_URL=postgresql://datastore_ro:${DATASTORE_READONLY_PASSWORD}@ckan_db/datastore
       - CKAN_SOLR_URL=http://ckan_solr:8983/solr/ckan
       - CKAN_REDIS_URL=redis://ckan_redis:6379/1
-      - CKAN_DATAPUSHER_URL=http://datapusher:8800
+      - CKAN_DATAPUSHER_URL=http://datapusher:8000
       - CKAN_SITE_URL=${CKAN_SITE_URL}
       - CKAN_MAX_UPLOAD_SIZE_MB=${CKAN_MAX_UPLOAD_SIZE_MB}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -48,13 +48,21 @@ services:
 
   datapusher:
     container_name: ckan_datapusher
-    image: crearegistry.azurecr.io/datapusher
-    build:
-      context: ./datapusher_copy
+    image: keitaro/ckan-datapusher:latest
+    # build:
+    #   dockerfile: ./Dockerfile
+    #   context: ./datapusher_copy/
     ports:
-      - "8800:8800"
+      - "8000:8000"
     environment:
-      - MAX_CONTENT_LENGTH="5000000000"
+      - DATAPUSHER_MAX_CONTENT_LENGTH=5000000000
+      #- DATAPUSHER_CHUNK_SIZE=${DATAPUSHER_CHUNK_SIZE}
+      #- DATAPUSHER_CHUNK_INSERT_ROWS=${DATAPUSHER_CHUNK_INSERT_ROWS}
+      - DATAPUSHER_DOWNLOAD_TIMEOUT=30
+      - DATAPUSHER_SSL_VERIFY=False
+      - DATAPUSHER_REWRITE_RESOURCES=True
+      - CKAN_SITE_URL=${CKAN_SITE_URL}
+      # - DATAPUSHER_REWRITE_URL=http://ckan:5000
 
   ckan_db:
     image: crearegistry.azurecr.io/crea_ckan_db

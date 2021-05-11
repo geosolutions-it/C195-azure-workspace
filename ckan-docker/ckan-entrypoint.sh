@@ -67,7 +67,7 @@ crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins datastore
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins datapusher
 
-crudini --set --verbose ${CONFIG_INI} DEFAULT debug True
+crudini --set --verbose ${CONFIG_INI} DEFAULT debug False
 
 crudini --set --verbose ${CONFIG_INI} logger_root     level DEBUG
 crudini --set --verbose ${CONFIG_INI} logger_werkzeug level DEBUG
@@ -91,6 +91,10 @@ crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.auth_callback_
 crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.allow_create_users True
 
 crudini --set --verbose ${CONFIG_INI} app:main ckan.max_resource_size 5000
+crudini --set --verbose ${CONFIG_INI} app:main ckan.datapusher.callback_url_base ${CKAN_SITE_URL}
+crudini --set --verbose ${CONFIG_INI} app:main ckan.datapusher.url ${CKAN_DATAPUSHER_URL}
+crudini --set --verbose ${CONFIG_INI} app:main ckan.datapusher.assume_task_stale_after 300
+
 #Configure datastore SQL functions
 
 $CKAN_VENV/bin/ckan -c ${CONFIG_INI} datastore set-permissions | grep -v ^"$(date +%Y-%m-%d)" | psql ${CKAN_DATASTORE_WRITE_URL} --set ON_ERROR_STOP=1
