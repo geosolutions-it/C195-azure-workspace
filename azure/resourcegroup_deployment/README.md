@@ -41,6 +41,15 @@ Partial customization can be also be done in file `setenv.sh`, for vars not extr
 It is recommended **not** to modify the params in the following list, because they are considered as fixed values in some scripts:
 - `param_postgres_username = ckan`
 
+### ADFS parameters
+
+In order to setup ADFS integration, also edit:
+- `param_azure_auth_tenantid`
+- `param_azure_auth_clientid`
+- `param_azure_auth_client_secret`  
+
+When configuring the AD client, also register a callback path in Azure as `PROT://YOUR_CKAN_HOST/oauth2/callback`
+
 
 ## Deploy 
 
