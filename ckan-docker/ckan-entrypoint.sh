@@ -64,6 +64,7 @@ crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins dcat_json_interface
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins structured_data
 crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins azure_auth
+crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins grace_period
 
 
 crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_size 10
@@ -89,6 +90,9 @@ crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.client_secret 
 crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.auth_callback_path /azure/callback
 crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.allow_create_users True
 
+crudini --set --verbose ${CONFIG_INI} app:main ckan.auth.allow_dataset_collaborators True
+crudini --set --verbose ${CONFIG_INI} app:main ckan.auth.allow_admin_collaborators True
+crudini --set --verbose ${CONFIG_INI} app:main ckan.auth.allow_collaborators_to_change_owner_org False
 # END changes to the ini file
 
 # Get or create CKAN_SQLALCHEMY_URL
