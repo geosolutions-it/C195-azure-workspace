@@ -26,6 +26,9 @@ services:
       - CKAN_MAX_UPLOAD_SIZE_MB=${CKAN_MAX_UPLOAD_SIZE_MB}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - TENANT_ID=${TENANT_ID}
     volumes:
       - ${CKAN_SHARE_MOUNT}:/var/lib/ckan
   ckan_solr:
