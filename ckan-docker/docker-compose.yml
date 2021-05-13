@@ -40,6 +40,9 @@ services:
       - CKAN_MAX_UPLOAD_SIZE_MB=${CKAN_MAX_UPLOAD_SIZE_MB}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
+      - CLIENT_ID=${ADFS_CLIENT_ID}
+      - CLIENT_SECRET=${ADFS_CLIENT_SECRET}
+      - TENANT_ID=${ADFS_TENANT_ID}
 
     volumes:
       # - ckan_config:/etc/ckan
