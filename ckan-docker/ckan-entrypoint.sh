@@ -50,6 +50,13 @@ while ! pg_isready -h $CKAN_PG_HOST -U ckan; do
   sleep 1;
 done
 
+# If we don't already have a who config file, bootstrap
+if [ ! -e "$CKAN_CONFIG/who.ini" ]; then
+  cp $CKAN_VENV/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini  
+else
+  echo "who.ini already exists"
+fi
+
 # If we don't already have a config file, bootstrap
 if [ ! -e "$CONFIG_INI" ]; then
   write_config
