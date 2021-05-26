@@ -30,16 +30,19 @@ resourceGroupName="$arg1"
 storageAccountName="$arg2"
 fileShareName="$arg3"
 fileShareName2="$arg9"
+fileShareName3="ckanconfig"
 storageAccountKey="$arg8"
 registryName="$arg4"
 registryUsername="$arg5"
 registryPassword="$arg6"
 mntPath1="/mnt/$fileShareName"
 mntPath2="/mnt/$fileShareName2"
+mntPath3="/mnt/$fileShareName3"
 smbCredentialFile="/etc/smbcredentials/$storageAccountName.cred"
 httpEndpoint="$arg7"
 smbPath1=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName
 smbPath2=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName2
+smbPath3=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName3
 
 #build and push ckan and solr images
 
@@ -56,7 +59,7 @@ sudo -u ${vmusername} docker pull ${registryName}.azurecr.io/crea_ckan || echo "
 sudo -u ${vmusername} docker pull ${registryName}.azurecr.io/crea_ckan_solr || echo "problem pulling from registry"
 # mount ckan share
 
-sudo mkdir -p $mntPath1 $mntPath2
+sudo mkdir -p $mntPath1 $mntPath2 $mntPath3
 
 if [ ! -d "/etc/smbcredentials" ]; then
     sudo mkdir "/etc/smbcredentials"
@@ -74,12 +77,19 @@ sudo chmod 600 $smbCredentialFile
 if [ -z "$(grep $smbPath1\ $mntPath1 /etc/fstab)" ]; then
     echo "$smbPath1 $mntPath1 cifs nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
 else
-    echo "/etc/fstab was not modified to avoid conflicting entries as this Azure file share was already present. You may want to double check /etc/fstab to ensure the configuration is as desired."
+    echo "/etc/fstab was not modified to avoid conflicting entries as this Azure file share $mntPath1 was already present. You may want to double check /etc/fstab to ensure the configuration is as desired."
 fi
 
 if [ -z "$(grep $smbPath2\ $mntPath2 /etc/fstab)" ]; then
     echo "$smbPath2 $mntPath2 cifs nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
 else
-    echo "/etc/fstab was not modified to avoid conflicting entries as this Azure file share was already present. You may want to double check /etc/fstab to ensure the configuration is as desired."
+    echo "/etc/fstab was not modified to avoid conflicting entries as this Azure file share $mntPath2 was already present. You may want to double check /etc/fstab to ensure the configuration is as desired."
 fi
+
+if [ -z "$(grep $smbPath3\ $mntPath3 /etc/fstab)" ]; then
+    echo "$smbPath3 $mntPath3 cifs nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
+else
+    echo "/etc/fstab was not modified to avoid conflicting entries as this Azure file share $mntPath3 was already present. You may want to double check /etc/fstab to ensure the configuration is as desired."
+fi
+
 sudo mount -a
