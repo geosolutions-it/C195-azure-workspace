@@ -112,7 +112,7 @@ cp ${CONFIG_TMP} ${CONFIG_INI}
 
 #Configure datastore SQL functions
 echo "Configuring datastore..."
-$CKAN_VENV/bin/ckan -c ${CONFIG_INI} datastore set-permissions | grep -v ^"$(date +%Y-%m-%d)" | PGPASSWORD=${POSTGRES_PASSWORD} psql --set ON_ERROR_STOP=1 -U ckan@${PG_HOST} -h ${PG_HOST_FULL} datastore
+$CKAN_VENV/bin/ckan -c ${CONFIG_INI} datastore set-permissions | grep -v ^"$(date +%Y-%m-%d)" | sed -e "s/ckan@etj-pg3/ckan/g" | PGPASSWORD=${POSTGRES_PASSWORD} psql --set ON_ERROR_STOP=1 -U ckan@${PG_HOST} -h ${PG_HOST_FULL} datastore
 
 # Get or create CKAN_SQLALCHEMY_URL
 if [ -z "$CKAN_SQLALCHEMY_URL" ]; then
