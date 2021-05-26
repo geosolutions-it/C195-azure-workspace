@@ -31,6 +31,8 @@ RUN apt-get -q -y update \
         swig \
     && apt-get -q clean \
     && rm -rf /var/lib/apt/lists/*
+RUN wget https://raw.githubusercontent.com/pixelb/crudini/0.9.3/crudini -O /usr/bin/crudini \
+    && chmod a+x /usr/bin/crudini
 
 # Define environment variables
 ENV CKAN_HOME /usr/lib/ckan
