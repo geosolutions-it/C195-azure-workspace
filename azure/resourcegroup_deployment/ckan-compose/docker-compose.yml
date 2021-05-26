@@ -31,7 +31,7 @@ services:
       - PG_HOST=${PG_HOST}
     volumes:
       - ${CKAN_SHARE_MOUNT}:/var/lib/ckan
-      - ckanconfig:/etc/ckan
+      - /mnt/ckanconfig:/etc/ckan
 
   datapusher:
     container_name: ckan_datapusher
