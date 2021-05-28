@@ -24,7 +24,7 @@ sudo -u ${vmusername} git submodule init && sudo -u ${vmusername} git submodule 
 
 cd /home/${vmusername}/C195-azure-workspace/ckan-docker/ckan_copy
 sudo -u ${vmusername} git fetch --all
-sudo -u ${vmusername} git checkout datapusher-datastore-ckan
+sudo -u ${vmusername} git checkout master
 
 resourceGroupName="$arg1"
 storageAccountName="$arg2"
