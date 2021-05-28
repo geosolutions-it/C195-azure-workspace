@@ -5,7 +5,7 @@ export PGPASSWORD=$arg2
 VMUSER=$arg6
 
 psql -U $arg1@$arg3 -h $arg4 postgres -c 'create database ckan with owner ckan;'
-psql -U $arg1@$arg3 -h $arg4 postgres -c "CREATE ROLE \"datastore_ro@$arg3\" LOGIN NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION PASSWORD \'${arg5}\';"
+psql -U $arg1@$arg3 -h $arg4 postgres -c "CREATE ROLE \"datastore_ro@$arg3\" LOGIN NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION PASSWORD '${arg5}';"
 psql -U $arg1@$arg3 -h $arg4 postgres -c "CREATE ROLE datastore_ro LOGIN NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION PASSWORD '${arg5}';"
 psql -U $arg1@$arg3 -h $arg4 postgres -c "CREATE DATABASE datastore with OWNER ckan ENCODING 'utf-8';"
 psql -U $arg1@$arg3 -h $arg4 postgres -c "GRANT ALL PRIVILEGES ON DATABASE datastore TO ckan;"
