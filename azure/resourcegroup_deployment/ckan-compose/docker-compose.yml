@@ -22,7 +22,7 @@ services:
       - CKAN_DATASTORE_READ_URL=postgresql://${DATASTORE_RO_PG_USER}:${DATASTORE_READONLY_PASSWORD}@${PG_HOST_FULL}/datastore
       - CKAN_SOLR_URL=http://${SOLR_HOST_FULL}:8983/solr/ckan
       - CKAN_REDIS_URL=redis://default:${REDIS_AUTHKEY}@${REDIS_HOST_FULL}:6379/1
-      - CKAN_DATAPUSHER_URL=http://datapusher:8800
+      - CKAN_DATAPUSHER_URL=http://datapusher:8000
       - CKAN_SITE_URL=${CKAN_SITE_URL}
       - CKAN_MAX_UPLOAD_SIZE_MB=${CKAN_MAX_UPLOAD_SIZE_MB}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -42,7 +42,7 @@ services:
       - DATAPUSHER_MAX_CONTENT_LENGTH=5000000000
       - DATAPUSHER_DOWNLOAD_TIMEOUT=60
       - DATAPUSHER_SSL_VERIFY=False
-      - DATAPUSHER_REWRITE_RESOURCES=True    
+      #- DATAPUSHER_REWRITE_RESOURCES=True    
 
   ckan_solr:
     image: ${REGISTRY_NAME}.azurecr.io/crea_ckan_solr
