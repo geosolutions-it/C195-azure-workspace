@@ -29,6 +29,10 @@ services:
       - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
       - PG_HOST_FULL=${PG_HOST_FULL}
       - PG_HOST=${PG_HOST}
+      - CLIENT_ID=${ADFS_CLIENT_ID}
+      - CLIENT_SECRET=${ADFS_CLIENT_SECRET}
+      - TENANT_ID=${ADFS_TENANT_ID}
+
     volumes:
       - ${CKAN_SHARE_MOUNT}:/var/lib/ckan
       - /mnt/ckanconfig:/etc/ckan

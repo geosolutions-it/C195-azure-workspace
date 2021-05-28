@@ -66,7 +66,7 @@ else
 fi
 
 echo "Customizing CKAN configuration file ${CONFIG_INI}..."
-CONFIG_TMP=/tmp/ckan.ini 
+CONFIG_TMP=/tmp/ckan.ini
 
 # we need to use crudini in a local copy or we get a [Errno 13] Permission denied
 cp ${CONFIG_INI} ${CONFIG_TMP}
@@ -114,6 +114,7 @@ cp ${CONFIG_TMP} ${CONFIG_INI}
 echo "Configuring datastore..."
 $CKAN_VENV/bin/ckan -c ${CONFIG_INI} datastore set-permissions > /tmp/check_datastore.sql
 $CKAN_VENV/bin/ckan -c ${CONFIG_INI} datastore set-permissions 2>/dev/null | grep -v ^"$(date +%Y-%m-%d)" | sed -e "s/ckan@${PG_HOST}/ckan/g" | sed -e "s/datastore_ro@${PG_HOST}/datastore_ro/g" | PGPASSWORD=${POSTGRES_PASSWORD} psql --set ON_ERROR_STOP=1 -U ckan@${PG_HOST} -h ${PG_HOST_FULL} datastore
+
 
 # Get or create CKAN_SQLALCHEMY_URL
 if [ -z "$CKAN_SQLALCHEMY_URL" ]; then

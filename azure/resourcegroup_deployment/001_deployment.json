@@ -97,7 +97,7 @@
         "param_azure_auth_client_secret": {
             "defaultValue": "pKf_0000000_00000-0000-0000",
             "type": "String"
-        }         
+        }
     },
     "variables": {},
     "resources": [
