@@ -17,7 +17,7 @@ sudo -u ${vmusername} git clone https://github.com/geosolutions-it/C195-azure-wo
 cd /home/${vmusername}/C195-azure-workspace 
 
 ### remove this before merging to master
-# sudo -u ${vmusername} git checkout datapusher-datastore-ckan
+sudo -u ${vmusername} git checkout datapusher-datastore-ckan
 ###
 
 sudo -u ${vmusername} git submodule init && sudo -u ${vmusername} git submodule update
