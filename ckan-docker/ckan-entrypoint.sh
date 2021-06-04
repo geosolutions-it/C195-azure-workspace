@@ -74,6 +74,7 @@ cp ${CONFIG_INI} ${CONFIG_TMP}
 
 # changes to the ini file -- SHOULD BE IDEMPOTENT
 crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins c195
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins grace_period
 crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins dcat
 crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins dcat_json_interface
 crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins structured_data
