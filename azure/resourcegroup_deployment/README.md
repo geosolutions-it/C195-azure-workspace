@@ -87,16 +87,16 @@ When configuring the AD client, also register a callback path in Azure as `PORT:
     ./azure_solr_config.sh
     ```
 
-- Create API key
+- Create API Token
   1. login into CKAN as admin
-  1. go into admin / manage
-  1. regenerate API key
+  1. navigate into the admin page, API Tokens page (or in the page `http://HOST/user/ADMINUSERNAME/api-tokens`)
+  1. type a mnemonic name for your token and press the "Create API Token" button
+  1. copy/store your brand new token somewhere (this is the only time you can see it)
 
 - Load initial datasets
-  - Run the script
-  
+  - Run the script (either locally or in the VM, it only uses HTTP calls):
     ```bash
-    ./000_provision_initial_data.sh
+    ./000_provision_initial_data.sh YOUR_API_TOKEN
     ```
 
 ## Smoke tests
