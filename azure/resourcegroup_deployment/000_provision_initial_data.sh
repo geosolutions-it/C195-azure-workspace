@@ -4,9 +4,14 @@
 set -x
 . ckan-compose/.env
 CKAN_HOST_FULL=${CKAN_VM_NAME}.${VM_DOMAIN}
-export PGPASSWORD=$POSTGRES_PASSWORD
 
-CKAN_APIKEY=$(psql -t -A -X -U ${CKAN_PG_USER_PARTIAL}@${PG_INSTANCE} -h ${PG_HOST_FULL} ckan -c "select apikey from \"user\" where name='admin';")
+if [ $# -eq 0 ] ; then
+   export PGPASSWORD=$POSTGRES_PASSWORD
+   CKAN_APIKEY=$(psql -t -A -X -U ${CKAN_PG_USER_PARTIAL}@${PG_INSTANCE} -h ${PG_HOST_FULL} ckan -c "select apikey from \"user\" where name='admin';")
+else
+   CKAN_APIKEY=$1
+fi
+
 NEW_JSON=/tmp/load_org.json
 
 for json in data/orgs/* ; do

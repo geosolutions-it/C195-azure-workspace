@@ -97,7 +97,7 @@
         "param_azure_auth_client_secret": {
             "defaultValue": "pKf_0000000_00000-0000-0000",
             "type": "String"
-        }  
+        }
     },
     "variables": {},
     "resources": [
@@ -857,6 +857,20 @@
             "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
             "apiVersion": "2020-08-01-preview",
             "name": "[concat(parameters('param_storageaccount_name'), '/default/ckanshare')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/fileServices', parameters('param_storageaccount_name'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('param_storageaccount_name'))]"
+            ],
+            "properties": {
+                "accessTier": "TransactionOptimized",
+                "shareQuota": 5120,
+                "enabledProtocols": "SMB"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(parameters('param_storageaccount_name'), '/default/ckanconfig')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Storage/storageAccounts/fileServices', parameters('param_storageaccount_name'), 'default')]",
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('param_storageaccount_name'))]"

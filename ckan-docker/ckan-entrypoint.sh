@@ -50,6 +50,13 @@ while ! pg_isready -h $CKAN_PG_HOST -U ckan; do
   sleep 1;
 done
 
+# If we don't already have a who config file, bootstrap
+if [ ! -e "$CKAN_CONFIG/who.ini" ]; then
+  cp $CKAN_VENV/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini  
+else
+  echo "who.ini already exists"
+fi
+
 # If we don't already have a config file, bootstrap
 if [ ! -e "$CONFIG_INI" ]; then
   write_config
@@ -58,42 +65,59 @@ else
   ls -l ${CONFIG_INI}
 fi
 
+echo "Customizing CKAN configuration file ${CONFIG_INI}..."
+CONFIG_TMP=/tmp/ckan.ini
+
+# we need to use crudini in a local copy or we get a [Errno 13] Permission denied
+cp ${CONFIG_INI} ${CONFIG_TMP}
+#cp ${CONFIG_INI} "/etc/ckan/$(date -Ins)_ckan.ini"
+
 # changes to the ini file -- SHOULD BE IDEMPOTENT
-crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins c195
-crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins dcat
-crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins dcat_json_interface
-crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins structured_data
-crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins azure_auth
-crudini --set --verbose --list --list-sep=\  ${CONFIG_INI} app:main ckan.plugins grace_period
 
+# Make sure azure_auth is before c195
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins azure_auth
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins c195
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins grace_period
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins dcat
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins dcat_json_interface
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins structured_data
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins datastore
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins datapusher
 
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_size 10
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.echo_pool True
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_pre_ping True
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_reset_on_return rollback
-crudini --set --verbose ${CONFIG_INI} app:main sqlalchemy.pool_timeout 30
+crudini --set --verbose ${CONFIG_TMP} DEFAULT debug False
 
-crudini --set --verbose ${CONFIG_INI} DEFAULT debug False
+crudini --set --verbose ${CONFIG_TMP} logger_root     level DEBUG
+crudini --set --verbose ${CONFIG_TMP} logger_werkzeug level DEBUG
+crudini --set --verbose ${CONFIG_TMP} logger_ckan     level DEBUG
+crudini --set --verbose ${CONFIG_TMP} logger_ckanext  level DEBUG
+crudini --set --verbose ${CONFIG_TMP} handler_console level DEBUG
 
-crudini --set --verbose ${CONFIG_INI} logger_root     level DEBUG
-crudini --set --verbose ${CONFIG_INI} logger_werkzeug level DEBUG
-crudini --set --verbose ${CONFIG_INI} logger_ckan     level DEBUG
-crudini --set --verbose ${CONFIG_INI} logger_ckanext  level DEBUG
-crudini --set --verbose ${CONFIG_INI} handler_console level DEBUG
+crudini --set --verbose ${CONFIG_TMP} app:main sqlalchemy.pool_size 10
+crudini --set --verbose ${CONFIG_TMP} app:main sqlalchemy.echo_pool True
+crudini --set --verbose ${CONFIG_TMP} app:main sqlalchemy.pool_pre_ping True
+crudini --set --verbose ${CONFIG_TMP} app:main sqlalchemy.pool_reset_on_return rollback
+crudini --set --verbose ${CONFIG_TMP} app:main sqlalchemy.pool_timeout 30
 
 #Azure auth plugin https://github.com/geosolutions-it/ckanext-azure-auth.git
+crudini --set --verbose ${CONFIG_TMP} app:main ckanext.azure_auth.tenant_id ${TENANT_ID}
+crudini --set --verbose ${CONFIG_TMP} app:main ckanext.azure_auth.client_id ${CLIENT_ID}
+crudini --set --verbose ${CONFIG_TMP} app:main ckanext.azure_auth.audience ${CLIENT_ID}
+crudini --set --verbose ${CONFIG_TMP} app:main ckanext.azure_auth.client_secret ${CLIENT_SECRET}
+crudini --set --verbose ${CONFIG_TMP} app:main ckanext.azure_auth.auth_callback_path /azure/callback
+crudini --set --verbose ${CONFIG_TMP} app:main ckanext.azure_auth.allow_create_users True
 
-crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.tenant_id ${TENANT_ID}
-crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.client_id ${CLIENT_ID}
-crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.audience ${CLIENT_ID}
-crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.client_secret ${CLIENT_SECRET}
-crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.auth_callback_path /azure/callback
-crudini --set --verbose ${CONFIG_INI} app:main ckanext.azure_auth.allow_create_users True
+crudini --set --verbose ${CONFIG_TMP} app:main ckan.max_resource_size 5000
+crudini --set --verbose ${CONFIG_TMP} app:main ckan.datapusher.callback_url_base ${CKAN_SITE_URL}
+crudini --set --verbose ${CONFIG_TMP} app:main ckan.datapusher.url ${CKAN_DATAPUSHER_URL}
+crudini --set --verbose ${CONFIG_TMP} app:main ckan.datapusher.assume_task_stale_after 300
+# END changes to the ini file 
+cp ${CONFIG_TMP} ${CONFIG_INI}
 
-crudini --set --verbose ${CONFIG_INI} app:main ckan.auth.allow_dataset_collaborators True
-crudini --set --verbose ${CONFIG_INI} app:main ckan.auth.allow_admin_collaborators True
-crudini --set --verbose ${CONFIG_INI} app:main ckan.auth.allow_collaborators_to_change_owner_org False
-# END changes to the ini file
+#Configure datastore SQL functions
+echo "Configuring datastore..."
+$CKAN_VENV/bin/ckan -c ${CONFIG_INI} datastore set-permissions > /tmp/check_datastore.sql
+$CKAN_VENV/bin/ckan -c ${CONFIG_INI} datastore set-permissions 2>/dev/null | grep -v ^"$(date +%Y-%m-%d)" | sed -e "s/ckan@${PG_HOST}/ckan/g" | sed -e "s/datastore_ro@${PG_HOST}/datastore_ro/g" | PGPASSWORD=${POSTGRES_PASSWORD} psql --set ON_ERROR_STOP=1 -U ckan@${PG_HOST} -h ${PG_HOST_FULL} datastore
+
 
 # Get or create CKAN_SQLALCHEMY_URL
 if [ -z "$CKAN_SQLALCHEMY_URL" ]; then

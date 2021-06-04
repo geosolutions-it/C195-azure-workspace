@@ -39,6 +39,7 @@ Here is a partial list:
 Partial customization can be also be done in file `setenv.sh`, for vars not extracted from the `parameters.json` file, but it's not needed.
 
 It is recommended **not** to modify the params in the following list, because they are considered as fixed values in some scripts:
+
 - `param_postgres_username = ckan`
 
 ### ADFS parameters
@@ -48,38 +49,40 @@ In order to setup ADFS integration, also edit:
 - `param_azure_auth_clientid`
 - `param_azure_auth_client_secret`  
 
-When configuring the AD client, also register a callback path in Azure as `PROT://YOUR_CKAN_HOST/azure/callback`
+When configuring the AD client, also register a callback path in Azure as `PORT://YOUR_CKAN_HOST/azure/callback`
 
+## Deploy
 
-## Deploy 
-
-- Deploy main resources in Azure. 
+- Deploy main resources in Azure.
   - This command will take up to 20-25 minutes to complete.
   - Run locally:
+
     ```bash
     ./azure_main_deploy.sh
     ```
 
 - Install docker stuff on VM and create images.
   - Run locally:
+
     ```bash
     ./azure_ckan_vm_config.sh
     ```
 
 - Create configuration from local files.
   - This script will also retrieve some info from Azure, so it's not immediate, but should be quite fast anyway.
-  - Run locally 
+  - Run locally
+
     ```bash
     env -i ./az_config_env.sh
     ```
+
 - Copy configuration to VM
   - Previous script should have printed a full `scp` command line. Run it locally to copy local generated configuration file to VM.
 
-
 - Create CKAN DB, restart services
   - Create CKAN DBs and assign privs, restart containers in VM (solr, ckan, nginx)
-  - This command above is idempotent and can be run several times, due to a current bug in Azure CLI (https://github.com/Azure/azure-cli/issues/16705) this script may be needed to be run more than one for solr to be configured correctly.
   - Run locally (calls `az` commands)
+  
     ```bash
     ./azure_solr_config.sh
     ```
@@ -113,9 +116,9 @@ To ensure CKAN is always responding, there's a script named `check_ckan_alive.sh
 date=$(date '+%Y-%m-%d %H:%M:%S')
 response="$(curl -I -s http://localhost:5000/ --max-time 10 --connect-timeout 10 | head -1 | tr -d '\r')"
 if [ "$response" != 'HTTP/1.0 200 OK' ]; then
-    docker exec -i ckan /capture_gdb.sh      
-    docker restart ckan
-   	echo "$date - restarted ckan because it was stuck" >> $HOME/ckan_restart_log
+  docker exec -i ckan /capture_gdb.sh      
+  docker restart ckan
+  echo "$date - restarted ckan because it was stuck" >> $HOME/ckan_restart_log
 fi
 ```
 
