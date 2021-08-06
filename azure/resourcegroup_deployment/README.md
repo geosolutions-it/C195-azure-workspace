@@ -58,14 +58,14 @@ When configuring the AD client, also register a callback path in Azure as `PORT:
   - Run locally:
 
     ```bash
-    ./azure_main_deploy.sh
+    ./01_deploy_azure_resources.sh
     ```
 
 - Install docker stuff on VM and create images.
   - Run locally:
 
     ```bash
-    ./azure_ckan_vm_config.sh
+    ./02_config_vm.sh
     ```
 
 - Create configuration from local files.
@@ -73,18 +73,25 @@ When configuring the AD client, also register a callback path in Azure as `PORT:
   - Run locally
 
     ```bash
-    env -i ./az_config_env.sh
+    env -i ./03_create_env_file.sh
     ```
 
 - Copy configuration to VM
   - Previous script should have printed a full `scp` command line. Run it locally to copy local generated configuration file to VM.
 
-- Create CKAN DB, restart services
-  - Create CKAN DBs and assign privs, restart containers in VM (solr, ckan, nginx)
+- Create and configure CKAN DB
+  - Create CKAN DBs and assign privs
   - Run locally (calls `az` commands)
   
     ```bash
-    ./azure_solr_config.sh
+    ./04_setup_db.sh
+    ```
+- Restart services
+  - Restart containers in VM (solr, ckan, nginx)
+  - Run locally (calls `az` commands)
+  
+    ```bash
+    ./05_restart_services.sh
     ```
 
 - Create API Token
@@ -96,7 +103,7 @@ When configuring the AD client, also register a callback path in Azure as `PORT:
 - Load initial datasets
   - Run the script (either locally or in the VM, it only uses HTTP calls):
     ```bash
-    ./000_provision_initial_data.sh YOUR_API_TOKEN
+    ./06_provision_initial_data.sh YOUR_API_TOKEN
     ```
 
 ## Smoke tests
