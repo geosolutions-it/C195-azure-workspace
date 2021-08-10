@@ -149,6 +149,15 @@ Then pull the updates:
 git pull
 ```
 
+### Update the DB
+There may be changes in the DB schema, so you need to update the DB.
+
+```bash
+cd ~/C195-azure-workspace/azure/resourcegroup_deployment/az_scripts
+./setup_db.sh
+```
+The script is idempotent, so running it over and over won't create any problem.
+
 ### Rebuild docker images
 Rebuild the docker images. This procedure will also get the updated extensions:
 
