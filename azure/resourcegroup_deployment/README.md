@@ -106,6 +106,69 @@ When configuring the AD client, also register a callback path in Azure as `PORT:
     ./06_provision_initial_data.sh YOUR_API_TOKEN
     ```
 
+## Update
+
+### Update CREA project
+Make sure you are on the proper branch for the CREA project:
+
+```bash
+cd C195-azure-workspace
+git branch
+  202108_cleanup
+* master
+````
+
+If the current branch is not `master` switch to it
+```bash
+git checkout master
+```
+
+Then pull the updates:
+```bash
+git pull
+```
+
+### Update CKAN
+
+Make sure you are on the proper branch for the CKAN module:
+
+```bash
+cd ~/C195-azure-workspace/ckan-docker/ckan_copy/
+git branch 
+* 2.9
+  master
+````
+
+If the current branch is not `2.9` switch to it
+```bash
+git checkout 2.9
+```
+
+Then pull the updates:
+```bash
+git pull
+```
+
+### Rebuild docker images
+Rebuild the docker images. This procedure will also get the updated extensions:
+
+```bash
+cd ~/C195-azure-workspace/ckan-docker/
+./rebuild.sh
+```
+
+### Restart docker containers
+Make sure you are in the `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose` directory:
+```bash
+cd ~/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose
+```
+
+Stop and restart the docker containers:
+```bash
+docker-compose down
+docker-compose up -d
+```
+
 ## Smoke tests
 
 - to run smoke tests there is a script that can be run after deployment on the installation machine:
