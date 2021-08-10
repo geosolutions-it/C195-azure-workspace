@@ -16,15 +16,14 @@ sudo -u ${vmusername} rm -rf /home/${vmusername}/.docker
 sudo -u ${vmusername} git clone https://github.com/geosolutions-it/C195-azure-workspace.git /home/${vmusername}/C195-azure-workspace
 cd /home/${vmusername}/C195-azure-workspace 
 
-### remove this before merging to master
-sudo -u ${vmusername} git checkout 202108_cleanup
-###
+# Make sure we are on the right branch
+sudo -u ${vmusername} git checkout master
 
 sudo -u ${vmusername} git submodule init && sudo -u ${vmusername} git submodule update
 
 cd /home/${vmusername}/C195-azure-workspace/ckan-docker/ckan_copy
 sudo -u ${vmusername} git fetch --all
-sudo -u ${vmusername} git checkout master
+sudo -u ${vmusername} git checkout 2.9
 
 resourceGroupName="$arg1"
 storageAccountName="$arg2"
