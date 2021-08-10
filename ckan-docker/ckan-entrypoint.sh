@@ -83,6 +83,9 @@ crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins
 crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins structured_data
 crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins datastore
 crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins datapusher
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins harvest 
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins spatial_metadata 
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins spatial_query
 
 crudini --set --verbose ${CONFIG_TMP} DEFAULT debug False
 
@@ -110,6 +113,8 @@ crudini --set --verbose ${CONFIG_TMP} app:main ckan.max_resource_size 5000
 crudini --set --verbose ${CONFIG_TMP} app:main ckan.datapusher.callback_url_base ${CKAN_SITE_URL}
 crudini --set --verbose ${CONFIG_TMP} app:main ckan.datapusher.url ${CKAN_DATAPUSHER_URL}
 crudini --set --verbose ${CONFIG_TMP} app:main ckan.datapusher.assume_task_stale_after 300
+
+crudini --set --verbose ${CONFIG_TMP} app:main ckanext.spatial.search_backend solr
 # END changes to the ini file 
 cp ${CONFIG_TMP} ${CONFIG_INI}
 
@@ -140,16 +145,20 @@ echo "Setting var and venv..."
 set_environment
 source $CKAN_VENV/bin/activate
 
-echo "Initting DB..."
+echo "Initting DB... -- ckan"
 ckan --config "$CONFIG_INI" db init
 
-# echo "Adding admin user"
+echo "Initting DB... -- harvest"
+ckan --config "$CONFIG_INI" harvester initdb
+
+echo "Initting DB... -- spatial"
+ckan --config "$CONFIG_INI" spatial initdb
 
 if [ "$(ckan -c "$CONFIG_INI" sysadmin list 2>&1 | grep ^User | grep -v 'name=default' | wc -l )" == "0" ];then
+  echo "Adding admin user"
   # APIKEY=$(cat /proc/sys/kernel/random/uuid)
   echo -ne '\n' | ckan -c "$CONFIG_INI" sysadmin add admin email=admin@localhost name=admin password=adminadmin
 fi
 
 echo 'Running command --> ' $@
 exec "$@"
-
