@@ -43,6 +43,7 @@ services:
   datapusher:
     container_name: ckan_datapusher
     image: keitaro/ckan-datapusher:latest
+    restart: always    
     ports:
       - "8000:8000"
     environment:
