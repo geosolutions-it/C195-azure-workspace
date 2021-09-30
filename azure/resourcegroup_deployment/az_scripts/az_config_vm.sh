@@ -74,19 +74,19 @@ sudo chmod 600 $smbCredentialFile
 # This command assumes you have logged in with az login
 
 if [ -z "$(grep $smbPath1\ $mntPath1 /etc/fstab)" ]; then
-    echo "$smbPath1 $mntPath1 cifs nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
+    echo "$smbPath1 $mntPath1 cifs auto,nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
 else
     echo "/etc/fstab was not modified to avoid conflicting entries as this Azure file share $mntPath1 was already present. You may want to double check /etc/fstab to ensure the configuration is as desired."
 fi
 
 if [ -z "$(grep $smbPath2\ $mntPath2 /etc/fstab)" ]; then
-    echo "$smbPath2 $mntPath2 cifs nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
+    echo "$smbPath2 $mntPath2 cifs auto,nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
 else
     echo "/etc/fstab was not modified to avoid conflicting entries as this Azure file share $mntPath2 was already present. You may want to double check /etc/fstab to ensure the configuration is as desired."
 fi
 
 if [ -z "$(grep $smbPath3\ $mntPath3 /etc/fstab)" ]; then
-    echo "$smbPath3 $mntPath3 cifs nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
+    echo "$smbPath3 $mntPath3 cifs auto,nofail,vers=3.0,credentials=$smbCredentialFile,serverino,file_mode=0777,dir_mode=0777" | sudo tee -a /etc/fstab > /dev/null
 else
     echo "/etc/fstab was not modified to avoid conflicting entries as this Azure file share $mntPath3 was already present. You may want to double check /etc/fstab to ensure the configuration is as desired."
 fi
