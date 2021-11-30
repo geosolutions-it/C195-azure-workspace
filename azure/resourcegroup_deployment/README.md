@@ -11,14 +11,14 @@ Prerequisites on the machine performing deployment operations:
 ## First steps
 
 - In Azure, create the Resource Group for the deployment
-- Authenticate in azure in order to be able to run `az` commands.  
-  You may either run in your terminal:  
+- Authenticate in azure in order to be able to run `az` commands.
+  You may either run in your terminal:
   - `az login`: it will open a browser session where you can perform the authentication.
   - `az login -u USERNAME`: it will ask for a query in the terminal.
 
 ## Customize parameters
 
-Edit the file `parameters.json` to suit your needs.  
+Edit the file `parameters.json` to suit your needs.
 
 Please note that username/password are identical for vm and postgres instance.
 
@@ -45,9 +45,10 @@ It is recommended **not** to modify the params in the following list, because th
 ### ADFS parameters
 
 In order to setup ADFS integration, also edit:
+
 - `param_azure_auth_tenantid`
 - `param_azure_auth_clientid`
-- `param_azure_auth_client_secret`  
+- `param_azure_auth_client_secret`
 
 When configuring the AD client, also register a callback path in Azure as `PORT://YOUR_CKAN_HOST/azure/callback`
 
@@ -82,14 +83,15 @@ When configuring the AD client, also register a callback path in Azure as `PORT:
 - Create and configure CKAN DB
   - Create CKAN DBs and assign privs
   - Run locally (calls `az` commands)
-  
+
     ```bash
     ./04_setup_db.sh
     ```
+
 - Restart services
   - Restart containers in VM (solr, ckan, nginx)
   - Run locally (calls `az` commands)
-  
+
     ```bash
     ./05_restart_services.sh
     ```
@@ -102,6 +104,7 @@ When configuring the AD client, also register a callback path in Azure as `PORT:
 
 - Load initial datasets
   - Run the script (either locally or in the VM, it only uses HTTP calls):
+
     ```bash
     ./06_provision_initial_data.sh YOUR_API_TOKEN
     ```
@@ -119,11 +122,13 @@ git branch
 ````
 
 If the current branch is not `master` switch to it
+
 ```bash
 git checkout master
 ```
 
 Then pull the updates:
+
 ```bash
 git pull
 ```
@@ -134,17 +139,19 @@ Make sure you are on the proper branch for the CKAN module:
 
 ```bash
 cd ~/C195-azure-workspace/ckan-docker/ckan_copy/
-git branch 
+git branch
 * 2.9
   master
 ````
 
 If the current branch is not `2.9` switch to it
+
 ```bash
 git checkout 2.9
 ```
 
 Then pull the updates:
+
 ```bash
 git pull
 ```
@@ -156,9 +163,11 @@ There may be changes in the DB schema, so you need to update the DB.
 cd ~/C195-azure-workspace/azure/resourcegroup_deployment/az_scripts
 ./setup_db.sh
 ```
+
 The script is idempotent, so running it over and over won't create any problem.
 
 ### Rebuild docker images
+
 Rebuild the docker images. This procedure will also get the updated extensions:
 
 ```bash
@@ -167,12 +176,15 @@ cd ~/C195-azure-workspace/ckan-docker/
 ```
 
 ### Restart docker containers
+
 Make sure you are in the `C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose` directory:
+
 ```bash
 cd ~/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose
 ```
 
 Stop and restart the docker containers:
+
 ```bash
 docker-compose down
 docker-compose up -d
@@ -195,7 +207,7 @@ To ensure CKAN is always responding, there's a script named `check_ckan_alive.sh
 date=$(date '+%Y-%m-%d %H:%M:%S')
 response="$(curl -I -s http://localhost:5000/ --max-time 10 --connect-timeout 10 | head -1 | tr -d '\r')"
 if [ "$response" != 'HTTP/1.0 200 OK' ]; then
-  docker exec -i ckan /capture_gdb.sh      
+  docker exec -i ckan /capture_gdb.sh
   docker restart ckan
   echo "$date - restarted ckan because it was stuck" >> $HOME/ckan_restart_log
 fi
@@ -218,6 +230,7 @@ Connect via ssh to the ckan vm, once connected issue:
 ```Shell
 mkdir $HOME/custom-ssl
 ```
+
 Copy ssl private key and full chain certificate to that location with this name convention:
 
 - `privkey.pem` for private key
@@ -228,6 +241,7 @@ Then go to nginx configuration file:
 ```Shell
 cd ~/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs
 ```
+
 Substitute the nginx present there in file named `default` (make backup first) with this one:
 
 ```nginx

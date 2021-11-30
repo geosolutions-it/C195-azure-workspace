@@ -1,5 +1,5 @@
 . ./setenv.sh
-
+sshpass -p $CKAN_VM_PASS scp -r custom-ssl $CKAN_VM_USER@${CKAN_VM_NAME}.VM_DOMAIN:
 # Install docker on vm
 az vm run-command invoke \
 	-g ${RESOURCE_GROUP} \

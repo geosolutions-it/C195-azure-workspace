@@ -3,55 +3,55 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "param_resource_group_name": {
-            "Value": "YOUR_RESOURCE_GROUP_NAME"
+            "Value": "test-crea"
         },
         "param_subscription_id": {
-            "Value": "YOUR_SUBSCRIPTION_ID"
-        },                   
+            "Value": "1cd0a26f-1c2a-48fb-9db5-c5be98e7603b"
+        },
         "param_redis_name": {
-            "Value": "YOUR_REDIS_NAME"
+            "Value": "redis-crea-test"
         },
         "param_endpoint_redis_name": {
-            "Value": "YOUR_REDIS_NAME"
+            "Value": "redis-crea-test"
         },
         "param_vm_ckan_hostname": {
-            "Value": "YOUR_VM_HOSTNAME"
+            "Value": "vmckan"
         },
         "param_vm_ckan_username": {
             "Value": "geosolutions"
-        },        
+        },
         "param_vm_ckan_password": {
             "Value": "S3cre3tP4ssw0rd"
         },
         "param_postgres_username": {
             "Value": "ckan"
-        },        
+        },
         "param_postgres_password": {
             "Value": "S3cre3tP4ssw0rd"
-        },              
+        },
         "param_postgres_hostname": {
-            "Value": "YOUR_POSTGRES_HOSTNAME"
+            "Value": "pgckan"
         },
         "param_endpoint_pg_name": {
-            "Value": "YOUR_POSTGRES_HOSTNAME"
+            "Value": "pgckan"
         },
         "param_vnet_name": {
             "Value": "privnet01"
         },
         "param_networkiface_vm_name": {
-            "Value": "ckan-vm195"
+            "Value": "ckan-vmckan"
         },
         "param_publicipaddress_vm_name": {
             "Value": "ckan-vm-ip"
         },
         "param_storageaccount_name": {
-            "Value": "YOUR_STORAGEACCOUNT_NAME"
+            "Value": "ckanstore"
         },
         "param_vnetlink_solr_name": {
             "Value": "crea-solr"
         },
         "param_registry_name": {
-            "Value": "YOUR_REGISTRY_NAME"
+            "Value": "ckanreg"
         },
         "param_networksecgroup_name": {
             "Value": "ckan-vm-nsg"
@@ -64,6 +64,6 @@
         },
         "param_azure_auth_client_secret": {
             "Value": "pKf_0000000_00000-0000-0000"
-        }             
+        }
     }
-}    
+}

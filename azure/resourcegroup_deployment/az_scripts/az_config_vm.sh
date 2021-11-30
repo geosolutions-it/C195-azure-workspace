@@ -14,7 +14,7 @@ sudo adduser ${vmusername} docker
 sudo -u ${vmusername} rm -rf /home/${vmusername}/C195-azure-workspace
 sudo -u ${vmusername} rm -rf /home/${vmusername}/.docker
 sudo -u ${vmusername} git clone https://github.com/geosolutions-it/C195-azure-workspace.git /home/${vmusername}/C195-azure-workspace
-cd /home/${vmusername}/C195-azure-workspace 
+cd /home/${vmusername}/C195-azure-workspace
 
 # Make sure we are on the right branch
 sudo -u ${vmusername} git checkout master
@@ -45,9 +45,9 @@ smbPath3=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareN
 
 #build and push ckan and solr images
 
-echo $registryPassword | sudo -u ${vmusername} docker login ${registryName}.azurecr.io --username $registryUsername --password-stdin 
+echo $registryPassword | sudo -u ${vmusername} docker login ${registryName}.azurecr.io --username $registryUsername --password-stdin
 cd /home/${vmusername}/C195-azure-workspace/ckan-docker
-sudo -u ${vmusername} docker-compose -f /home/${vmusername}/C195-azure-workspace/ckan-docker/docker-compose.yml --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample build ckan 
+sudo -u ${vmusername} docker-compose -f /home/${vmusername}/C195-azure-workspace/ckan-docker/docker-compose.yml --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample build ckan
 sudo -u ${vmusername} docker-compose -f /home/${vmusername}/C195-azure-workspace/ckan-docker/docker-compose.yml --env-file ../azure/resourcegroup_deployment/ckan-compose/.env.sample build ckan_solr
 cd /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose
 sudo -u ${vmusername} docker tag crearegistry.azurecr.io/crea_ckan ${registryName}.azurecr.io/crea_ckan
@@ -56,6 +56,14 @@ sudo -u ${vmusername} docker push ${registryName}.azurecr.io/crea_ckan
 sudo -u ${vmusername} docker push ${registryName}.azurecr.io/crea_ckan_solr
 sudo -u ${vmusername} docker pull ${registryName}.azurecr.io/crea_ckan || echo "problem pulling from registry"
 sudo -u ${vmusername} docker pull ${registryName}.azurecr.io/crea_ckan_solr || echo "problem pulling from registry"
+
+# configure custom ssl
+
+[ -d /home/${vmusername}/custom-ssl ] && \
+mkdir -p  /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs  && \
+cp ~/custom_ssl/nginx-default /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs/default
+cp ~/custom_ssl/*.pem /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs
+
 # mount ckan share
 
 sudo mkdir -p $mntPath1 $mntPath2 $mntPath3
@@ -67,7 +75,7 @@ fi
 if [ ! -f $smbCredentialFile ]; then
     echo "username=$storageAccountName" | sudo tee $smbCredentialFile > /dev/null
     echo "password=$storageAccountKey" | sudo tee -a $smbCredentialFile > /dev/null
-else 
+else
     echo "The credential file $smbCredentialFile already exists, and was not modified."
 fi
 sudo chmod 600 $smbCredentialFile
