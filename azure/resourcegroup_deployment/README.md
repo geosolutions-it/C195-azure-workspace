@@ -78,9 +78,6 @@ When configuring the AD client, also register a callback path in Azure as `PORT:
     env -i ./03_create_env_file.sh
     ```
 
-- Copy configuration to VM
-  - Previous script should have printed a full `scp` command line. Run it locally to copy local generated configuration file to VM.
-
 - Create and configure CKAN DB
   - Create CKAN DBs and assign privs
   - Run locally (calls `az` commands)
@@ -226,102 +223,16 @@ You may need to edit the `home` path in `az_cronjob.sh`
 
 ## Custom SSL certificates
 
-Connect via ssh to the ckan vm, once connected issue:
-
-```Shell
-mkdir $HOME/custom-ssl
-```
-
-Copy ssl private key and full chain certificate to that location with this name convention:
+Assuming you already have a checked out project from where installation are performed:
+Copy ssl private key and full chain certificate with this name convention
 
 - `privkey.pem` for private key
 - `fullchain.pem` for certificate or in some cases (like COMODO/Sectigo certificates) a file comprised of CA, intermediate certs and the actual certificate signed by authory.
 
-Then go to nginx configuration file:
+into directory `~/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-custom-ssl`.
 
-```Shell
-cd ~/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs
+Re-run deployment from phase 2:
+
+```shell
+./02_config_vm.sh && env -i ./03_create_env_file.sh && ./05_restart_services.sh
 ```
-
-Substitute the nginx present there in file named `default` (make backup first) with this one:
-
-```nginx
-error_page 502 /502.html;
-server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-        server_name _;
-        return 301 https://$host$request_uri;
-}
-
-server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
-
-    server_name _;
-
-#    include /config/nginx/ssl.conf;
-    ssl_session_timeout 1d;
-    ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
-    ssl_session_tickets off;
-
-    # intermediate configuration
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
-    ssl_prefer_server_ciphers off;
-
-    # OCSP stapling
-    ssl_stapling on;
-    ssl_stapling_verify on;
-
-    # Certificates
-    ssl_certificate /home/geosolutions/custom-ssl/fullchain.pem;
-    ssl_certificate_key /home/geosolutions/custom-ssl/privkey.pem;
-
-    client_max_body_size 0;
-
-    location / {
-        include /config/nginx/proxy.conf;
-        resolver 127.0.0.11 valid=30s;
-        set $upstream_app ckan;
-        set $upstream_port 5000;
-        set $upstream_proto http;
-        proxy_pass $upstream_proto://$upstream_app:$upstream_port;
-
-    }
-}
-```
-
-Go back one directory to the path of the docker compose and reload nginx:
-
-```Shell
-cd ..
-docker-compose exec proxy sh
-nginx -s reload
-```
-
-if all went well certificates should be no more the ones from letsencrypt
-This is how let's encrypt certificates presences can be checked with openssl cli tool for linux:
-
-```Shell
-openssl s_client anaeehostname.westeurope.cloudapp.azure.com:443 < /dev/null | head
-depth=2 C = US, O = Internet Security Research Group, CN = ISRG Root X1
-verify return:1
-depth=1 C = US, O = Let's Encrypt, CN = R3
-verify return:1
-depth=0 CN = anaeehostname.westeurope.cloudapp.azure.com
-verify return:1
-DONE
-CONNECTED(00000003)
----
-Certificate chain
- 0 s:CN = anaeehostname.westeurope.cloudapp.azure.com
-   i:C = US, O = Let's Encrypt, CN = R3
- 1 s:C = US, O = Let's Encrypt, CN = R3
-   i:C = US, O = Internet Security Research Group, CN = ISRG Root X1
- 2 s:C = US, O = Internet Security Research Group, CN = ISRG Root X1
-   i:O = Digital Signature Trust Co., CN = DST Root CA X3
----
-```
-
-After custom ssl is configured you won't see anymore "Let's Encrypt" as above in the certificate chain and you'll see your own ssl privider.

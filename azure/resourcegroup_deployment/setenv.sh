@@ -20,8 +20,9 @@ SOLR_CONTAINER_NAME=solr-container-test
 WE_DOMAIN=westeurope.azurecontainer.io
 REDIS_DOMAIN=privatelink.redis.cache.windows.net
 PG_DOMAIN=privatelink.postgres.database.azure.com
-#VM_DOMAIN=westeurope.cloudapp.azure.com
-VM_DOMAIN=geosolutionsgroup.com
+# if using custom sslcertificate please change the value below to your custom domain
+#VM_DOMAIN=example.com
+VM_DOMAIN=westeurope.cloudapp.azure.com
 SOLR_DOMAIN=privatelink.solr.azure.com
 
 REDIS_HOST=$(jq -r '.parameters.param_redis_name.Value' ./parameters.json)
@@ -33,7 +34,7 @@ PG_HOST=$(jq -r '.parameters.param_postgres_hostname.Value' ./parameters.json)
 PG_INSTANCE=$(jq -r '.parameters.param_endpoint_pg_name.Value' ./parameters.json)
 CKAN_HOST=$(jq -r '.parameters.param_vm_ckan_hostname.Value' ./parameters.json)
 
-REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_NAME --query primaryKey | tr -d '"')
+REDIS_AUTHKEY=$(az redis list-keys --resource-group $RESOURCE_GROUP --name $REDIS_HOST --query primaryKey | tr -d '"')
 
 CKAN_VM_NAME=$(jq -r '.parameters.param_vm_ckan_hostname.Value' ./parameters.json)
 CKAN_VM_USER=$(jq -r '.parameters.param_vm_ckan_username.Value' ./parameters.json)
