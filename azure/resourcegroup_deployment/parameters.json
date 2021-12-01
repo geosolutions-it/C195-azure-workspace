@@ -1,22 +1,21 @@
-
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "param_resource_group_name": {
-            "Value": "test-crea"
+            "Value": "YOUR_RESOURCE_GROUP_NAME"
         },
         "param_subscription_id": {
-            "Value": "1cd0a26f-1c2a-48fb-9db5-c5be98e7603b"
+            "Value": "YOUR_SUBSCRIPTION_ID"
         },
         "param_redis_name": {
-            "Value": "redis-crea-test"
+            "Value": "YOUR_REDIS_NAME"
         },
         "param_endpoint_redis_name": {
-            "Value": "redis-crea-test"
+            "Value": "YOUR_REDIS_NAME"
         },
         "param_vm_ckan_hostname": {
-            "Value": "vmckan"
+            "Value": "YOUR_VM_HOSTNAME"
         },
         "param_vm_ckan_username": {
             "Value": "geosolutions"
@@ -31,28 +30,28 @@
             "Value": "S3cre3tP4ssw0rd"
         },
         "param_postgres_hostname": {
-            "Value": "pgckan"
+            "Value": "YOUR_POSTGRES_HOSTNAME"
         },
         "param_endpoint_pg_name": {
-            "Value": "pgckan"
+            "Value": "YOUR_POSTGRES_HOSTNAME"
         },
         "param_vnet_name": {
             "Value": "privnet01"
         },
         "param_networkiface_vm_name": {
-            "Value": "ckan-vmckan"
+            "Value": "ckan-vm195"
         },
         "param_publicipaddress_vm_name": {
             "Value": "ckan-vm-ip"
         },
         "param_storageaccount_name": {
-            "Value": "ckanstore"
+            "Value": "YOUR_STORAGEACCOUNT_NAME"
         },
         "param_vnetlink_solr_name": {
             "Value": "crea-solr"
         },
         "param_registry_name": {
-            "Value": "ckanreg"
+            "Value": "YOUR_REGISTRY_NAME"
         },
         "param_networksecgroup_name": {
             "Value": "ckan-vm-nsg"
