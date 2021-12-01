@@ -6,6 +6,7 @@ Prerequisites on the machine performing deployment operations:
   - `bash` (shell)
   - `az` (azure cli)
   - `jq` (tool for parsing json)
+  - `sshpass` (tool for passig default password to ssh non-interactively)
 - must have full access or be in same resource group where the ckan stack is being deployed.
 
 ## First steps
