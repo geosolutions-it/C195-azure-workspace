@@ -17,7 +17,8 @@ sudo -u ${vmusername} git clone https://github.com/geosolutions-it/C195-azure-wo
 cd /home/${vmusername}/C195-azure-workspace
 
 # Make sure we are on the right branch
-sudo -u ${vmusername} git checkout master
+#sudo -u ${vmusername} git checkout master
+sudo -u ${vmusername} git checkout custom-ssl-certificates-doc
 
 sudo -u ${vmusername} git submodule init && sudo -u ${vmusername} git submodule update
 
