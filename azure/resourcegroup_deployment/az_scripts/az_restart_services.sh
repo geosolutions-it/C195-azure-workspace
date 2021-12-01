@@ -19,7 +19,6 @@ sudo -u ${VMUSER} docker-compose --env-file .env up -d
 
 if [ -f /home/${VMUSER}/C195-azure-workspace/azure/resourcegroup_deployment/custom-ssl/privkey.pem ]; then
     sudo cp /home/${VMUSER}/C195-azure-workspace/azure/resourcegroup_deployment/custom-ssl/nginx-default /home/${VMUSER}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs/default
-    sudo cp /home/${VMUSER}/C195-azure-workspace/azure/resourcegroup_deployment/custom-ssl/ssl.conf /home/${VMUSER}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs/ssl.conf
     sudo -u ${VMUSER} docker-compose --env-file .env down
     sudo -u ${VMUSER} docker-compose --env-file .env up -d
 fi

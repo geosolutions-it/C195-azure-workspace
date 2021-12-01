@@ -84,6 +84,7 @@ services:
     volumes:
       - config:/config
       - ./site-confs:/config/nginx/site-confs
+      - ./site-custom-ssl:/config/nginx/site-custom-ssl
     ports:
       - "443:443"
       - "80:80" #optional

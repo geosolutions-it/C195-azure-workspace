@@ -12,7 +12,7 @@ server {
 
     server_name _;
 
-    include /config/site-confs/ssl.conf;
+    include /config/site-custom-ssl/ssl.conf;
 
     client_max_body_size 0;
 
