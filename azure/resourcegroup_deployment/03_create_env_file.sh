@@ -27,4 +27,6 @@ sed -i '/^PWD=/d'  ckan-compose/.env
 sed -i '/^SHLVL=/d'  ckan-compose/.env
 
 echo "Please run:"
-echo "scp ckan-compose/.env ${CKAN_VM_USER}@${CKAN_VM_NAME}.westeurope.cloudapp.azure.com:/home/${CKAN_VM_USER}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env"
+echo "scp ckan-compose/.env ${CKAN_VM_USER}@${CKAN_VM_NAME}.${VM_DOMAIN}:/home/${CKAN_VM_USER}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env"
+
+sshpass -p $CKAN_VM_PASS scp ckan-compose/.env ${CKAN_VM_USER}@${CKAN_VM_NAME}.${VM_DOMAIN}:/home/${CKAN_VM_USER}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env
