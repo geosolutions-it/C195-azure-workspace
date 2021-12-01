@@ -1,6 +1,10 @@
 #!/bin/bash -x
+set -x
 
 source ./setenv.sh
+if [ -f "./custom-ssl/privkey.pem" ]; then
+	sshpass -p $CKAN_VM_PASS scp -r custom-ssl/*.pem $CKAN_VM_USER@${CKAN_VM_NAME}.${VM_DOMAIN}:C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs
+fi
 
 export CKAN_HOST CKAN_IMAGE CKAN_MAX_UPLOAD_SIZE_MB CKAN_PG_USER \
 CKAN_PG_USER_PARTIAL CKAN_PORT CKAN_SHARE_MOUNT CKAN_SHARE_NAME \

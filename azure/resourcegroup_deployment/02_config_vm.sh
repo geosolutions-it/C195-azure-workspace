@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 . ./setenv.sh
 set -x
-if [ -f "./custom-ssl/privkey.pem" ]; then
-	sshpass -p $CKAN_VM_PASS ssh $CKAN_VM_USER@${CKAN_VM_NAME}.${VM_DOMAIN} mkdir -p custom-ssl
-	sshpass -p $CKAN_VM_PASS scp -r custom-ssl/*.pem $CKAN_VM_USER@${CKAN_VM_NAME}.${VM_DOMAIN}:C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs
-fi
+
 # Install docker on vm
 az vm run-command invoke \
 	-g ${RESOURCE_GROUP} \
