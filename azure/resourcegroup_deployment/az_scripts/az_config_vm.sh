@@ -58,14 +58,6 @@ sudo -u ${vmusername} docker push ${registryName}.azurecr.io/crea_ckan_solr
 sudo -u ${vmusername} docker pull ${registryName}.azurecr.io/crea_ckan || echo "problem pulling from registry"
 sudo -u ${vmusername} docker pull ${registryName}.azurecr.io/crea_ckan_solr || echo "problem pulling from registry"
 
-# configure custom ssl
-
-if [ -f /home/${vmusername}/custom-ssl/privkey.pem ]; then
-    mkdir -p  /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs
-    cp ~/custom_ssl/nginx-default /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs/default
-    cp ~/custom_ssl/*.pem /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs
-fi
-
 # mount ckan share
 
 sudo mkdir -p $mntPath1 $mntPath2 $mntPath3
