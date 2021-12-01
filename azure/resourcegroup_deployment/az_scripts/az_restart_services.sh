@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 resourceGroupName="$arg1"
 storageAccountName="$arg2"
 fileShareName="$arg3"

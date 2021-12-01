@@ -27,8 +27,8 @@ server {
     ssl_stapling_verify on;
 
     # Certificates
-    ssl_certificate /home/geosolutions/custom-ssl/fullchain.pem;
-    ssl_certificate_key /home/geosolutions/custom-ssl/privkey.pem;
+    ssl_certificate /config/nginx/site-confs/fullchain.pem;
+    ssl_certificate_key /config/nginx/site-confs/privkey.pem;
 
     client_max_body_size 0;
 
