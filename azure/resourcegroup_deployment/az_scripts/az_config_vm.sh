@@ -60,10 +60,11 @@ sudo -u ${vmusername} docker pull ${registryName}.azurecr.io/crea_ckan_solr || e
 
 # configure custom ssl
 
-[ -d /home/${vmusername}/custom-ssl ] && \
-mkdir -p  /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs  && \
-cp ~/custom_ssl/nginx-default /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs/default
-cp ~/custom_ssl/*.pem /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs
+if [ -f /home/${vmusername}/custom-ssl/privkey.pem ]; then
+    mkdir -p  /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs
+    cp ~/custom_ssl/nginx-default /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs/default
+    cp ~/custom_ssl/*.pem /home/${vmusername}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs
+fi
 
 # mount ckan share
 

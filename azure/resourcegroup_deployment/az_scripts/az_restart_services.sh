@@ -11,6 +11,14 @@ VMUSER="$arg9"
 cd /home/${VMUSER}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose
 if [ ! -f /home/${VMUSER}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env ]; then
     cp /home/${VMUSER}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env.sample /home/${VMUSER}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/.env
-fi    
+fi
 sudo -u ${VMUSER} docker-compose --env-file .env down
 sudo -u ${VMUSER} docker-compose --env-file .env up -d
+
+if [ -f /home/${VMUSER}/custom-ssl/privkey.pem ]; then
+
+   sudo cp ~/custom_ssl/nginx-default /home/${VMUSER}/C195-azure-workspace/azure/resourcegroup_deployment/ckan-compose/site-confs/default
+
+fi
+
+sudo -u ${VMUSER} docker-compose --env-file .env restart proxy
