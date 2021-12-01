@@ -1,4 +1,5 @@
 /azure/azure_pg_test/parameters.json
 /azure/resourcegroup_deployment/parameters.json
+azure/resourcegroup_deployment/parameters.json
 /azure/resourcegroup_deployment/custom-ssl/*pem
-/azure/resourcegroup_deployment/ckan-compose/
+/azure/resourcegroup_deployment/ckan-compose/.env
