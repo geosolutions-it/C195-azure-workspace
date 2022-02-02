@@ -1,4 +1,6 @@
+#!/usr/bin/env bash
 . ./setenv.sh
+set -x
 
 # Install docker on vm
 az vm run-command invoke \

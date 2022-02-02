@@ -7,7 +7,7 @@
         },
         "param_subscription_id": {
             "Value": "YOUR_SUBSCRIPTION_ID"
-        },                   
+        },
         "param_redis_name": {
             "Value": "YOUR_REDIS_NAME"
         },
@@ -19,16 +19,16 @@
         },
         "param_vm_ckan_username": {
             "Value": "geosolutions"
-        },        
+        },
         "param_vm_ckan_password": {
             "Value": "S3cre3tP4ssw0rd"
         },
         "param_postgres_username": {
             "Value": "ckan"
-        },        
+        },
         "param_postgres_password": {
             "Value": "S3cre3tP4ssw0rd"
-        },              
+        },
         "param_postgres_hostname": {
             "Value": "YOUR_POSTGRES_HOSTNAME"
         },
@@ -64,6 +64,6 @@
         },
         "param_azure_auth_client_secret": {
             "Value": "pKf_0000000_00000-0000-0000"
-        }             
+        }
     }
-}    
+}
