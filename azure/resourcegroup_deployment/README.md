@@ -236,3 +236,31 @@ Re-run deployment from phase 2:
 ```shell
 ./02_config_vm.sh && env -i ./03_create_env_file.sh && ./05_restart_services.sh
 ```
+
+## Further configuration
+
+The main CKAN configuration file is mapped in the host filesystem at `/mnt/ckanconfig/production.ini`.  
+You may edit the `.ini` file according to your needs.  
+
+Be warned that **any misconfiguration may prevent CKAN from working** properly, or at all.
+
+### Example: reCAPTCHA configuration
+
+You can enable the Google reCAPTCHA verification in CKAN at user registration simply by setting the reCAPTCHA keys.
+
+You need to add in the `[app:main]` section the keys:
+```ini
+ckan.recaptcha.publickey = <YOUR PUBLIC KEY>
+ckan.recaptcha.privatekey = <YOUR PRIVATE KEY>
+```
+
+You can create your keys at https://www.google.com/recaptcha.  
+Please note that *CKAN can only handle recaptcha v2*, not v3.
+
+
+
+
+
+
+
+
