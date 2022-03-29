@@ -78,6 +78,7 @@ RUN $CKAN_VENV/bin/pip install -e git+https://github.com/ckan/ckanext-spatial.gi
     $CKAN_VENV/bin/pip install -r $CKAN_VENV/src/ckanext-spatial/requirements.txt
 RUN $CKAN_VENV/bin/pip install -e git+https://github.com/TIBHannover/ckanext-tif-imageview.git@main#ckanext_tif_imageview && \
     $CKAN_VENV/bin/pip install -r $CKAN_VENV/src/ckanext-tif-imageview/requirements.txt
+RUN $CKAN_VENV/bin/pip install -e git+https://github.com/ckan/ckanext-pdfview@master#ckanext_pdfview
 
 # Setup CKAN custom scripts
 

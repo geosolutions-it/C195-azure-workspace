@@ -87,8 +87,10 @@ crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins
 crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins spatial_metadata 
 crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins spatial_query
 crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins tif_imageview
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.plugins ckanext_pdfview
 
 crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.views.default_views tif_imageview
+crudini --set --verbose --list --list-sep=\  ${CONFIG_TMP} app:main ckan.views.default_views ckanext_pdfview
 
 crudini --set --verbose ${CONFIG_TMP} DEFAULT debug False
 
